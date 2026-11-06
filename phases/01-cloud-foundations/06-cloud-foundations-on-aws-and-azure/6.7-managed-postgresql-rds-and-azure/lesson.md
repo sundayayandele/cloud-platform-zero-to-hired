@@ -6,6 +6,7 @@
 - Connect ITL Pay Lite on the VMs from topic 6.5 to the database, with TLS.
 - Configure backups, point-in-time restore, high availability across zones, and maintenance windows, and test a restore.
 - Choose sizes and settings that keep a learner's bill small.
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -163,6 +164,43 @@ Both double the cost, so labs don't use them, but production must. Apps must **r
 - **Stop** the database when not in use: RDS instances can be stopped for up to 7 days (then they start again automatically); Flexible Servers can be stopped for up to 7 days too. Storage and backups still cost money while stopped.
 - **Delete** after the lab: turn off deletion protection first (RDS), choose whether to keep a final snapshot, and on Azure delete the server (or the resource group). Check for leftover snapshots.
 
+## Google Cloud: Cloud SQL for PostgreSQL
+
+Cloud SQL runs in Google's own network, connected to your VPC by the **private services access** peering you set up in topic 6.4. Give it a **private IP only**.
+
+```bash
+gcloud services enable sqladmin.googleapis.com secretmanager.googleapis.com
+gcloud sql instances create itlpay-db --database-version=POSTGRES_17 --edition=ENTERPRISE \
+  --tier=db-custom-1-3840 --region=africa-south1 \
+  --network=itlpay-vpc --no-assign-ip --ssl-mode=ENCRYPTED_ONLY \
+  --backup-start-time=01:00 --enable-point-in-time-recovery --retained-backups-count=7 \
+  --deletion-protection --user-labels=owner=ada,purpose=topic-6-7
+gcloud sql databases create itlpay --instance=itlpay-db
+
+# The app user's password goes straight into Secret Manager, never on screen
+openssl rand -base64 24 | tr -d '\n' | gcloud secrets create db-password --replication-policy=automatic --data-file=-
+gcloud sql users create itlpay --instance=itlpay-db --password="$(gcloud secrets versions access latest --secret=db-password)"
+gcloud secrets add-iam-policy-binding db-password \
+  --member="serviceAccount:itlpay-app@$(gcloud config get-value project).iam.gserviceaccount.com" \
+  --role="roles/secretmanager.secretAccessor"
+gcloud sql instances describe itlpay-db --format="value(ipAddresses[0].ipAddress)"      # the private IP for DB_HOST
+```
+
+- `--no-assign-ip` with `--network`: a private IP only, no public endpoint.
+- `--ssl-mode=ENCRYPTED_ONLY` refuses unencrypted connections.
+- The VM's start-up script gets the password the same way as on the other clouds, with its own identity: add a third branch to `itlpay-start.sh`:
+
+```bash
+elif [[ "$CLOUD" == gcp ]]; then
+  user=itlpay; pass=$(gcloud secrets versions access latest --secret=db-password)
+```
+
+(Make the existing `else` branch `elif [[ "$CLOUD" == azure ]]; then`.) Google also offers **IAM database authentication** and the **Cloud SQL Auth Proxy**, which remove the password altogether; you'll use them in Phase 2.
+
+**Backups and restore:** daily backups plus point-in-time recovery; a restore creates a **new instance** with `gcloud sql instances clone itlpay-db itlpay-db-restore --point-in-time='2026-11-06T13:04:00Z'`. **High availability:** `--availability-type=REGIONAL` keeps a standby in another zone (double the cost; not for labs). **Maintenance windows:** `gcloud sql instances patch itlpay-db --maintenance-window-day=SUN --maintenance-window-hour=1`.
+
+**Keeping it cheap:** use the smallest tier, stop it when not in use (`gcloud sql instances patch itlpay-db --activation-policy=NEVER`; storage is still billed), and delete it after the lab (turn off deletion protection first with `--no-deletion-protection`).
+
 ## Practice
 
 1. Create the database on both clouds, privately, with the password in Secrets Manager / Key Vault.
@@ -170,6 +208,7 @@ Both double the cost, so labs don't use them, but production must. Apps must **r
 3. Prove the databases aren't reachable from the internet, and that from a VM in the **public** subnet `nc -vz <db-host> 5432` fails while from the app VM it succeeds.
 4. Make a few transfers, note the time, make more, then do a point-in-time restore to the earlier time on one cloud. Connect to the restored server and show only the earlier transfers exist. Time the restore and write a short runbook.
 5. Stop or delete both databases and check the bill next day.
+6. **Google Cloud:** create the Cloud SQL instance with a private IP, store the password in Secret Manager, connect ITL Pay Lite from the Compute Engine VM, and do a point-in-time clone.
 
 ## Watch
 
@@ -178,10 +217,11 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 - [How to Set Up a Postgres Database on Amazon RDS](https://www.youtube.com/watch?v=XF1ZADfH0EQ) · Database Star · 10 min. Setting up PostgreSQL on Amazon RDS.
 - [Create Azure Database for PostgreSQL Flexible Server | Using Azure Portal](https://www.youtube.com/watch?v=AeQi195rg_4) · Cloud Knowledge · 9 min. Creating an Azure Database for PostgreSQL Flexible Server.
 - [AZ-900 Episode 27 | Azure Key Vault | Secret, Key and Certificate Management](https://www.youtube.com/watch?v=AA3yYg9Zq9w) · Adam Marczak - Azure for Everyone · 9 min. Azure Key Vault: secrets, keys and certificates (AZ-900).
+- [How to connect a CloudSQL instance with ONLY Private IP?](https://www.youtube.com/watch?v=IbK7trf1DHU) · Learn GCP with Mahesh · 6 min. Connecting to a Cloud SQL instance that has only a private IP.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -193,4 +233,8 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 - [Fundamentals of Amazon RDS for PostgreSQL](https://skillbuilder.aws/learn/AK479CRG5K/fundamentals-of-amazon-rds-for-postgresql/FB4ZR9N2DU)
 - [Amazon RDS for PostgreSQL - Troubleshooting](https://skillbuilder.aws/learn/GN8V5D3YQA/amazon-relational-database-service-amazon-rds-for-postgresql--troubleshooting/6PYYKHYNUW)
 - [AWS Secrets Manager Getting Started](https://skillbuilder.aws/learn/26F7XCFDUX/aws-secrets-manager-getting-started/U1CPGYWQTK)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Essential Google Cloud Infrastructure: Core Services](https://www.skills.google/course_templates/49)
 

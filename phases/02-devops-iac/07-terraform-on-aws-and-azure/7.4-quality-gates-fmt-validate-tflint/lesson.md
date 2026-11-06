@@ -6,6 +6,7 @@
 - Protect important resources with `lifecycle` rules (`prevent_destroy`, `ignore_changes`, `create_before_destroy`).
 - Review a Terraform pull request: the plan, the risks, and the questions to ask.
 - Put all of this together into a set of quality gates that every change must pass (wired into a pipeline in topic 8.4).
+- Do the same on **Google Cloud** with the `google` provider, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -71,6 +72,12 @@ plugin "azurerm" {
   version = "0.28.0"
   source  = "github.com/terraform-linters/tflint-ruleset-azurerm"
 }
+
+plugin "google" {
+  enabled = true
+  version = "0.31.0"
+  source  = "github.com/terraform-linters/tflint-ruleset-google"
+}
 ```
 
 Then `tflint --init` downloads them. (Check the rule sets' current versions before you copy these numbers.)
@@ -104,7 +111,7 @@ resource "aws_eip" "nat" {
 }
 ```
 
-After the changes: **65 passed, 0 failed, 7 skipped**. The rules for skipping:
+After the changes: **65 passed, 0 failed, 7 skipped**. When the Google Cloud module was added later, checkov found one more real point (Private Google Access was off on the public subnet), which was fixed: all three modules now give **86 passed, 0 failed, 7 skipped**. tflint also caught an input the Google module declared but never used. The rules for skipping:
 
 - Skip **one check on one resource**, never a check everywhere.
 - **Always write the reason**, so a reviewer (or an auditor) can agree or disagree.
@@ -156,7 +163,7 @@ Every infrastructure pull request in this course (and in Capstone 2) must pass:
 | --- | --- | --- |
 | Formatting | `terraform fmt -check -recursive` | Any file isn't formatted |
 | Correctness | `terraform validate` | Syntax or references are wrong |
-| Linting | `tflint` with the AWS and Azure rule sets | Invalid values, deprecated syntax |
+| Linting | `tflint` with the AWS, Azure and Google rule sets | Invalid values, deprecated syntax |
 | Security | `checkov` | Any failed check without a written skip reason |
 | Tests | `terraform test` | A module's tests fail |
 | Plan review | `terraform plan`, posted to the PR, and a human approval | Always needs an approval; destroys and replaces need a second reviewer |
@@ -180,7 +187,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 

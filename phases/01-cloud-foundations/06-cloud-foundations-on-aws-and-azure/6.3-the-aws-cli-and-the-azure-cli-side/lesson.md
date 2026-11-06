@@ -6,6 +6,7 @@
 - Filter and format output with `--query` (JMESPath), `--output` and `jq`.
 - Write safe, idempotent Bash scripts that create, tag, list and delete resources on both clouds.
 - Explain where the CLI stops being the right tool, and Terraform (Phase 2) takes over.
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -183,6 +184,47 @@ Everything from topic 3.2 applies, plus:
 
 Scripts that create infrastructure step by step get complicated: what if step 7 of 12 fails? How do you change one setting on resources that already exist? How do you see what will change before it changes? **Infrastructure as code** tools (Terraform, CloudFormation, Bicep) describe the **end state** and work out the steps themselves, with a "plan" you can review in a pull request. That's Phase 2. The CLI stays essential for investigation, one-off tasks, glue in pipelines and quick fixes, and the skills in this topic carry straight over.
 
+## The Google Cloud CLI: gcloud
+
+**Install and sign in:** **Cloud Shell** (the `>_` icon in the Google Cloud console) has `gcloud`, Terraform and common tools ready. Locally, install the Google Cloud CLI from Google's official instructions (an apt repository for Ubuntu and WSL), then:
+
+```bash
+gcloud init                                   # sign in and choose a default project and region
+gcloud auth login                             # your user, for gcloud commands
+gcloud auth application-default login         # credentials for Terraform and the SDKs (topic 7.1)
+gcloud config set project cpe-lab-ada
+gcloud config set compute/region africa-south1
+gcloud config list                            # who and where am I?
+gcloud config configurations create work      # named profiles, like AWS profiles: switch with `configurations activate`
+```
+
+**One Google Cloud gotcha:** each service's API must be **enabled** in a project before first use: `gcloud services enable compute.googleapis.com storage.googleapis.com`. The first command against a new service often fails until you do.
+
+**The command shape** is `gcloud <group> [<subgroup>] <verb>`, for example `gcloud compute instances list`. Help: `gcloud help`, `gcloud compute instances create --help`. **Output and filters:**
+
+```bash
+gcloud compute instances list --format="table(name, zone.basename(), status)"
+gcloud compute instances list --filter="labels.purpose=topic-6-5" --format="value(name)"   # one value per line, for scripts
+gcloud projects describe cpe-lab-ada --format=json | jq .projectNumber
+```
+
+`--format=value(...)` is the equivalent of `--output text` and `-o tsv`.
+
+**The lab on Google Cloud:** the same private, labelled storage, then clean-up:
+
+```bash
+project=$(gcloud config get-value project)
+bucket="itl-lab-${owner}-${suffix}"
+echo "Google Cloud as: $(gcloud config get-value account) in $project"
+gcloud storage buckets create "gs://$bucket" --location=africa-south1 \
+  --uniform-bucket-level-access --public-access-prevention
+gcloud storage buckets update "gs://$bucket" --update-labels=owner="$owner",purpose=topic-6-3
+gcloud storage buckets list --filter="labels.purpose=topic-6-3" --format="value(name)"
+gcloud storage buckets delete "gs://$bucket"
+```
+
+Add these lines to `lab-6-3.sh` (after the Azure part, using the same `owner` and `suffix`). Notice: bucket names are globally unique like S3's; label values allow only lowercase letters, numbers, `-` and `_`, so `topic-6.3` becomes `topic-6-3`; and the project is the clean-up unit.
+
 ## Practice
 
 1. Open AWS CloudShell and Azure Cloud Shell, and run `aws sts get-caller-identity` and `az account show` in each. Then install both CLIs locally (or in Codespaces) and sign in as your everyday user.
@@ -190,6 +232,7 @@ Scripts that create infrastructure step by step get complicated: what if step 7 
 3. Run `lab-6-3.sh` from section 5 (copy it into your `ops-scripts` repository, make it pass `shellcheck`). Confirm in both consoles that the storage is private and tagged, then let the script delete it.
 4. Write one `--query` per cloud that lists every security group / NSG rule that allows inbound port 22 from anywhere (`0.0.0.0/0` or `*`/`Internet`). Run it (you may have none, which is good).
 5. Make `lab-6-3.sh` refuse to run unless the AWS account ID and Azure subscription ID match values in a config file.
+6. **Google Cloud:** do the same in Cloud Shell and with a local `gcloud`; add the Google Cloud part to `lab-6-3.sh`; and write a `gcloud ... --filter` that lists firewall rules allowing port 22 from `0.0.0.0/0`.
 
 ## Watch
 
@@ -197,10 +240,12 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 - [AWS CLI Tutorial | Learn to run AWS CLI commands in 10 minutes](https://www.youtube.com/watch?v=21-t7Rkokmo) · AWS Made Easy · 11 min. Running your first AWS CLI commands.
 - [Azure CLI Tutorial](https://www.youtube.com/watch?v=GqpwiyYsNIw) · Adam Marczak - Azure for Everyone · 25 min. The Azure CLI, step by step.
+- [What is the Google Cloud CLI?](https://www.youtube.com/watch?v=FBU_tF7UzQY) · Google Cloud Tech · 3 min. What the Google Cloud CLI is, from Google.
+- [Gcloud command-line tips and tricks](https://www.youtube.com/watch?v=ezzZ--xt43c) · Google Cloud Tech · 10 min. gcloud tips: configurations, formats and filters, from Google.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -211,4 +256,9 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 
 - [AWS Command Line Interface (AWS CLI) Getting Started](https://skillbuilder.aws/learn/HNQT94X934/aws-command-line-interface-aws-cli-getting-started/QHT6C7ZHDA)
 - [Build with AWS Command Line Interface (AWS CLI)](https://skillbuilder.aws/learn/AVW7M7MTWY/build-with-aws-command-line-interface-aws-cli/BBYQYTJG3M)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Essential Google Cloud Infrastructure: Foundation](https://www.skills.google/course_templates/50)
+- [Google Cloud Computing Foundations: Infrastructure in Google Cloud](https://www.skills.google/course_templates/154)
 

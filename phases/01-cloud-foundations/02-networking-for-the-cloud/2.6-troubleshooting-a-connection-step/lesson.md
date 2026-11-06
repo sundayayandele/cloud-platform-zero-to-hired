@@ -115,13 +115,13 @@ Captures can contain sensitive data (tokens, personal data in plain HTTP). Captu
 
 In the cloud you can't run `tcpdump` on the provider's routers, but the providers give you tools that answer the same questions:
 
-| Question | AWS | Azure |
-| --- | --- | --- |
-| "Would traffic from A reach B on this port, given my routes and rules?" (no traffic needed) | **Reachability Analyzer** | **Network Watcher: IP flow verify** (checks NSG rules) and **connection troubleshoot** |
-| "Which rule allowed or blocked real traffic?" | **VPC Flow Logs** (accepted and rejected connections) | **VNet flow logs** (replacing NSG flow logs) |
-| "Which route applies to this machine?" | The subnet's route table; Reachability Analyzer shows the path | **Network Watcher: next hop**, and **effective routes** on the network interface |
-| "Which security rules apply to this machine, all combined?" | The instance's security groups plus the subnet's NACL | **Effective security rules** on the network interface |
-| "Capture packets" | **Traffic Mirroring** (on supported instances) | **Network Watcher packet capture** |
+| Question | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| "Would traffic from A reach B on this port, given my routes and rules?" (no traffic needed) | **Reachability Analyzer** | **Network Watcher: IP flow verify** (checks NSG rules) and **connection troubleshoot** | **Connectivity Tests** (Network Intelligence Center) |
+| "Which rule allowed or blocked real traffic?" | **VPC Flow Logs** (accepted and rejected connections) | **VNet flow logs** (replacing NSG flow logs) | **VPC Flow Logs** and **Firewall Rules Logging** |
+| "Which route applies to this machine?" | The subnet's route table; Reachability Analyzer shows the path | **Network Watcher: next hop**, and **effective routes** on the network interface | The VPC's routes; Connectivity Tests show the path |
+| "Which security rules apply to this machine, all combined?" | The instance's security groups plus the subnet's NACL | **Effective security rules** on the network interface | The VPC firewall rules that target the VM (by tag or service account), plus firewall policies |
+| "Capture packets" | **Traffic Mirroring** (on supported instances) | **Network Watcher packet capture** | **Packet Mirroring** |
 
 A flow log line that says **REJECT** for your connection is the cloud equivalent of "no SYN arrives": a rule is dropping it. Topic 6.4 has you turn flow logs on and find a dropped connection in them.
 
@@ -155,7 +155,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -165,4 +165,8 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 
 - [Amazon Virtual Private Cloud (Amazon VPC) - Troubleshooting](https://skillbuilder.aws/learn/YHWW7BTY89/amazon-virtual-private-cloud-amazon-vpc--troubleshooting/YTMMRFE2KJ)
 - [Elastic Load Balancing (ELB) - Troubleshooting](https://skillbuilder.aws/learn/5R5Q9TN3H4/elastic-load-balancing-elb--troubleshooting/GZTEH5S7D2)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Networking in Google Cloud: Routing and Addressing](https://www.skills.google/course_templates/36)
 

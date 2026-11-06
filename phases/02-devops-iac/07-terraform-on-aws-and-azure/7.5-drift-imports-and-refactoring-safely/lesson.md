@@ -6,6 +6,7 @@
 - Stop managing a resource without deleting it, with `removed` blocks.
 - Replace a broken resource on purpose with `-replace`.
 - Use the older `terraform state mv / rm / import` commands when needed, with a backup.
+- Do the same on **Google Cloud** with the `google` provider, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -155,7 +156,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 

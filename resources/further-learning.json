@@ -193,6 +193,12 @@
     "Elastic Load Balancing (ELB) Getting Started",
     "https://skillbuilder.aws/learn/2Q7X7W6V7G/elastic-load-balancing-elb-getting-started/XHYHBUHUTA"
    ]
+  ],
+  "gcp": [
+   [
+    "Networking in Google Cloud: Fundamentals",
+    "https://www.skills.google/course_templates/35"
+   ]
   ]
  },
  "2.6": {
@@ -210,6 +216,12 @@
    [
     "Elastic Load Balancing (ELB) - Troubleshooting",
     "https://skillbuilder.aws/learn/5R5Q9TN3H4/elastic-load-balancing-elb--troubleshooting/GZTEH5S7D2"
+   ]
+  ],
+  "gcp": [
+   [
+    "Networking in Google Cloud: Routing and Addressing",
+    "https://www.skills.google/course_templates/36"
    ]
   ]
  },
@@ -388,6 +400,12 @@
     "Containers Learning Series for Amazon ECS Overview",
     "https://skillbuilder.aws/learn/3EU3GFYDGG/containers-learning-series-for-amazon-ecs-overview/8HYE69VDXV"
    ]
+  ],
+  "gcp": [
+   [
+    "Modernize Infrastructure and Applications with Google Cloud",
+    "https://www.skills.google/course_templates/265"
+   ]
   ]
  },
  "5.4": {
@@ -448,6 +466,24 @@
     "AWS Billing and Cost Management",
     "https://skillbuilder.aws/learn/J59SS92GUN/aws-billing-and-cost-management/25JXE6WYAY"
    ]
+  ],
+  "gcp": [
+   [
+    "Google Cloud Fundamentals: Core Infrastructure",
+    "https://www.skills.google/course_templates/60"
+   ],
+   [
+    "Google Cloud Computing Foundations: Cloud Computing Fundamentals",
+    "https://www.skills.google/course_templates/153"
+   ],
+   [
+    "Cloud Digital Leader Certification (learning path)",
+    "https://www.skills.google/paths/9"
+   ],
+   [
+    "Optimizing Your Google Cloud Costs",
+    "https://www.skills.google/course_templates/56"
+   ]
   ]
  },
  "6.2": {
@@ -474,6 +510,20 @@
     "AWS Identity and Access Management (IAM) - Troubleshooting",
     "https://skillbuilder.aws/learn/ESGHTNXQFZ/aws-identity-and-access-management-iam--troubleshooting/3MQXNQUUQ4"
    ]
+  ],
+  "gcp": [
+   [
+    "Manage Security in Google Cloud",
+    "https://www.skills.google/course_templates/21"
+   ],
+   [
+    "Security Best Practices in Google Cloud",
+    "https://www.skills.google/course_templates/87"
+   ],
+   [
+    "Introduction to Cloud Identity",
+    "https://www.skills.google/course_templates/44"
+   ]
   ]
  },
  "6.3": {
@@ -495,6 +545,16 @@
    [
     "Build with AWS Command Line Interface (AWS CLI)",
     "https://skillbuilder.aws/learn/AVW7M7MTWY/build-with-aws-command-line-interface-aws-cli/BBYQYTJG3M"
+   ]
+  ],
+  "gcp": [
+   [
+    "Essential Google Cloud Infrastructure: Foundation",
+    "https://www.skills.google/course_templates/50"
+   ],
+   [
+    "Google Cloud Computing Foundations: Infrastructure in Google Cloud",
+    "https://www.skills.google/course_templates/154"
    ]
   ]
  },
@@ -526,6 +586,20 @@
     "Protecting Your Instance with Security Groups",
     "https://skillbuilder.aws/learn/QEA4T3Y2EJ/protecting-your-instance-with-security-groups/EAG9U7MHB3"
    ]
+  ],
+  "gcp": [
+   [
+    "Networking in Google Cloud: Fundamentals",
+    "https://www.skills.google/course_templates/35"
+   ],
+   [
+    "Networking in Google Cloud: Routing and Addressing",
+    "https://www.skills.google/course_templates/36"
+   ],
+   [
+    "Google Cloud Computing Foundations: Networking & Security in Google Cloud",
+    "https://www.skills.google/course_templates/155"
+   ]
   ]
  },
  "6.5": {
@@ -555,6 +629,16 @@
    [
     "AWS Systems Manager Getting Started (Session Manager)",
     "https://skillbuilder.aws/learn/1AG8ZGZN4Z/aws-systems-manager-getting-started/PKCXBQX7M5"
+   ]
+  ],
+  "gcp": [
+   [
+    "Essential Google Cloud Infrastructure: Foundation",
+    "https://www.skills.google/course_templates/50"
+   ],
+   [
+    "Elastic Google Cloud Infrastructure: Scaling and Automation",
+    "https://www.skills.google/course_templates/178"
    ]
   ]
  },
@@ -586,6 +670,12 @@
     "Amazon S3 Cost Optimization",
     "https://skillbuilder.aws/learn/VURSUWRSKA/amazon-simple-storage-service-amazon-s3-cost-optimization/6ZZF9NUFTH"
    ]
+  ],
+  "gcp": [
+   [
+    "Essential Google Cloud Infrastructure: Core Services",
+    "https://www.skills.google/course_templates/49"
+   ]
   ]
  },
  "6.7": {
@@ -611,6 +701,12 @@
    [
     "AWS Secrets Manager Getting Started",
     "https://skillbuilder.aws/learn/26F7XCFDUX/aws-secrets-manager-getting-started/U1CPGYWQTK"
+   ]
+  ],
+  "gcp": [
+   [
+    "Essential Google Cloud Infrastructure: Core Services",
+    "https://www.skills.google/course_templates/49"
    ]
   ]
  },
@@ -642,6 +738,16 @@
     "Amazon Route 53 Getting Started",
     "https://skillbuilder.aws/learn/XJBJ1PF1R2/amazon-route-53-getting-started/J1VS14GBPM"
    ]
+  ],
+  "gcp": [
+   [
+    "Implementing Cloud Load Balancing for Compute Engine",
+    "https://www.skills.google/course_templates/648"
+   ],
+   [
+    "Elastic Google Cloud Infrastructure: Scaling and Automation",
+    "https://www.skills.google/course_templates/178"
+   ]
   ]
  },
  "6.9": {
@@ -671,6 +777,16 @@
    [
     "Amazon EC2 Observability, Monitoring, and Troubleshooting",
     "https://skillbuilder.aws/learn/NVQMVRTS5H/amazon-ec2-observability-monitoring-and-troubleshooting/RC947H252R"
+   ]
+  ],
+  "gcp": [
+   [
+    "Logging and Monitoring in Google Cloud",
+    "https://www.skills.google/course_templates/99"
+   ],
+   [
+    "Scaling with Google Cloud Operations",
+    "https://www.skills.google/course_templates/271"
    ]
   ]
  },
@@ -704,6 +820,16 @@
     "Get started with Terraform on Azure",
     "https://developer.hashicorp.com/terraform/tutorials/azure-get-started"
    ]
+  ],
+  "gcp": [
+   [
+    "Getting Started with Terraform for Google Cloud",
+    "https://www.skills.google/course_templates/443"
+   ],
+   [
+    "Associate Cloud Engineer Certification (learning path)",
+    "https://www.skills.google/paths/11"
+   ]
   ]
  },
  "7.2": {
@@ -723,6 +849,12 @@
     "Modules",
     "https://developer.hashicorp.com/terraform/tutorials/modules"
    ]
+  ],
+  "gcp": [
+   [
+    "Getting Started with Terraform for Google Cloud",
+    "https://www.skills.google/course_templates/443"
+   ]
   ]
  },
  "7.3": {
@@ -737,6 +869,12 @@
    [
     "Manage Terraform state",
     "https://developer.hashicorp.com/terraform/tutorials/state"
+   ]
+  ],
+  "gcp": [
+   [
+    "Getting Started with Terraform for Google Cloud",
+    "https://www.skills.google/course_templates/443"
    ]
   ]
  },
@@ -811,6 +949,12 @@
    [
     "AWS Cloud Development Kit (CDK) Getting Started",
     "https://skillbuilder.aws/learn/XP346HYHM9/aws-cloud-development-kit-cdk-getting-started/D6C46ND6ZQ"
+   ]
+  ],
+  "gcp": [
+   [
+    "Getting Started with Terraform for Google Cloud",
+    "https://www.skills.google/course_templates/443"
    ]
   ]
  }

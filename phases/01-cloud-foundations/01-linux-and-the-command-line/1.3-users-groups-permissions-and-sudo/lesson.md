@@ -145,14 +145,14 @@ To remove access: `sudo gpasswd -d tunde devops` takes Tunde out of the group, a
 
 Everything in this topic comes back in Module 6, with bigger consequences:
 
-| Linux | AWS | Azure |
-| --- | --- | --- |
-| A user | An IAM user or, better, an IAM Identity Center user | A Microsoft Entra ID user |
-| A group | An IAM group | An Entra ID group |
-| A service's own system user | An IAM role for the service | A managed identity |
-| File permissions | IAM policies | Azure RBAC role assignments |
-| `root` | The account's root user (lock it away) | The subscription Owner role (give it to very few) |
-| `/var/log/auth.log` for sudo | CloudTrail | The Activity Log |
+| Linux | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| A user | An IAM user or, better, an IAM Identity Center user | A Microsoft Entra ID user | A Google account in Cloud IAM |
+| A group | An IAM group | An Entra ID group | A Google group |
+| A service's own system user | An IAM role for the service | A managed identity | A **service account** attached to the VM |
+| File permissions | IAM policies | Azure RBAC role assignments | IAM role bindings (allow policies) |
+| `root` | The account's root user (lock it away) | The subscription Owner role (give it to very few) | The project's Owner (basic role; give it to very few) |
+| `/var/log/auth.log` for sudo | CloudTrail | The Activity Log | Cloud Audit Logs |
 
 The rule is the same everywhere: start with no access, grant the smallest set that works, give it to a group or role rather than to individuals, and keep a log.
 
@@ -174,7 +174,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 

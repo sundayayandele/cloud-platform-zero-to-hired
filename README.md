@@ -1,28 +1,28 @@
 # Cloud & Platform Engineer: Zero to Hired
 
-A free, self-paced path from basic computer use to a hireable cloud, DevOps and platform engineer, with **AWS and Azure
+A free, self-paced path from basic computer use to a hireable cloud, DevOps and platform engineer, with **AWS, Azure and Google Cloud
 taught side by side**. Take it on [itlearning.tech](https://itlearning.tech), where you get the topic quizzes, the
 weekly plan, the capstone checks and a certificate, or read it here.
 
 | Item | Details |
 | --- | --- |
-| Clouds | AWS and Azure, side by side; GCP by comparison |
+| Clouds | AWS, Azure and Google Cloud, side by side |
 | Tools | Linux, Bash, Python, Git and GitHub, Docker, then Terraform, GitHub Actions, Kubernetes and more |
-| Length | 34 weeks in three phases, about 15–20 hours a week |
+| Length | 35 weeks in three phases, about 15–20 hours a week |
 | Cost | Free. Labs run on your own computer or within the clouds' free offers, with budget alerts from the day you open an account |
 
 ## What's here
 
 - [The curriculum](CURRICULUM.md): every phase, module and topic.
-- [Phase 1: Cloud Foundations](phases/01-cloud-foundations/README.md) (weeks 1–13): 32 lessons, each with practice
-  tasks, videos and free further learning from Microsoft Learn and AWS Skill Builder, and
+- [Phase 1: Cloud Foundations](phases/01-cloud-foundations/README.md) (weeks 1–14): 32 lessons, each with practice
+  tasks, videos and free further learning from Microsoft Learn, AWS Skill Builder and Google Skills, and
   [Capstone 1](phases/01-cloud-foundations/capstone-1/README.md).
 - [Labs](labs/): the practice log generator, the URL checker and ITL Pay Lite, the payments API used in Module 5 and
   Capstone 1.
-- [Further learning](resources/further-learning.json): the Microsoft Learn and AWS Skill Builder courses for each topic.
+- [Further learning](resources/further-learning.json): the Microsoft Learn, AWS Skill Builder, Google Skills and HashiCorp courses for each topic.
 
-- [Phase 2: DevOps and Infrastructure as Code](CURRICULUM.md) (weeks 14–24), being written: Module 7 (Terraform on AWS and
-  Azure) is ready, with the [Terraform network lab](labs/terraform-network/README.md).
+- [Phase 2: DevOps and Infrastructure as Code](CURRICULUM.md) (weeks 15–25), being written: Module 7 (Terraform on AWS, Azure
+  and Google Cloud) is ready, with the [Terraform network lab](labs/terraform-network/README.md).
 
 Phase 3 (Platform Engineering and SRE) follows.
 

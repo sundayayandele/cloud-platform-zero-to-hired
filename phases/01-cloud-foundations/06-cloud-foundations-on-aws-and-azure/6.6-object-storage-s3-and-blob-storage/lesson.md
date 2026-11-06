@@ -6,6 +6,7 @@
 - Choose storage classes and tiers, and set lifecycle rules that move or delete old data automatically.
 - Protect data against deletion and ransomware with versioning, soft delete and immutability.
 - Reach storage privately from your network (gateway endpoint, private endpoint).
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -132,6 +133,45 @@ Ransomware attackers who get admin access try to delete backups first. Immutable
 - **AWS:** add a **gateway VPC endpoint** for S3 to the app route table (topic 6.4). It's free, keeps traffic off the internet and the NAT gateway, and a bucket policy can then **require** that requests come through it (`aws:SourceVpce`).
 - **Azure:** add a **private endpoint** for the storage account's `blob` service in the app subnet, with the **private DNS zone** `privatelink.blob.core.windows.net` linked to the VNet, then turn off public network access on the account (`--public-network-access Disabled`). From the VM, `getent hosts itlpaystmtada1234.blob.core.windows.net` should now return a `10.30.x.x` address.
 
+## Google Cloud Storage
+
+| | Google Cloud |
+| --- | --- |
+| Top level | **Bucket** (globally unique name) in a **location**: a region (`africa-south1`), a dual-region or a multi-region |
+| Address | `https://storage.googleapis.com/<bucket>/<object>`, or `gs://<bucket>/<object>` in tools |
+| Private by default | **Public access prevention** on the bucket (and as an Organization Policy), with **uniform bucket-level access** so only IAM controls access |
+| An app reads one bucket | The VM's **service account** with `roles/storage.objectViewer` on that bucket |
+| Share one file for 15 minutes | A **signed URL** (`gcloud storage sign-url`, signed by a service account you may impersonate) |
+| Classes | Standard, Nearline (accessed less than once a month), Coldline (once a quarter), Archive (once a year); **Autoclass** moves objects automatically |
+| Lifecycle rules | **Object Lifecycle Management** (`--lifecycle-file`) |
+| Protection | **Object Versioning**, **soft delete** (deleted objects kept for a set period; on by default), **retention policies** with **Bucket Lock** (immutable) |
+| Private access from your network | **Private Google Access** on the subnet (topic 6.4); VPC Service Controls for stricter perimeters |
+
+```bash
+gcloud storage buckets create gs://itlpay-statements-ada-1234 --location=africa-south1 \
+  --uniform-bucket-level-access --public-access-prevention
+gcloud storage buckets update gs://itlpay-statements-ada-1234 --versioning
+gcloud storage cp statement.pdf gs://itlpay-statements-ada-1234/statements/2026/11/ACC-1001.pdf
+gcloud storage ls -r gs://itlpay-statements-ada-1234/statements/
+
+# Let the app servers' service account read it
+gcloud storage buckets add-iam-policy-binding gs://itlpay-statements-ada-1234 \
+  --member="serviceAccount:itlpay-app@$(gcloud config get-value project).iam.gserviceaccount.com" \
+  --role="roles/storage.objectViewer"
+
+# Lifecycle: cheaper class after 90 days, Archive after a year, delete after 7 years
+cat > lifecycle.json <<'EOF'
+{"rule": [
+  {"action": {"type": "SetStorageClass", "storageClass": "NEARLINE"}, "condition": {"age": 90, "matchesPrefix": ["statements/"]}},
+  {"action": {"type": "SetStorageClass", "storageClass": "ARCHIVE"}, "condition": {"age": 365, "matchesPrefix": ["statements/"]}},
+  {"action": {"type": "Delete"}, "condition": {"age": 2555, "matchesPrefix": ["statements/"]}}
+]}
+EOF
+gcloud storage buckets update gs://itlpay-statements-ada-1234 --lifecycle-file=lifecycle.json
+```
+
+From the topic 6.5 VM (no keys): `gcloud storage cp gs://itlpay-statements-ada-1234/statements/2026/11/ACC-1001.pdf /tmp/`.
+
 ## Practice
 
 1. Create a private, versioned bucket on AWS and a private storage account (ZRS) with a container on Azure. Upload, list and download a test file with the CLIs.
@@ -140,6 +180,7 @@ Ransomware attackers who get admin access try to delete backups first. Immutable
 4. Add a lifecycle rule on each: move `logs/` to a cooler tier after 30 days and delete after 90. Check it in the consoles.
 5. Turn on S3 versioning and Azure blob soft delete; delete the file and restore it on both.
 6. (Optional) Add the S3 gateway endpoint and an Azure private endpoint, and show from the VMs that the storage name resolves privately on Azure.
+7. **Google Cloud:** create the private, versioned bucket, add the lifecycle rule, give the VM's service account read access, and download the file from the VM. Delete an object and restore it from soft delete or a non-current version.
 
 ## Watch
 
@@ -147,10 +188,11 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 - [Amazon/AWS S3 (Simple Storage Service) Basics | S3 Tutorial, Creating a Bucket | AWS for Beginners](https://www.youtube.com/watch?v=mDRoyPFJvlU) · Tiny Technical Tutorials · 10 min. Amazon S3 basics: buckets and objects.
 - [AZ-900 Episode 11 | Azure Storage Services | Blob, Queue, Table, Files, Disk and Storage Tiers](https://www.youtube.com/watch?v=_Qlkvd4ZQuo) · Adam Marczak - Azure for Everyone · 19 min. Azure storage services and access tiers (AZ-900).
+- [Bucket options in Cloud Storage](https://www.youtube.com/watch?v=8DMOJ6Lgm7s) · Google Cloud Tech · 4 min. Cloud Storage bucket options, from Google.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -163,4 +205,8 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 - [Amazon S3 Getting Started](https://skillbuilder.aws/learn/H99Y6PR2F7/amazon-s3-getting-started/TCVDGQFEJR)
 - [Securing and Protecting Your Data in Amazon S3](https://skillbuilder.aws/learn/EQ3KGNCAC8/securing-and-protecting-your-data-in-amazon-simple-storage-service-amazon-s3/S7VEVDJ5D9)
 - [Amazon S3 Cost Optimization](https://skillbuilder.aws/learn/VURSUWRSKA/amazon-simple-storage-service-amazon-s3-cost-optimization/6ZZF9NUFTH)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Essential Google Cloud Infrastructure: Core Services](https://www.skills.google/course_templates/49)
 

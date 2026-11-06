@@ -6,6 +6,7 @@
 - Open an AWS account and an Azure account safely: protect the root/owner sign-in, turn on MFA, and stop using it day to day.
 - Set billing guardrails on both clouds **before** building anything: budgets with alerts, free-tier limits, and a teardown habit.
 - Read how each cloud charges, and recognise the common causes of surprise bills.
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -144,6 +145,45 @@ The usual surprise items for learners:
 
 The **pricing calculators** (AWS Pricing Calculator, Azure Pricing Calculator) estimate a design's monthly cost before you build it. Capstone 1 asks you for an estimate on both clouds.
 
+## Google Cloud: projects, regions and budgets
+
+Google Cloud organises things differently from the other two, and the difference matters for clean-up and billing.
+
+- A **project** is the main container: every resource lives in exactly one project, and the project is linked to a **billing account** that pays for it. A project has a name, a globally unique **project ID** (for example `itlpay-dev-ada-4821`) and a number. Think of it as AWS's account and Azure's subscription and resource group in one.
+- **Folders** group projects (for example `prod`, `nonprod`), and the **organization** sits on top. An organization exists only when you sign up with a company domain (Google Workspace or Cloud Identity); an individual learner has projects without an organization, which is fine for this course.
+- **Organization Policy** constraints set limits for everything below (for example "only these regions", "no service account keys"), like SCPs and Azure Policy.
+- **Labels** (lowercase keys and values, such as `owner=ada`, `purpose=topic-6-1`) do the job of tags.
+
+| Idea | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| Billing and isolation boundary | Account | Subscription | Project, linked to a billing account |
+| Grouping for clean-up | Tags; CloudFormation stacks | Resource groups | **The project itself**: deleting it shuts down everything inside |
+| Organisation-wide guardrails | Organizations + SCPs | Management groups + Azure Policy | Organization + folders + Organization Policy |
+| The all-powerful sign-in | Root user | Global Administrator / Owner | The account that created the project (Owner) |
+
+**Regions:** Google Cloud has a region in **Johannesburg, `africa-south1`**, with three zones. Like the others, check that the services you need are offered there before you design around it.
+
+**Opening an account safely:**
+
+1. Sign up at cloud.google.com with a Google account you'll keep. New customers get a **free trial credit** for a limited period, and the **Always Free** tier includes small amounts of some services (for example one small `e2-micro` VM in certain US regions). A card is used for identity checks; check the current terms before you start.
+2. Turn on **2-Step Verification** for the Google account.
+3. Create a project for the course (for example `cpe-lab-ada`), and later one project per environment.
+4. Don't use the basic **Owner** and **Editor** roles for daily work once you know IAM (topic 6.2).
+
+**Budgets on Google Cloud** (do it now, like the other two):
+
+```text
+Console: Billing → Budgets & alerts → Create budget
+  Scope: your billing account or the course project. Amount: USD 5 per month.
+  Alert thresholds: 50%, 90% and 100% of actual spend, and 100% of forecast; email to billing admins and users.
+```
+
+Budgets alert, they don't stop spending; advanced teams connect budget alerts to a Pub/Sub topic and a function that disables billing on a project, which you'll see in Phase 3.
+
+**Clean-up is easiest of all:** `gcloud projects delete cpe-lab-ada` shuts down every resource in the project (it can be restored for about 30 days). Put each big lab in its own project.
+
+Surprise costs to watch on Google Cloud: **Cloud NAT** and **load balancer forwarding rules** (hourly), **external IPv4 addresses** on VMs, **Cloud SQL** instances left running, and **disks and snapshots** left after deleting a VM.
+
 ## Practice
 
 1. Open (or prepare) an Azure account and an AWS account. Turn on MFA on both. Record in your learning log which offer you used and its current limits (credit amount, how long it lasts).
@@ -151,6 +191,7 @@ The **pricing calculators** (AWS Pricing Calculator, Azure Pricing Calculator) e
 3. On AWS, create an everyday admin user (IAM Identity Center, or IAM with MFA while learning), sign out of root, and sign in as that user. On Azure, look at **Microsoft Entra ID → Users** and **Subscriptions → Access control (IAM)** to see who has which role.
 4. Use both pricing calculators to estimate one month of: one small Linux VM running 24/7, a 20 GB disk, a small managed PostgreSQL, and 10 GB of data out to the internet, in Cape Town / South Africa North and in an EU region. Compare.
 5. Write an ADR (topic 4.3) choosing a region for ITL Pay's production, with at least two options, citing latency you measured and any data-protection points.
+6. **Google Cloud:** create a project for the course, turn on 2-Step Verification, set a USD 5 budget with alerts, and add Google Cloud to your pricing comparison in exercise 4. Use `africa-south1` (Johannesburg) as the African region.
 
 ## Watch
 
@@ -159,10 +200,11 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 - [AZ-900 Episode 7 | Geographies, Regions & Availability Zones | Microsoft Azure Fundamentals Course](https://www.youtube.com/watch?v=C-nNw1mGwzE) · Adam Marczak - Azure for Everyone · 15 min. Azure geographies, regions and availability zones (AZ-900).
 - [AWS Global Infrastructure Overview - Regions, Availability Zones, Edge Locations and more](https://www.youtube.com/watch?v=0hlZvybbaGk) · Digital Cloud Training · 6 min. AWS regions, availability zones and edge locations.
 - [AWS vs Azure vs GCP | Which one should you learn?](https://www.youtube.com/watch?v=ECnqartfjIM) · Tech With Lucy · 7 min. AWS, Azure and GCP compared: which to learn first.
+- [How to Create Organization, Folders, and Projects in Google Cloud | GCP Resource Hierarchy](https://www.youtube.com/watch?v=x2z11Z-HsXU) · TechTrapture · 21 min. Google Cloud's organization, folders and projects, step by step.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -177,4 +219,11 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 - [AWS Cloud Quest: Cloud Practitioner (hands-on game)](https://skillbuilder.aws/learn/FU5WCYVGKY/aws-cloud-quest-cloud-practitioner/JF9TKU68GT)
 - [AWS Budgets Getting Started](https://skillbuilder.aws/learn/778TKSGH8Z/aws-budgets-getting-started/XAZ7B7K32D)
 - [AWS Billing and Cost Management](https://skillbuilder.aws/learn/J59SS92GUN/aws-billing-and-cost-management/25JXE6WYAY)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Google Cloud Fundamentals: Core Infrastructure](https://www.skills.google/course_templates/60)
+- [Google Cloud Computing Foundations: Cloud Computing Fundamentals](https://www.skills.google/course_templates/153)
+- [Cloud Digital Leader Certification (learning path)](https://www.skills.google/paths/9)
+- [Optimizing Your Google Cloud Costs](https://www.skills.google/course_templates/56)
 

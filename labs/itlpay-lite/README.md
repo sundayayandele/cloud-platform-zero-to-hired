@@ -1,6 +1,6 @@
 # ITL Pay Lite
 
-A tiny transfers API (Python, FastAPI, PostgreSQL) used in Module 5 (containers) and Capstone 1 (deploying on AWS and Azure). Amounts are in kobo (₦1 = 100 kobo). Configuration comes only from environment variables, so the same image runs everywhere.
+A tiny transfers API (Python, FastAPI, PostgreSQL) used in Module 5 (containers) and Capstone 1 (deploying on AWS, Azure and Google Cloud). Amounts are in kobo (₦1 = 100 kobo). Configuration comes only from environment variables, so the same image runs everywhere.
 
 | Endpoint | What it does |
 | --- | --- |

@@ -1,12 +1,12 @@
 # Cloud & Platform Engineer: Zero to Hired: full curriculum
 
-AWS and Azure are taught side by side in every phase: the idea first, then the same task on each cloud with the same checks, then a short comparison. Terraform is the main infrastructure tool for both.
+AWS, Azure and Google Cloud are taught side by side in every phase: the idea first, then the same task on each cloud with the same checks, then a short comparison. Terraform is the main infrastructure tool for all three.
 
-## Phase 1: Cloud Foundations (weeks 1–13)
+## Phase 1: Cloud Foundations (weeks 1–14)
 
-Linux, networking, Bash and Python, Git, containers, and the foundations of AWS and Azure side by side. Capstone 1 deploys ITL Pay on both clouds.
+Linux, networking, Bash and Python, Git, containers, and the foundations of AWS, Azure and Google Cloud side by side. Capstone 1 deploys ITL Pay on all three clouds.
 
-Certification targets: AWS Certified Cloud Practitioner; Microsoft Azure Fundamentals (AZ-900).
+Certification targets: AWS Certified Cloud Practitioner; Microsoft Azure Fundamentals (AZ-900); Google Cloud Digital Leader.
 
 ### Module 1: Linux and the command line (weeks 1–2)
 
@@ -56,76 +56,76 @@ Certification targets: AWS Certified Cloud Practitioner; Microsoft Azure Fundame
 | [5.3 Docker Compose: running ITL Pay on your laptop](phases/01-cloud-foundations/05-containers/5.3-docker-compose-running-itl-pay/lesson.md) | 9 | Written |
 | [5.4 Registries and image security: GHCR, ECR and ACR](phases/01-cloud-foundations/05-containers/5.4-registries-and-image-security-ghcr-ecr/lesson.md) | 9 | Written |
 
-### Module 6: Cloud foundations on AWS and Azure (weeks 10–12)
+### Module 6: Cloud foundations on AWS, Azure and Google Cloud (weeks 10–12)
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| [6.1 Cloud concepts, accounts and subscriptions, regions, and billing guardrails](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.1-cloud-concepts-accounts/lesson.md) | 10 | Written |
-| [6.2 Identity and access: IAM, and Entra ID with Azure RBAC](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.2-identity-and-access-iam-and-entra-id/lesson.md) | 10 | Written |
-| [6.3 The AWS CLI and the Azure CLI side by side](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.3-the-aws-cli-and-the-azure-cli-side/lesson.md) | 10 | Written |
-| [6.4 Private networks: VPC and VNet](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.4-private-networks-vpc-and-vnet/lesson.md) | 11 | Written |
-| [6.5 Virtual machines: EC2 and Azure Virtual Machines](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.5-virtual-machines-ec2-and-azure-virtual/lesson.md) | 11 | Written |
-| [6.6 Object storage: S3 and Blob Storage](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.6-object-storage-s3-and-blob-storage/lesson.md) | 11 | Written |
-| [6.7 Managed PostgreSQL: RDS and Azure Database for PostgreSQL](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.7-managed-postgresql-rds-and-azure/lesson.md) | 12 | Written |
-| [6.8 Load balancers, DNS and HTTPS on both clouds](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.8-load-balancers-dns-and-https-on-both/lesson.md) | 12 | Written |
-| [6.9 Monitoring, logs and alerts: CloudWatch and Azure Monitor](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.9-monitoring-logs-and-alerts-cloudwatch/lesson.md) | 12 | Written |
+| [6.1 Cloud concepts, accounts, subscriptions and projects, regions, and billing guardrails](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.1-cloud-concepts-accounts/lesson.md) | 10 | Written |
+| [6.2 Identity and access: AWS IAM, Entra ID with Azure RBAC, and Google Cloud IAM](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.2-identity-and-access-iam-and-entra-id/lesson.md) | 10 | Written |
+| [6.3 The AWS, Azure and Google Cloud CLIs side by side](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.3-the-aws-cli-and-the-azure-cli-side/lesson.md) | 10 | Written |
+| [6.4 Private networks: VPC, VNet and Google Cloud VPC](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.4-private-networks-vpc-and-vnet/lesson.md) | 11 | Written |
+| [6.5 Virtual machines: EC2, Azure Virtual Machines and Compute Engine](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.5-virtual-machines-ec2-and-azure-virtual/lesson.md) | 11 | Written |
+| [6.6 Object storage: S3, Blob Storage and Cloud Storage](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.6-object-storage-s3-and-blob-storage/lesson.md) | 11 | Written |
+| [6.7 Managed PostgreSQL: RDS, Azure Database for PostgreSQL and Cloud SQL](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.7-managed-postgresql-rds-and-azure/lesson.md) | 12 | Written |
+| [6.8 Load balancers, DNS and HTTPS on all three clouds](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.8-load-balancers-dns-and-https-on-both/lesson.md) | 12 | Written |
+| [6.9 Monitoring, logs and alerts: CloudWatch, Azure Monitor and Cloud Monitoring](phases/01-cloud-foundations/06-cloud-foundations-on-aws-and-azure/6.9-monitoring-logs-and-alerts-cloudwatch/lesson.md) | 12 | Written |
 
-### [Capstone 1 (week 13): ITL Pay on AWS and Azure, by hand then by script](phases/01-cloud-foundations/capstone-1/README.md)
+### [Capstone 1 (weeks 13–14): ITL Pay on AWS, Azure and Google Cloud, by hand then by script](phases/01-cloud-foundations/capstone-1/README.md)
 
-## Phase 2: DevOps and Infrastructure as Code (weeks 14–24)
+## Phase 2: DevOps and Infrastructure as Code (weeks 15–25)
 
-Terraform on both clouds, CI/CD with keyless login, Kubernetes and Helm (EKS and AKS), secrets and observability. Capstone 2: pipeline to production on two clouds.
+Terraform on all three clouds, CI/CD with keyless login, Kubernetes and Helm (EKS, AKS and GKE), secrets and observability. Capstone 2: pipeline to production across three clouds.
 
-Certification targets: AWS Certified Solutions Architect – Associate or Microsoft Azure Administrator (AZ-104); HashiCorp Terraform Associate.
+Certification targets: AWS Certified Solutions Architect – Associate, Microsoft Azure Administrator (AZ-104) or Google Cloud Associate Cloud Engineer; HashiCorp Terraform Associate.
 
-### Module 7: Terraform on AWS and Azure (weeks 14–16)
-
-| Topic | Week | Status |
-| --- | --- | --- |
-| [7.1 Infrastructure as code and your first Terraform](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.1-infrastructure-as-code-and-your-first/lesson.md) | 14 | Written |
-| [7.2 Variables, outputs, data sources and modules](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.2-variables-outputs-data-sources/lesson.md) | 14 | Written |
-| [7.3 State: remote backends, locking and environments](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.3-state-remote-backends-locking/lesson.md) | 15 | Written |
-| [7.4 Quality gates: fmt, validate, tflint, checkov and plan review](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.4-quality-gates-fmt-validate-tflint/lesson.md) | 15 | Written |
-| [7.5 Drift, imports and refactoring safely](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.5-drift-imports-and-refactoring-safely/lesson.md) | 16 | Written |
-| [7.6 Reading CloudFormation and Bicep](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.6-reading-cloudformation-and-bicep/lesson.md) | 16 | Written |
-
-### Module 8: CI/CD with GitHub Actions (weeks 17–18)
+### Module 7: Terraform on AWS, Azure and Google Cloud (weeks 15–17)
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 8.1 Pipelines in depth: jobs, runners, caching and reuse | 17 | Coming next |
-| 8.2 Build, scan, sign and publish images with an SBOM | 17 | Coming next |
-| 8.3 Keyless login from GitHub to AWS and Azure with OIDC | 18 | Coming next |
-| 8.4 Terraform in the pipeline: environments and approvals | 18 | Coming next |
+| [7.1 Infrastructure as code and your first Terraform](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.1-infrastructure-as-code-and-your-first/lesson.md) | 15 | Written |
+| [7.2 Variables, outputs, data sources and modules](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.2-variables-outputs-data-sources/lesson.md) | 15 | Written |
+| [7.3 State: remote backends, locking and environments](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.3-state-remote-backends-locking/lesson.md) | 16 | Written |
+| [7.4 Quality gates: fmt, validate, tflint, checkov and plan review](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.4-quality-gates-fmt-validate-tflint/lesson.md) | 16 | Written |
+| [7.5 Drift, imports and refactoring safely](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.5-drift-imports-and-refactoring-safely/lesson.md) | 17 | Written |
+| [7.6 Reading CloudFormation and Bicep](phases/02-devops-iac/07-terraform-on-aws-and-azure/7.6-reading-cloudformation-and-bicep/lesson.md) | 17 | Written |
 
-### Module 9: Kubernetes and Helm on EKS and AKS (weeks 19–20)
-
-| Topic | Week | Status |
-| --- | --- | --- |
-| 9.1 Kubernetes architecture and your first workloads | 19 | Coming next |
-| 9.2 Services, Ingress, ConfigMaps and Secrets | 19 | Coming next |
-| 9.3 Probes, resources, autoscaling and storage | 20 | Coming next |
-| 9.4 Packaging with Helm | 20 | Coming next |
-| 9.5 EKS and AKS: networking, identity for pods and upgrades | 20 | Coming next |
-
-### Module 10: Configuration and secrets (weeks 21)
+### Module 8: CI/CD with GitHub Actions (weeks 18–19)
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 10.1 Configuration management with Ansible | 21 | Coming next |
-| 10.2 Secrets in the cloud: Secrets Manager, Key Vault and External Secrets | 21 | Coming next |
+| 8.1 Pipelines in depth: jobs, runners, caching and reuse | 18 | Coming next |
+| 8.2 Build, scan, sign and publish images with an SBOM | 18 | Coming next |
+| 8.3 Keyless login from GitHub to AWS, Azure and Google Cloud with OIDC | 19 | Coming next |
+| 8.4 Terraform in the pipeline: environments and approvals | 19 | Coming next |
 
-### Module 11: Observability (weeks 22)
+### Module 9: Kubernetes and Helm on EKS, AKS and GKE (weeks 20–21)
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 11.1 Metrics and alerts with Prometheus and Grafana | 22 | Coming next |
-| 11.2 Logs and traces: Loki, OpenTelemetry and the clouds' own tools | 22 | Coming next |
+| 9.1 Kubernetes architecture and your first workloads | 20 | Coming next |
+| 9.2 Services, Ingress, ConfigMaps and Secrets | 20 | Coming next |
+| 9.3 Probes, resources, autoscaling and storage | 21 | Coming next |
+| 9.4 Packaging with Helm | 21 | Coming next |
+| 9.5 EKS, AKS and GKE: networking, identity for pods and upgrades | 21 | Coming next |
 
-### Capstone 2 (week 23–24): Pipeline to production on two clouds
+### Module 10: Configuration and secrets (weeks 22)
 
-## Phase 3: Platform Engineering and SRE (weeks 25–34)
+| Topic | Week | Status |
+| --- | --- | --- |
+| 10.1 Configuration management with Ansible | 22 | Coming next |
+| 10.2 Secrets in the cloud: Secrets Manager, Key Vault, Secret Manager and External Secrets | 22 | Coming next |
 
-GitOps, reliability targets and incident response, a self-service platform that deploys to either cloud, cloud security, FinOps and AI for operations. Capstone 3: run a two-cloud platform.
+### Module 11: Observability (weeks 23)
+
+| Topic | Week | Status |
+| --- | --- | --- |
+| 11.1 Metrics and alerts with Prometheus and Grafana | 23 | Coming next |
+| 11.2 Logs and traces: Loki, OpenTelemetry and the clouds' own tools | 23 | Coming next |
+
+### Capstone 2 (weeks 24–25): Pipeline to production across three clouds
+
+## Phase 3: Platform Engineering and SRE (weeks 26–35)
+
+GitOps, reliability targets and incident response, a self-service platform that deploys to any of the three clouds, cloud security, FinOps and AI for operations. Capstone 3: run a three-cloud platform.
 
 *Planned.*

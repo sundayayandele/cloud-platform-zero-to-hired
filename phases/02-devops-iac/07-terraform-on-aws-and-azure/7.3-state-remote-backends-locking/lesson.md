@@ -6,6 +6,7 @@
 - Separate environments (dev, staging, production) with separate state, and explain why folders beat workspaces for that.
 - Use `terraform state` commands safely to inspect state, and know when not to touch it.
 - Read outputs from another configuration's state, and know the safer alternatives.
+- Do the same on **Google Cloud** with the `google` provider, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -76,7 +77,26 @@ terraform {
 }
 ```
 
-The azurerm backend locks with a **blob lease**, automatically. Turn on blob **versioning** and **soft delete** on the storage account so a damaged state can be restored.
+The azurerm backend locks with a **blob lease**, automatically.
+
+**Google Cloud: a Cloud Storage bucket**
+
+```bash
+gcloud storage buckets create gs://itlpay-tfstate-ada --location=africa-south1 \
+  --uniform-bucket-level-access --public-access-prevention
+gcloud storage buckets update gs://itlpay-tfstate-ada --versioning
+```
+
+```hcl
+terraform {
+  backend "gcs" {
+    bucket = "itlpay-tfstate-ada"
+    prefix = "dev-gcp/network"
+  }
+}
+```
+
+The `gcs` backend locks automatically (it writes a lock object next to the state), and uses your Application Default Credentials. Turn on blob **versioning** and **soft delete** on the storage account so a damaged state can be restored.
 
 After adding a backend block, run `terraform init` again. If local state exists, Terraform offers to **migrate** it to the backend: say yes, check `terraform state list` shows everything, then delete the local file.
 
@@ -84,13 +104,13 @@ If an apply is interrupted, a lock can be left behind. `terraform force-unlock L
 
 ## 3. Protecting state
 
-| Protection | AWS | Azure |
-| --- | --- | --- |
-| Private | Block Public Access | Public blob access off; consider a private endpoint |
-| Encrypted at rest | `encrypt = true` (SSE); a KMS key for stricter control | Encrypted by default; customer-managed keys if required |
-| Recover from mistakes | Bucket versioning | Blob versioning and soft delete |
-| Who can read it | IAM: only the people and pipelines that run Terraform for that environment | RBAC: *Storage Blob Data Contributor/Reader* on the container, for the same people |
-| Separate production | A separate state bucket in the production account | A separate storage account in the production subscription |
+| Protection | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| Private | Block Public Access | Public blob access off; consider a private endpoint | Public access prevention; uniform bucket-level access |
+| Encrypted at rest | `encrypt = true` (SSE); a KMS key for stricter control | Encrypted by default; customer-managed keys if required | Encrypted by default; Cloud KMS keys if required |
+| Recover from mistakes | Bucket versioning | Blob versioning and soft delete | Object versioning and soft delete |
+| Who can read it | IAM: only the people and pipelines that run Terraform for that environment | RBAC: *Storage Blob Data Contributor/Reader* on the container, for the same people | IAM: *Storage Object Admin/Viewer* on the bucket, for the same people |
+| Separate production | A separate state bucket in the production account | A separate storage account in the production subscription | A separate state bucket in the production project |
 
 Anyone who can read production state can read whatever secrets are in it, so production state access should be as tight as production itself.
 
@@ -129,8 +149,8 @@ Prefer 2 or 3 between teams; 1 is fine within one team's configurations.
 
 ## Practice
 
-1. Create a state bucket on AWS and a state storage account on Azure as in section 2, with versioning on both.
-2. Add the backend blocks to `envs/dev-aws` and `envs/dev-azure` from the network lab, run `terraform init`, migrate the state, and confirm with `terraform state list`. Check you can see the state objects in S3 and Blob Storage.
+1. Create a state bucket on AWS, a state storage account on Azure and a state bucket on Google Cloud as in section 2, with versioning on all three.
+2. Add the backend blocks to `envs/dev-aws`, `envs/dev-azure` and `envs/dev-gcp` from the network lab, run `terraform init`, migrate the state, and confirm with `terraform state list`. Check you can see the state objects in S3, Blob Storage and Cloud Storage.
 3. Prove locking works: start `terraform apply` in one terminal and, before confirming, run `terraform plan` in another. Read the lock error.
 4. Create `envs/staging-aws` that uses the same module with a different `cidr` and its own backend `key`. Show that destroying staging doesn't affect dev.
 5. Change the application lab to find the network's app subnets with a data source by tag instead of hard-coded IDs.
@@ -144,11 +164,15 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
 - [Fundamentals of Terraform on Azure (learning path)](https://learn.microsoft.com/training/paths/terraform-fundamentals/)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Getting Started with Terraform for Google Cloud](https://www.skills.google/course_templates/443)
 
 **Terraform (HashiCorp's free tutorials):**
 

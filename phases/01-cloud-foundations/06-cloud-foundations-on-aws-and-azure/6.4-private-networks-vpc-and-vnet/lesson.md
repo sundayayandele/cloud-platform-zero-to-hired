@@ -6,6 +6,7 @@
 - Turn on flow logs and use them, with Reachability Analyzer and Network Watcher, to find a blocked connection.
 - Explain private endpoints and VPC endpoints, and peering, at a high level.
 - Compare the two clouds' networking defaults, and tear everything down so it costs nothing.
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -194,6 +195,58 @@ NAT gateways and public IPs cost money every hour. At the end of the session:
 
 Save your creation script; Capstone 1 rebuilds this network from one script, and Phase 2 rebuilds it with Terraform.
 
+## Google Cloud: the VPC
+
+Use `10.40.0.0/16` for Google Cloud, so none of the three networks overlap.
+
+Google Cloud's network model has two big differences from the other two:
+
+- A **VPC is global**: one VPC spans every region. **Subnets are regional** and span the region's zones (like Azure), so one subnet per tier per region is enough.
+- **Firewall rules belong to the VPC**, not to subnets or interfaces, and they choose which VMs they apply to by **network tag** or **service account**. Every VPC has two **implied rules**: deny all inbound, allow all outbound.
+
+There's no internet gateway to create: a VPC has a default route to the internet, but a VM with **no external IP** can't use it, so private VMs reach the internet only through **Cloud NAT** (attached to a **Cloud Router**). **Private Google Access** on a subnet lets private VMs reach Google APIs (Cloud Storage, Artifact Registry) without NAT.
+
+```bash
+gcloud services enable compute.googleapis.com servicenetworking.googleapis.com
+gcloud compute networks create itlpay-vpc --subnet-mode=custom          # never "auto" mode: it creates subnets in every region
+gcloud compute networks subnets create public --network=itlpay-vpc --region=africa-south1 --range=10.40.0.0/23
+gcloud compute networks subnets create app --network=itlpay-vpc --region=africa-south1 --range=10.40.16.0/20 \
+  --enable-private-ip-google-access --enable-flow-logs
+gcloud compute networks subnets create data --network=itlpay-vpc --region=africa-south1 --range=10.40.48.0/23 \
+  --enable-private-ip-google-access
+
+# Outbound internet for the app tier only, through Cloud NAT
+gcloud compute routers create itlpay-router --network=itlpay-vpc --region=africa-south1
+gcloud compute routers nats create itlpay-nat --router=itlpay-router --region=africa-south1 \
+  --nat-custom-subnet-ip-ranges=app --auto-allocate-nat-external-ips
+
+# Firewall rules, targeting VMs by network tag
+gcloud compute firewall-rules create allow-lb-to-app --network=itlpay-vpc --direction=INGRESS --action=ALLOW \
+  --rules=tcp:8080 --source-ranges=35.191.0.0/16,130.211.0.0/22 --target-tags=app      # Google's load balancers and health checks
+gcloud compute firewall-rules create allow-iap-ssh --network=itlpay-vpc --direction=INGRESS --action=ALLOW \
+  --rules=tcp:22 --source-ranges=35.235.240.0/20 --target-tags=app                      # admin access through IAP only (topic 6.5)
+
+# A private range for Google-managed services such as Cloud SQL (topic 6.7), connected by peering
+gcloud compute addresses create google-managed-services --global --purpose=VPC_PEERING \
+  --addresses=10.40.64.0 --prefix-length=20 --network=itlpay-vpc
+gcloud services vpc-peerings connect --service=servicenetworking.googleapis.com \
+  --ranges=google-managed-services --network=itlpay-vpc
+```
+
+Notice there's no rule allowing anything from the internet to the app tier: the implied deny covers it. The load balancer (topic 6.8) reaches the app from Google's documented ranges `35.191.0.0/16` and `130.211.0.0/22`, which is also where health checks come from.
+
+| | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| Network scope | VPC per region | VNet per region | **VPC is global**; subnets are regional |
+| Subnets and zones | One per tier per AZ | One per tier (spans zones) | One per tier per region (spans zones) |
+| Firewall attached to | Network interfaces (security groups) | Subnets or interfaces (NSGs) | **The VPC**, targeting VMs by tag or service account |
+| Private outbound | NAT gateway per AZ | NAT gateway on the subnet | Cloud NAT on a Cloud Router |
+| Private access to the cloud's own services | VPC endpoints | Private endpoints, service endpoints | Private Google Access; Private Service Connect; private services access for Cloud SQL |
+| Flow logs | VPC Flow Logs | VNet flow logs | VPC Flow Logs, per subnet; Firewall Rules Logging |
+| "Would this connection work?" | Reachability Analyzer | Network Watcher | **Connectivity Tests** (Network Intelligence Center) |
+
+**Tear down:** delete the project, or delete in reverse order (firewall rules, NAT and router, peering and address, subnets, network): `gcloud compute networks delete itlpay-vpc` fails until everything in it is gone.
+
 ## Practice
 
 1. Build the AWS VPC from section 2 and the Azure VNet from section 3. Draw each in Mermaid (topic 4.3) in your capstone repository, showing subnets, route tables, gateways and the security rules.
@@ -201,6 +254,7 @@ Save your creation script; Capstone 1 rebuilds this network from one script, and
 3. Add a deliberate mistake: on AWS, allow 5432 to `sg-db` from `10.20.0.0/16` instead of `sg-app`; on Azure, remove the "deny from VirtualNetwork" rule. Explain in your learning log why each is too broad and who could now reach the database.
 4. Turn on flow logs on both and find one rejected/denied connection (try connecting to a port that isn't allowed from a VM in topic 6.5, or wait for internet scanners to hit a public IP).
 5. Tear everything down and check both bills the next day show no leftover hourly charges.
+6. **Google Cloud:** build the VPC from the Google Cloud section, run a **Connectivity Test** proving the internet can't reach a VM in the app subnet, and add it to your diagrams.
 
 ## Watch
 
@@ -209,10 +263,12 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 - [How to Create an AWS VPC with Public and Private Subnets](https://www.youtube.com/watch?v=ApGz8tpNLgo) · Be A Better Dev · 13 min. Building an AWS VPC with public and private subnets.
 - [AZ-900 Episode 10 | Networking Services | Virtual Network, VPN Gateway, CDN, Load Balancer, App GW](https://www.youtube.com/watch?v=5NMcM4zJPM4) · Adam Marczak - Azure for Everyone · 17 min. Azure networking: virtual networks, gateways and load balancers (AZ-900).
 - [Security Groups vs. Network Access Control Lists (NACLs) in AWS: What’s the Difference?](https://www.youtube.com/watch?v=JWoNu2Mtpdg) · Tiny Technical Tutorials · 2 min. Security groups versus network ACLs in two minutes.
+- [EP 11. GCP Networking | What is Google Cloud VPC | Google Cloud Networking Explained](https://www.youtube.com/watch?v=XLaFU1t9pM8) · Tech Tutorials with Piyush · 23 min. Google Cloud VPC networking explained.
+- [VPC firewall rules in Google Cloud Platform](https://www.youtube.com/watch?v=8pqwoZflqPo) · Cloud Advocate · 17 min. VPC firewall rules on Google Cloud.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -225,4 +281,10 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 - [Introduction to Amazon Virtual Private Cloud (VPC)](https://skillbuilder.aws/learn/PH6Z6EVH8Z/introduction-to-amazon-virtual-private-cloud-vpc/PA8H7FUE15)
 - [Configuring and Deploying VPCs with Multiple Subnets](https://skillbuilder.aws/learn/4HWA8PME5S/configuring-and-deploying-vpcs-with-multiple-subnets/BTRCDVX2RU)
 - [Protecting Your Instance with Security Groups](https://skillbuilder.aws/learn/QEA4T3Y2EJ/protecting-your-instance-with-security-groups/EAG9U7MHB3)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Networking in Google Cloud: Fundamentals](https://www.skills.google/course_templates/35)
+- [Networking in Google Cloud: Routing and Addressing](https://www.skills.google/course_templates/36)
+- [Google Cloud Computing Foundations: Networking & Security in Google Cloud](https://www.skills.google/course_templates/155)
 

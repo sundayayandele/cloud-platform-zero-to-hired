@@ -19,6 +19,7 @@ An image is software you're about to run in production, often with access to cus
 | **GitHub Container Registry** (`ghcr.io`) | GitHub | Images built by GitHub Actions next to the code; free for public images |
 | **Amazon ECR** (`<account>.dkr.ecr.<region>.amazonaws.com`) | Your AWS account | Images run by ECS, EKS, App Runner and EC2; access controlled by IAM |
 | **Azure Container Registry** (`<name>.azurecr.io`) | Your Azure subscription | Images run by AKS, Container Apps and App Service; access controlled by Entra ID and RBAC |
+| **Google Artifact Registry** (`<region>-docker.pkg.dev/<project>/<repo>`) | Your Google Cloud project | Images run by GKE, Cloud Run and Compute Engine; access controlled by Cloud IAM |
 
 Production systems normally pull from a **private registry in the same cloud** (ECR or ACR): it's faster, it doesn't depend on Docker Hub's limits or availability, and access goes through the cloud's identity system rather than a shared password.
 
@@ -73,15 +74,21 @@ az acr create --resource-group rg-itlpay --name itlpayacr --sku Basic
 az acr login --name itlpayacr
 docker tag itlpay-lite:1.0.0 itlpayacr.azurecr.io/itlpay-lite:1.0.0
 docker push itlpayacr.azurecr.io/itlpay-lite:1.0.0
+
+# Google Artifact Registry
+gcloud artifacts repositories create itlpay --repository-format=docker --location=africa-south1
+gcloud auth configure-docker africa-south1-docker.pkg.dev
+docker tag itlpay-lite:1.0.0 africa-south1-docker.pkg.dev/cpe-lab-ada/itlpay/itlpay-lite:1.0.0
+docker push africa-south1-docker.pkg.dev/cpe-lab-ada/itlpay/itlpay-lite:1.0.0
 ```
 
-| | ECR | ACR |
-| --- | --- | --- |
-| Log in | `aws ecr get-login-password` (a token valid for 12 hours) | `az acr login` (uses your Entra ID login) |
-| Who may pull | IAM policies; servers use their **IAM role** | Azure RBAC role **AcrPull**; servers and clusters use a **managed identity** |
-| Built-in scanning | Basic scanning, or enhanced scanning with Amazon Inspector | Microsoft Defender for Containers |
-| Keep only recent images | **Lifecycle policies** | **Retention policies** and purge tasks (some need the Premium tier) |
-| Make tags unchangeable | **Tag immutability** setting | Lock images or repositories (`az acr repository update --write-enabled false`) |
+| | ECR | ACR | Artifact Registry |
+| --- | --- | --- | --- |
+| Log in | `aws ecr get-login-password` (a token valid for 12 hours) | `az acr login` (uses your Entra ID login) | `gcloud auth configure-docker africa-south1-docker.pkg.dev` (uses your Google login) |
+| Who may pull | IAM policies; servers use their **IAM role** | Azure RBAC role **AcrPull**; servers and clusters use a **managed identity** | IAM role **Artifact Registry Reader** for the VM's or cluster's service account |
+| Built-in scanning | Basic scanning, or enhanced scanning with Amazon Inspector | Microsoft Defender for Containers | **Artifact Analysis** vulnerability scanning |
+| Keep only recent images | **Lifecycle policies** | **Retention policies** and purge tasks (some need the Premium tier) | **Cleanup policies** |
+| Make tags unchangeable | **Tag immutability** setting | Lock images or repositories (`az acr repository update --write-enabled false`) | **Immutable tags** setting on the repository |
 
 Turn on **tag immutability** for production repositories: once `1.2.0` is pushed, nobody can push different contents under the same tag.
 
@@ -153,7 +160,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 

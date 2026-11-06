@@ -125,11 +125,11 @@ One test checks that a transfer moves money **and that the total across all acco
 
 For production, the same container image runs on a managed platform:
 
-| | AWS | Azure |
-| --- | --- | --- |
-| Simplest: give it an image, get a URL | **App Runner** or **ECS on Fargate** | **Azure Container Apps** or **App Service for containers** |
-| Full Kubernetes (Phase 2) | **EKS** | **AKS** |
-| One VM with Docker (Capstone 1's first step) | EC2 with Docker and Compose | An Azure VM with Docker and Compose |
+| | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| Simplest: give it an image, get a URL | **App Runner** or **ECS on Fargate** | **Azure Container Apps** or **App Service for containers** | **Cloud Run** |
+| Full Kubernetes (Phase 2) | **EKS** | **AKS** | **GKE** |
+| One VM with Docker (Capstone 1's first step) | EC2 with Docker and Compose | An Azure VM with Docker and Compose | A Compute Engine VM with Docker and Compose |
 
 In Capstone 1 you'll first run ITL Pay Lite with Compose on a single VM in each cloud, then move the database to the managed service (topic 6.7) and put a load balancer in front (topic 6.8).
 
@@ -150,7 +150,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -159,4 +159,8 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 **AWS (AWS Skill Builder):**
 
 - [Containers Learning Series for Amazon ECS Overview](https://skillbuilder.aws/learn/3EU3GFYDGG/containers-learning-series-for-amazon-ecs-overview/8HYE69VDXV)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Modernize Infrastructure and Applications with Google Cloud](https://www.skills.google/course_templates/265)
 

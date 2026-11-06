@@ -3,7 +3,8 @@
  "short": "CPE",
  "clouds": [
   "AWS",
-  "Azure"
+  "Azure",
+  "Google Cloud"
  ],
  "design": "java-learn-from-zero-2hire: lms/new-courses/cloud-platform-engineer.md",
  "phases": [
@@ -11,12 +12,13 @@
    "number": 1,
    "slug": "01-cloud-foundations",
    "title": "Cloud Foundations",
-   "weeks": "1-13",
+   "weeks": "1-14",
    "status": "written",
-   "summary": "Linux, networking, Bash and Python, Git, containers, and the foundations of AWS and Azure side by side. Capstone 1 deploys ITL Pay on both clouds.",
+   "summary": "Linux, networking, Bash and Python, Git, containers, and the foundations of AWS, Azure and Google Cloud side by side. Capstone 1 deploys ITL Pay on all three clouds.",
    "certifications": [
     "AWS Certified Cloud Practitioner",
-    "Microsoft Azure Fundamentals (AZ-900)"
+    "Microsoft Azure Fundamentals (AZ-900)",
+    "Google Cloud Digital Leader"
    ],
    "modules": [
     {
@@ -200,69 +202,69 @@
     {
      "number": 6,
      "slug": "06-cloud-foundations-on-aws-and-azure",
-     "title": "Cloud foundations on AWS and Azure",
+     "title": "Cloud foundations on AWS, Azure and Google Cloud",
      "weeks": "10-12",
      "topics": [
       {
        "id": "6.1",
        "slug": "6.1-cloud-concepts-accounts",
-       "title": "Cloud concepts, accounts and subscriptions, regions, and billing guardrails",
+       "title": "Cloud concepts, accounts, subscriptions and projects, regions, and billing guardrails",
        "week": 10
       },
       {
        "id": "6.2",
        "slug": "6.2-identity-and-access-iam-and-entra-id",
-       "title": "Identity and access: IAM, and Entra ID with Azure RBAC",
+       "title": "Identity and access: AWS IAM, Entra ID with Azure RBAC, and Google Cloud IAM",
        "week": 10
       },
       {
        "id": "6.3",
        "slug": "6.3-the-aws-cli-and-the-azure-cli-side",
-       "title": "The AWS CLI and the Azure CLI side by side",
+       "title": "The AWS, Azure and Google Cloud CLIs side by side",
        "week": 10
       },
       {
        "id": "6.4",
        "slug": "6.4-private-networks-vpc-and-vnet",
-       "title": "Private networks: VPC and VNet",
+       "title": "Private networks: VPC, VNet and Google Cloud VPC",
        "week": 11
       },
       {
        "id": "6.5",
        "slug": "6.5-virtual-machines-ec2-and-azure-virtual",
-       "title": "Virtual machines: EC2 and Azure Virtual Machines",
+       "title": "Virtual machines: EC2, Azure Virtual Machines and Compute Engine",
        "week": 11
       },
       {
        "id": "6.6",
        "slug": "6.6-object-storage-s3-and-blob-storage",
-       "title": "Object storage: S3 and Blob Storage",
+       "title": "Object storage: S3, Blob Storage and Cloud Storage",
        "week": 11
       },
       {
        "id": "6.7",
        "slug": "6.7-managed-postgresql-rds-and-azure",
-       "title": "Managed PostgreSQL: RDS and Azure Database for PostgreSQL",
+       "title": "Managed PostgreSQL: RDS, Azure Database for PostgreSQL and Cloud SQL",
        "week": 12
       },
       {
        "id": "6.8",
        "slug": "6.8-load-balancers-dns-and-https-on-both",
-       "title": "Load balancers, DNS and HTTPS on both clouds",
+       "title": "Load balancers, DNS and HTTPS on all three clouds",
        "week": 12
       },
       {
        "id": "6.9",
        "slug": "6.9-monitoring-logs-and-alerts-cloudwatch",
-       "title": "Monitoring, logs and alerts: CloudWatch and Azure Monitor",
+       "title": "Monitoring, logs and alerts: CloudWatch, Azure Monitor and Cloud Monitoring",
        "week": 12
       }
      ]
     }
    ],
    "capstone": {
-    "week": 13,
-    "title": "ITL Pay on AWS and Azure, by hand then by script",
+    "week": "13-14",
+    "title": "ITL Pay on AWS, Azure and Google Cloud, by hand then by script",
     "brief": "phases/01-cloud-foundations/capstone-1/README.md"
    }
   },
@@ -270,55 +272,55 @@
    "number": 2,
    "slug": "02-devops-iac",
    "title": "DevOps and Infrastructure as Code",
-   "weeks": "14-24",
+   "weeks": "15-25",
    "status": "building",
-   "summary": "Terraform on both clouds, CI/CD with keyless login, Kubernetes and Helm (EKS and AKS), secrets and observability. Capstone 2: pipeline to production on two clouds.",
+   "summary": "Terraform on all three clouds, CI/CD with keyless login, Kubernetes and Helm (EKS, AKS and GKE), secrets and observability. Capstone 2: pipeline to production across three clouds.",
    "certifications": [
-    "AWS Certified Solutions Architect – Associate or Microsoft Azure Administrator (AZ-104)",
+    "AWS Certified Solutions Architect – Associate, Microsoft Azure Administrator (AZ-104) or Google Cloud Associate Cloud Engineer",
     "HashiCorp Terraform Associate"
    ],
    "modules": [
     {
      "number": 7,
      "slug": "07-terraform-on-aws-and-azure",
-     "title": "Terraform on AWS and Azure",
-     "weeks": "14-16",
+     "title": "Terraform on AWS, Azure and Google Cloud",
+     "weeks": "15-17",
      "topics": [
       {
        "id": "7.1",
        "slug": "7.1-infrastructure-as-code-and-your-first",
        "title": "Infrastructure as code and your first Terraform",
-       "week": 14
+       "week": 15
       },
       {
        "id": "7.2",
        "slug": "7.2-variables-outputs-data-sources",
        "title": "Variables, outputs, data sources and modules",
-       "week": 14
+       "week": 15
       },
       {
        "id": "7.3",
        "slug": "7.3-state-remote-backends-locking",
        "title": "State: remote backends, locking and environments",
-       "week": 15
+       "week": 16
       },
       {
        "id": "7.4",
        "slug": "7.4-quality-gates-fmt-validate-tflint",
        "title": "Quality gates: fmt, validate, tflint, checkov and plan review",
-       "week": 15
+       "week": 16
       },
       {
        "id": "7.5",
        "slug": "7.5-drift-imports-and-refactoring-safely",
        "title": "Drift, imports and refactoring safely",
-       "week": 16
+       "week": 17
       },
       {
        "id": "7.6",
        "slug": "7.6-reading-cloudformation-and-bicep",
        "title": "Reading CloudFormation and Bicep",
-       "week": 16
+       "week": 17
       }
      ]
     },
@@ -326,69 +328,69 @@
      "number": 8,
      "slug": "08-ci-cd-with-github-actions",
      "title": "CI/CD with GitHub Actions",
-     "weeks": "17-18",
+     "weeks": "18-19",
      "topics": [
       {
        "id": "8.1",
        "slug": "8.1-pipelines-in-depth-jobs-runners-caching",
        "title": "Pipelines in depth: jobs, runners, caching and reuse",
-       "week": 17
+       "week": 18
       },
       {
        "id": "8.2",
        "slug": "8.2-build-scan-sign-and-publish-images",
        "title": "Build, scan, sign and publish images with an SBOM",
-       "week": 17
+       "week": 18
       },
       {
        "id": "8.3",
        "slug": "8.3-keyless-login-from-github-to-aws",
-       "title": "Keyless login from GitHub to AWS and Azure with OIDC",
-       "week": 18
+       "title": "Keyless login from GitHub to AWS, Azure and Google Cloud with OIDC",
+       "week": 19
       },
       {
        "id": "8.4",
        "slug": "8.4-terraform-in-the-pipeline-environments",
        "title": "Terraform in the pipeline: environments and approvals",
-       "week": 18
+       "week": 19
       }
      ]
     },
     {
      "number": 9,
      "slug": "09-kubernetes-and-helm-on-eks-and-aks",
-     "title": "Kubernetes and Helm on EKS and AKS",
-     "weeks": "19-20",
+     "title": "Kubernetes and Helm on EKS, AKS and GKE",
+     "weeks": "20-21",
      "topics": [
       {
        "id": "9.1",
        "slug": "9.1-kubernetes-architecture-and-your-first",
        "title": "Kubernetes architecture and your first workloads",
-       "week": 19
+       "week": 20
       },
       {
        "id": "9.2",
        "slug": "9.2-services-ingress-configmaps-and-secrets",
        "title": "Services, Ingress, ConfigMaps and Secrets",
-       "week": 19
+       "week": 20
       },
       {
        "id": "9.3",
        "slug": "9.3-probes-resources-autoscaling-and-storage",
        "title": "Probes, resources, autoscaling and storage",
-       "week": 20
+       "week": 21
       },
       {
        "id": "9.4",
        "slug": "9.4-packaging-with-helm",
        "title": "Packaging with Helm",
-       "week": 20
+       "week": 21
       },
       {
        "id": "9.5",
        "slug": "9.5-eks-and-aks-networking-identity-for-pods",
-       "title": "EKS and AKS: networking, identity for pods and upgrades",
-       "week": 20
+       "title": "EKS, AKS and GKE: networking, identity for pods and upgrades",
+       "week": 21
       }
      ]
     },
@@ -396,19 +398,19 @@
      "number": 10,
      "slug": "10-configuration-and-secrets",
      "title": "Configuration and secrets",
-     "weeks": "21",
+     "weeks": "22",
      "topics": [
       {
        "id": "10.1",
        "slug": "10.1-configuration-management-with-ansible",
        "title": "Configuration management with Ansible",
-       "week": 21
+       "week": 22
       },
       {
        "id": "10.2",
        "slug": "10.2-secrets-in-the-cloud-secrets-manager-key",
-       "title": "Secrets in the cloud: Secrets Manager, Key Vault and External Secrets",
-       "week": 21
+       "title": "Secrets in the cloud: Secrets Manager, Key Vault, Secret Manager and External Secrets",
+       "week": 22
       }
      ]
     },
@@ -416,35 +418,35 @@
      "number": 11,
      "slug": "11-observability",
      "title": "Observability",
-     "weeks": "22",
+     "weeks": "23",
      "topics": [
       {
        "id": "11.1",
        "slug": "11.1-metrics-and-alerts-with-prometheus",
        "title": "Metrics and alerts with Prometheus and Grafana",
-       "week": 22
+       "week": 23
       },
       {
        "id": "11.2",
        "slug": "11.2-logs-and-traces-loki-opentelemetry",
        "title": "Logs and traces: Loki, OpenTelemetry and the clouds' own tools",
-       "week": 22
+       "week": 23
       }
      ]
     }
    ],
    "capstone": {
-    "week": "23-24",
-    "title": "Pipeline to production on two clouds"
+    "week": "24-25",
+    "title": "Pipeline to production across three clouds"
    }
   },
   {
    "number": 3,
    "slug": "03-platform-sre",
    "title": "Platform Engineering and SRE",
-   "weeks": "25-34",
+   "weeks": "26-35",
    "status": "planned",
-   "summary": "GitOps, reliability targets and incident response, a self-service platform that deploys to either cloud, cloud security, FinOps and AI for operations. Capstone 3: run a two-cloud platform."
+   "summary": "GitOps, reliability targets and incident response, a self-service platform that deploys to any of the three clouds, cloud security, FinOps and AI for operations. Capstone 3: run a three-cloud platform."
   }
  ]
 }

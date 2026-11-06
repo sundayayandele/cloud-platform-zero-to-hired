@@ -171,12 +171,12 @@ systemd timers can take a time zone in the schedule: `OnCalendar=*-*-* 02:30:00 
 
 You'll often schedule work without any server of your own:
 
-| Need | AWS | Azure |
-| --- | --- | --- |
-| Run code on a schedule, serverless | **EventBridge Scheduler** triggering a Lambda function | **Azure Functions** with a **timer trigger** |
-| Start or stop VMs at set times (to save money) | EventBridge Scheduler with Systems Manager automation | **Start/stop VMs** automation, or Azure Automation runbooks |
-| Run a script on many VMs on a schedule | **Systems Manager** State Manager / Run Command | **Azure Automation** or Azure Machine Configuration |
-| Scheduled pipeline jobs | GitHub Actions `schedule:` (cron syntax), CodePipeline | GitHub Actions `schedule:`, Azure Pipelines schedules |
+| Need | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| Run code on a schedule, serverless | **EventBridge Scheduler** triggering a Lambda function | **Azure Functions** with a **timer trigger** | **Cloud Scheduler** triggering Cloud Run or a function |
+| Start or stop VMs at set times (to save money) | EventBridge Scheduler with Systems Manager automation | **Start/stop VMs** automation, or Azure Automation runbooks | Cloud Scheduler, or **instance schedules** on Compute Engine |
+| Run a script on many VMs on a schedule | **Systems Manager** State Manager / Run Command | **Azure Automation** or Azure Machine Configuration | **VM Manager** (OS Config) and OS policies |
+| Scheduled pipeline jobs | GitHub Actions `schedule:` (cron syntax), CodePipeline | GitHub Actions `schedule:`, Azure Pipelines schedules | GitHub Actions `schedule:`, Cloud Build triggers with Cloud Scheduler |
 
 They all use the same ideas: a schedule (often in cron syntax, sometimes with six fields including seconds on Azure Functions), something to run, logs, and alerts when a run fails. One saving used by almost every cloud team, and by you in Module 6, is a schedule that **stops development machines every evening** and starts them in the morning.
 
@@ -197,7 +197,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 

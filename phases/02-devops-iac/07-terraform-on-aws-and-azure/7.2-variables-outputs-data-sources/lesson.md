@@ -6,6 +6,7 @@
 - Use Terraform's functions and expressions: `cidrsubnet`, `merge`, `for` expressions, conditionals.
 - Write a **module** with a clear interface, and use it from an environment folder.
 - Read and use the course's network modules for AWS and Azure, which share one interface.
+- Do the same on **Google Cloud** with the `google` provider, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -161,27 +162,27 @@ The **Terraform Registry** (registry.terraform.io) has well-known public modules
 
 ## 7. The course's network modules
 
-`labs/terraform-network/` (in the course labs download and the public repository) contains ITL Pay's network from topic 6.4 as two modules with **the same interface**:
+`labs/terraform-network/` (in the course labs download and the public repository) contains ITL Pay's network from topic 6.4 as three modules with **the same interface**:
 
-| | `modules/aws-network` | `modules/azure-network` |
-| --- | --- | --- |
-| Inputs | `name`, `cidr`, `nat_gateway`, `tags`, plus `zone_count` | `name`, `cidr`, `nat_gateway`, `tags`, plus `location`, `resource_group_name` |
-| Outputs | `network_id`, `public_subnet_ids`, `app_subnet_ids`, `data_subnet_ids`, `security_group_ids` | The same five, plus `appgw_subnet_id`, `bastion_subnet_id` |
-| Builds | VPC, subnets per AZ, internet gateway, optional NAT, route tables, three security groups that reference each other | VNet, one subnet per tier (plus Bastion and Application Gateway subnets), optional NAT, NSGs with an explicit deny inside the VNet, an application security group |
+| | `modules/aws-network` | `modules/azure-network` | `modules/gcp-network` |
+| --- | --- | --- | --- |
+| Inputs | `name`, `cidr`, `nat_gateway`, `tags`, plus `zone_count` | `name`, `cidr`, `nat_gateway`, `tags`, plus `location`, `resource_group_name` | `name`, `cidr`, `nat_gateway`, `tags`, plus `project_id`, `region` |
+| Outputs | `network_id`, `public_subnet_ids`, `app_subnet_ids`, `data_subnet_ids`, `security_group_ids` | The same five, plus `appgw_subnet_id`, `bastion_subnet_id` | The same five, plus `private_services_range` |
+| Builds | VPC, subnets per AZ, internet gateway, optional NAT, route tables, three security groups that reference each other | VNet, one subnet per tier (plus Bastion and Application Gateway subnets), optional NAT, NSGs with an explicit deny inside the VNet, an application security group | Global VPC, one regional subnet per tier with flow logs, optional Cloud NAT, firewall rules that target the network tag `app`, private services access for Cloud SQL |
 
-Read both `main.tf` files side by side. The decisions are the same as in topic 6.4; only the building blocks differ. Notice:
+Read the three `main.tf` files side by side. The decisions are the same as in topic 6.4; only the building blocks differ. Notice:
 
 - `cidrsubnet` derives every subnet from the one network range, so changing `cidr` moves the whole plan consistently;
 - `zone_count` has a validation, because a third app subnet would overlap the data subnets in this layout: modules should refuse inputs that would produce a broken network;
 - the Azure data subnet is **delegated** to PostgreSQL Flexible Server (topic 6.7) and has `default_outbound_access_enabled = false`, so it's private on purpose, not by luck.
 
-The environment folders `envs/dev-aws` and `envs/dev-azure` call the modules. In Capstone 2 you'll extend this to dev, staging and production.
+The environment folders `envs/dev-aws`, `envs/dev-azure` and `envs/dev-gcp` call the modules. In Capstone 2 you'll extend this to dev, staging and production.
 
 ## Practice
 
-1. Apply `envs/dev-aws` and `envs/dev-azure` (with `nat_gateway = false`). Use `terraform output -json` and `jq` to print the app subnet IDs from each. Destroy both.
+1. Apply `envs/dev-aws`, `envs/dev-azure` and `envs/dev-gcp` (with `nat_gateway = false`). Use `terraform output -json` and `jq` to print the app subnet IDs from each. Destroy both.
 2. Add a `zone_count = 3` to the AWS environment and run `plan`. Read the validation message. Then change the layout in a copy of the module so three zones fit (hint: move the data subnets), and prove with `terraform console` and `cidrsubnet` that nothing overlaps.
-3. Write a small module `modules/aws-bucket` that creates a private, versioned, encrypted S3 bucket with lifecycle rules, with inputs `name`, `expire_days` and `tags`. Write `modules/azure-storage` with the same interface. Use both from one environment.
+3. Write a small module `modules/aws-bucket` that creates a private, versioned, encrypted S3 bucket with lifecycle rules, with inputs `name`, `expire_days` and `tags`. Write `modules/azure-storage` and `modules/gcp-bucket` with the same interface. Use both from one environment.
 4. Convert a `count` resource to `for_each` in a copy of a module and run `plan`. What does Terraform want to do to the existing resources? (Topic 7.5 shows how to avoid that with `moved` blocks.)
 5. In your learning log, list three things that make a module "secure by default".
 
@@ -194,11 +195,15 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
 - [Fundamentals of Terraform on Azure (learning path)](https://learn.microsoft.com/training/paths/terraform-fundamentals/)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Getting Started with Terraform for Google Cloud](https://www.skills.google/course_templates/443)
 
 **Terraform (HashiCorp's free tutorials):**
 

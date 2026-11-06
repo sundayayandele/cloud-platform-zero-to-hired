@@ -35,13 +35,13 @@ mtr -n 1.1.1.1              # traceroute that keeps running, showing loss at eac
 
 ## 2. Routing in the cloud: public and private subnets
 
-In AWS and Azure, every subnet uses a route table. The difference between a "public" and a "private" subnet is **only** its routes:
+In all three clouds, every subnet's traffic follows routes. The difference between a "public" and a "private" subnet is **only** its routes:
 
-| Route table for... | Destination | Next hop (AWS) | Next hop (Azure) |
-| --- | --- | --- | --- |
-| Every subnet | The network's own range (`10.20.0.0/16`) | `local` | Virtual network (automatic) |
-| A **public** subnet | `0.0.0.0/0` | An **internet gateway** | Internet (the default system route) |
-| A **private** subnet | `0.0.0.0/0` | A **NAT gateway** (in a public subnet) | A **NAT gateway** attached to the subnet, or a firewall |
+| Route table for... | Destination | Next hop (AWS) | Next hop (Azure) | Next hop (Google Cloud) |
+| --- | --- | --- | --- | --- |
+| Every subnet | The network's own range (`10.20.0.0/16`) | `local` | Virtual network (automatic) | Subnet routes (automatic) |
+| A **public** subnet | `0.0.0.0/0` | An **internet gateway** | Internet (the default system route) | The **default internet gateway** route (automatic; used only by VMs with an external IP) |
+| A **private** subnet | `0.0.0.0/0` | A **NAT gateway** (in a public subnet) | A **NAT gateway** attached to the subnet, or a firewall | **Cloud NAT** on a Cloud Router (VMs without external IPs) |
 
 There's an important difference between the clouds:
 
@@ -79,12 +79,12 @@ A firewall checks each connection against **rules**: protocol, source, destinati
 
 **Stateful** firewalls remember connections: if a request was allowed **out**, its reply is automatically allowed back **in**. You write rules only for the direction the connection **starts**. **Stateless** firewalls check every packet on its own, so you must allow the reply traffic too (usually on the high ephemeral ports, 1024–65535).
 
-| | AWS | Azure |
-| --- | --- | --- |
-| Main firewall, attached to... | **Security group**: stateful, attached to network interfaces (instances, load balancers, databases). **Allow rules only**; everything else is denied | **Network security group (NSG)**: stateful, attached to a subnet and/or a network interface. **Allow and deny rules** with priorities (lower number wins) and built-in default rules |
-| Subnet-level extra layer | **Network ACL**: stateless, numbered allow and deny rules | NSG on the subnet does this job |
-| Referring to "the app servers" instead of IP addresses | A rule's source can be **another security group** | A rule's source can be an **application security group** or a service tag (for example `AzureLoadBalancer`, `Internet`) |
-| Central firewall service | AWS Network Firewall | Azure Firewall |
+| | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| Main firewall, attached to... | **Security group**: stateful, attached to network interfaces (instances, load balancers, databases). **Allow rules only**; everything else is denied | **Network security group (NSG)**: stateful, attached to a subnet and/or a network interface. **Allow and deny rules** with priorities (lower number wins) and built-in default rules | **VPC firewall rules**: stateful, belong to the whole VPC, applied to VMs chosen by **network tag** or **service account**; allow and deny with priorities; implied deny inbound |
+| Subnet-level extra layer | **Network ACL**: stateless, numbered allow and deny rules | NSG on the subnet does this job | Not needed (firewall rules and hierarchical firewall policies do this job) |
+| Referring to "the app servers" instead of IP addresses | A rule's source can be **another security group** | A rule's source can be an **application security group** or a service tag (for example `AzureLoadBalancer`, `Internet`) | A rule's source or target can be a **network tag** or a **service account** |
+| Central firewall service | AWS Network Firewall | Azure Firewall | Cloud Next Generation Firewall (firewall policies), Cloud Armor for web traffic |
 
 Referring to groups rather than IP addresses is the professional way: "PostgreSQL is allowed only from members of the app group" keeps working when servers are replaced and their addresses change.
 
@@ -108,6 +108,7 @@ Layer 4 versus layer 7:
 | Can do | Very fast forwarding, any TCP/UDP protocol, fixed IP addresses | Route `/api/*` to one service and `/` to another, terminate TLS, redirect HTTP to HTTPS, add a web application firewall |
 | AWS | **Network Load Balancer (NLB)** | **Application Load Balancer (ALB)** |
 | Azure | **Azure Load Balancer** | **Application Gateway** (regional) and **Front Door** (global, at the edge) |
+| Google Cloud | **Network Load Balancer** (passthrough) | **Application Load Balancer** (global external, or regional) |
 
 For ITL Pay, a layer-7 load balancer in the public subnets terminates HTTPS, sends `/api/*` to the app servers in the private subnets on port 8080, and checks `/health` on each.
 
@@ -146,7 +147,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -159,4 +160,8 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 - [Understanding AWS Networking Gateways](https://skillbuilder.aws/learn/DYWKWCJ9Y1/understanding-aws-networking-gateways/484J82ZCEZ)
 - [Differences Between Security Groups and NACLs](https://skillbuilder.aws/learn/WZ7B7G3RZ4/differences-between-security-groups-and-nacls/G59RY3EZGG)
 - [Elastic Load Balancing (ELB) Getting Started](https://skillbuilder.aws/learn/2Q7X7W6V7G/elastic-load-balancing-elb-getting-started/XHYHBUHUTA)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Networking in Google Cloud: Fundamentals](https://www.skills.google/course_templates/35)
 

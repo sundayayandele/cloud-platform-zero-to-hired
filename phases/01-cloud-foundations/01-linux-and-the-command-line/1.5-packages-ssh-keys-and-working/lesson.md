@@ -158,12 +158,12 @@ In the cloud, the main firewall sits **outside** the machine: AWS security group
 
 ## 7. SSH on AWS and Azure
 
-| | AWS | Azure |
-| --- | --- | --- |
-| Giving a VM your key | Import your public key as an **EC2 key pair**, or let AWS create one and download the private key once | Paste your public key when you create the VM, or let Azure generate one |
-| Default user | `ec2-user` (Amazon Linux), `ubuntu` (Ubuntu) | The admin username you chose (often `azureuser`) |
-| Logging in without an open SSH port | **Session Manager** (Systems Manager) or **EC2 Instance Connect** | **Azure Bastion**, or Entra ID login to the VM |
-| Firewall rule for SSH | Security group: allow TCP 22 from your IP only | Network security group: allow TCP 22 from your IP only |
+| | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| Giving a VM your key | Import your public key as an **EC2 key pair**, or let AWS create one and download the private key once | Paste your public key when you create the VM, or let Azure generate one | Add your public key to project or instance metadata, or (better) use **OS Login** with your Google identity |
+| Default user | `ec2-user` (Amazon Linux), `ubuntu` (Ubuntu) | The admin username you chose (often `azureuser`) | Your OS Login username (from your Google account) |
+| Logging in without an open SSH port | **Session Manager** (Systems Manager) or **EC2 Instance Connect** | **Azure Bastion**, or Entra ID login to the VM | **Identity-Aware Proxy (IAP) TCP forwarding**: `gcloud compute ssh --tunnel-through-iap` |
+| Firewall rule for SSH | Security group: allow TCP 22 from your IP only | Network security group: allow TCP 22 from your IP only | VPC firewall rule: allow TCP 22 only from IAP's range `35.235.240.0/20` (or your IP) |
 
 The "no open port" options are increasingly the norm at banks and large companies: nothing on the internet can even try to reach port 22, access is granted through the cloud's identity system, and every session is logged. You'll use them in Module 6.
 
@@ -186,7 +186,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 

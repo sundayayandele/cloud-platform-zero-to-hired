@@ -6,6 +6,7 @@
 - Deploy, preview and delete a small template with each cloud's CLI.
 - Decide when a team would choose the native tool over Terraform, and work in a company that uses them.
 - Translate a small CloudFormation or Bicep file into Terraform, and back.
+- Do the same on **Google Cloud** with the `google` provider, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -134,7 +135,22 @@ az group delete -n rg-topic-7-6 --yes
 
 Linters: Bicep's built-in linter (`az bicep lint`), and checkov reads Bicep and ARM.
 
-## 4. When teams choose the native tools
+## 4. Google Cloud: Infrastructure Manager
+
+Google took a different path: its native service runs **Terraform itself**. **Infrastructure Manager** stores your Terraform configuration's state for you and runs plans and applies in Google Cloud, with the same HCL you already know:
+
+```bash
+gcloud infra-manager previews create itlpay-preview --location=africa-south1 \
+  --service-account=projects/cpe-lab-ada/serviceAccounts/infra-manager@cpe-lab-ada.iam.gserviceaccount.com \
+  --local-source=./envs/dev-gcp --input-values=project_id=cpe-lab-ada,owner=ada        # the plan
+gcloud infra-manager deployments apply projects/cpe-lab-ada/locations/africa-south1/deployments/itlpay-dev \
+  --service-account=projects/cpe-lab-ada/serviceAccounts/infra-manager@cpe-lab-ada.iam.gserviceaccount.com \
+  --local-source=./envs/dev-gcp --input-values=project_id=cpe-lab-ada,owner=ada
+```
+
+You'll still meet **Deployment Manager** (YAML and Jinja templates) in older Google Cloud projects; Google is retiring it in favour of Infrastructure Manager, so read it, but don't start anything new with it. Check the exact command options in the gcloud reference before you use them; the service is newer than CloudFormation and Bicep and still changing.
+
+## 5. When teams choose the native tools
 
 | Choose the native tool when | Choose Terraform when |
 | --- | --- |
@@ -143,7 +159,7 @@ Linters: Bicep's built-in linter (`az bicep lint`), and checkov reads Bicep and 
 | The vendor's examples or marketplace products come as templates | The team already knows Terraform (it's the most common skill in job adverts) |
 | Policies require it (some government and regulated environments) | You need a mature module ecosystem and testing tools |
 
-Many companies use both: Terraform for the platform, and native templates for specific vendor products. That's why this course teaches Terraform deeply and the native tools for reading.
+Many companies use both: Terraform for the platform, and native templates for specific vendor products. That's why this course teaches Terraform deeply and the native tools for reading. On Google Cloud the choice is smaller: its native service runs Terraform anyway.
 
 ## Practice
 
@@ -163,7 +179,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -174,4 +190,8 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 
 - [AWS CloudFormation Getting Started](https://skillbuilder.aws/learn/RH22P2RXU4/aws-cloudformation-getting-started/KEK5BT6HSE)
 - [AWS Cloud Development Kit (CDK) Getting Started](https://skillbuilder.aws/learn/XP346HYHM9/aws-cloud-development-kit-cdk-getting-started/D6C46ND6ZQ)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Getting Started with Terraform for Google Cloud](https://www.skills.google/course_templates/443)
 

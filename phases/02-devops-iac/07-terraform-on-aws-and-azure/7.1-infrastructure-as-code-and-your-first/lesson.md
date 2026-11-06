@@ -6,6 +6,7 @@
 - Write, plan, apply and destroy a small configuration on AWS and on Azure.
 - Read a plan: what will be created, changed, replaced or destroyed, and spot a dangerous one before applying.
 - Explain why Terraform is the main tool in this course, and where the clouds' own tools fit.
+- Do the same on **Google Cloud** with the `google` provider, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -31,9 +32,10 @@ The main tools:
 | **OpenTofu** | Same as Terraform | HCL | An open-source fork of Terraform, managed by the Linux Foundation; almost all of this module applies unchanged |
 | **CloudFormation** (and CDK) | AWS only | YAML/JSON (CDK: TypeScript, Python...) | Built into AWS, no state file to manage (topic 7.6) |
 | **Bicep** (ARM templates) | Azure only | Bicep | Built into Azure (topic 7.6) |
+| **Infrastructure Manager** | Google Cloud only | Terraform (HCL) | Google's managed service that runs Terraform for you; Deployment Manager, its older tool, is being retired (topic 7.6) |
 | **Pulumi** | Many | General programming languages | Less common in adverts |
 
-This course uses Terraform for both clouds, so you learn one language and two providers, and topic 7.6 teaches you to read CloudFormation and Bicep because you'll meet them at work.
+This course uses Terraform for all three clouds, so you learn one language and three providers, and topic 7.6 teaches you to read CloudFormation and Bicep (and Google's Infrastructure Manager, which runs Terraform itself) because you'll meet them at work.
 
 ## 2. Installing Terraform
 
@@ -128,6 +130,37 @@ resource "azurerm_storage_account" "statements" {
 
 The azurerm provider needs the empty `features {}` block and, since version 4, the `subscription_id`. Notice that the storage account takes its location and tags from the resource group by reference, so they can't drift apart.
 
+And on Google Cloud:
+
+```hcl
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 7.0"
+    }
+  }
+}
+
+provider "google" {
+  project = "cpe-lab-ada"            # your project ID: gcloud config get-value project
+  region  = "africa-south1"
+  default_labels = { owner = "ada", purpose = "topic-7-1", managed_by = "terraform" }
+}
+
+resource "google_storage_bucket" "statements" {
+  name                        = "itlpay-statements-ada-7-1"
+  location                    = "africa-south1"
+  uniform_bucket_level_access = true
+  public_access_prevention    = "enforced"
+  versioning {
+    enabled = true
+  }
+}
+```
+
+Terraform on Google Cloud signs in with **Application Default Credentials**: run `gcloud auth application-default login` once (topic 6.3). `default_labels` labels every resource that supports labels, like AWS's `default_tags`.
+
 ## 4. The workflow: init, plan, apply, destroy
 
 ```bash
@@ -183,20 +216,20 @@ Three rules you must know now (topic 7.3 goes further):
 
 ## 7. Your first lab, on both clouds
 
-1. Create two folders, `aws-7-1/` and `azure-7-1/`, each with the `main.tf` from section 3 (change the names to something unique).
+1. Create three folders, `aws-7-1/`, `azure-7-1/` and `gcp-7-1/`, each with the `main.tf` from section 3 (change the names to something unique).
 2. In each: `terraform init`, `terraform fmt`, `terraform validate`, `terraform plan -out=tfplan`, `terraform apply tfplan`.
 3. Check in each console that the storage exists, is private and has the tags.
 4. Change one tag in each file, plan again, and read the `~` update.
 5. Change the S3 bucket's name and plan: read the `-/+` replace, and **don't apply it**.
-6. `terraform destroy` in both folders.
+6. `terraform destroy` in all three folders.
 
 ## Practice
 
-1. Do the lab in section 7 on both clouds, and paste both plans' summary lines into your learning log.
+1. Do the lab in section 7 on all three clouds, and paste the plans' summary lines into your learning log.
 2. Run `terraform plan` again straight after an apply. Why does it say "No changes"?
 3. In the AWS folder, delete the bucket's public access block in the console, then run `terraform plan`. What does Terraform want to do, and why? (This is **drift**, topic 7.5.)
 4. Look inside `terraform.tfstate` with `terraform state list` and `terraform state show aws_s3_bucket.statements` (not a text editor). What does it record?
-5. Write a short ADR (topic 4.3): "Use Terraform for both clouds rather than CloudFormation and Bicep." Include at least two reasons for and one against.
+5. Write a short ADR (topic 4.3): "Use Terraform for all three clouds rather than CloudFormation, Bicep and Infrastructure Manager." Include at least two reasons for and one against.
 
 ## Watch
 
@@ -205,10 +238,11 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 - [Terraform in 100 Seconds](https://www.youtube.com/watch?v=tomUWcQ0P3k) · Fireship · 2 min. Terraform in 100 seconds.
 - [Terraform Explained](https://www.youtube.com/watch?v=HmxkYNv1ksg) · IBM Technology · 9 min. What Terraform is and how it works, from IBM.
 - [Terraform explained in 15 mins | Terraform Tutorial for Beginners](https://www.youtube.com/watch?v=l5k1ai_GBDE) · TechWorld with Nana · 18 min. Terraform's core ideas: providers, resources, state and the workflow.
+- [Learn Terraform with Google Cloud Platform – Infrastructure as Code Course](https://www.youtube.com/watch?v=VCayKl82Lt8) (optional, longer) · freeCodeCamp.org · 52 min. Terraform with Google Cloud, a full course.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -219,6 +253,11 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 
 - [AWS CloudFormation Getting Started](https://skillbuilder.aws/learn/RH22P2RXU4/aws-cloudformation-getting-started/KEK5BT6HSE)
 - [Faster and Safer Infrastructure Deployment with AWS CloudFormation and CDK](https://skillbuilder.aws/learn/V8MQ93JRH6/faster-and-safer-infrastructure-deployment-with-aws-cloudformation-and-cdk/7WDJCSKBQV)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Getting Started with Terraform for Google Cloud](https://www.skills.google/course_templates/443)
+- [Associate Cloud Engineer Certification (learning path)](https://www.skills.google/paths/11)
 
 **Terraform (HashiCorp's free tutorials):**
 

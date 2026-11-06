@@ -1,8 +1,8 @@
-# Capstone 1: ITL Pay on AWS and Azure, by hand then by script
+# Capstone 1: ITL Pay on AWS, Azure and Google Cloud, by hand then by script
 
-**Week 13 · Phase 1: Cloud Foundations** · About 20–25 hours · Individual work
+**Weeks 13–14 · Phase 1: Cloud Foundations** · About 30–40 hours · Individual work
 
-You'll deploy ITL Pay Lite, a small payments API, on **both** AWS and Azure. You'll build it the way a junior cloud engineer would at a bank: a private three-tier network, no open SSH, the database password in a vault, HTTPS, alerts, and a runbook. Then you'll rebuild it from one script and compare the two clouds.
+You'll deploy ITL Pay Lite, a small payments API, on **all three**: AWS, Azure and Google Cloud. You'll build it the way a junior cloud engineer would at a bank: a private three-tier network, no open SSH, the database password in a vault, HTTPS, alerts, and a runbook. Then you'll rebuild it from one script per cloud and compare the three.
 
 This capstone is what you'll show employers from Phase 1. Treat the repository as your portfolio.
 
@@ -10,34 +10,34 @@ This capstone is what you'll show employers from Phase 1. Treat the repository a
 
 ```mermaid
 flowchart LR
-    user([Customer]) -->|HTTPS 443| lb[Load balancer<br/>ALB / Application Gateway<br/>public subnet]
+    user([Customer]) -->|HTTPS 443| lb[Load balancer<br/>ALB / Application Gateway / Cloud Load Balancing<br/>public subnet]
     lb -->|HTTP 8080| a[App VM, zone A<br/>private subnet]
     lb -->|HTTP 8080| b[App VM, zone B<br/>private subnet]
     a -->|5432, TLS| db[(Managed PostgreSQL<br/>data subnet, private)]
     b -->|5432, TLS| db
-    a & b -.->|outbound only| nat[NAT gateway]
-    a & b -.->|identity, no keys| vault[Secrets Manager / Key Vault]
-    a & b -.->|logs, metrics| mon[CloudWatch / Azure Monitor]
+    a & b -.->|outbound only| nat[NAT gateway / Cloud NAT]
+    a & b -.->|identity, no keys| vault[Secrets Manager / Key Vault / Secret Manager]
+    a & b -.->|logs, metrics| mon[CloudWatch / Azure Monitor / Cloud Monitoring]
 ```
 
-| Requirement | AWS | Azure | Topic |
-| --- | --- | --- | --- |
-| A network from your address plan, public / app / data tiers, two zones, no overlap between the clouds | VPC, subnets, IGW, NAT, route tables | VNet, subnets, NAT gateway, NSGs + ASGs | 2.2, 2.5, 6.4 |
-| Security rules that allow only: 443 to the load balancer, 8080 from the load balancer to the app, 5432 from the app to the database | Security groups referencing each other | NSGs, ASGs, explicit deny inside the VNet for the data tier | 2.5, 6.4 |
-| Two app VMs in different zones, **no public IPs, no inbound SSH**, configured only by cloud-init, running ITL Pay Lite from your registry image | EC2 + Session Manager, IMDSv2 | VMs + Bastion (or run-command), managed identity | 5.4, 6.5 |
-| A private managed PostgreSQL, encrypted, TLS required, 7-day backups | RDS | Flexible Server (private access) | 6.7 |
-| The database password only in a vault, read by the VMs' identities | Secrets Manager | Key Vault (RBAC) | 6.2, 6.7 |
-| A load balancer with a health check on `/health`, HTTPS with a valid certificate on at least one cloud, HTTP redirected to HTTPS | ALB + ACM + Route 53 alias | Application Gateway + Key Vault certificate + Azure DNS alias | 2.4, 6.8 |
-| Logs in the cloud, a dashboard, and at least two alerts by email (healthy hosts, and one database alert) | CloudWatch Logs, alarms, SNS | Log Analytics, alert rules, action group | 6.9 |
-| Budgets and tags on everything (`owner`, `purpose=capstone-1`) | Budgets | Cost Management budget | 6.1 |
+| Requirement | AWS | Azure | Google Cloud | Topic |
+| --- | --- | --- | --- | --- |
+| A network from your address plan, public / app / data tiers, two zones, no overlap between the clouds | VPC, subnets, IGW, NAT, route tables | VNet, subnets, NAT gateway, NSGs + ASGs | Custom-mode VPC, regional subnets, Cloud Router + Cloud NAT | 2.2, 2.5, 6.4 |
+| Security rules that allow only: 443 to the load balancer, 8080 from the load balancer to the app, 5432 from the app to the database | Security groups referencing each other | NSGs, ASGs, explicit deny inside the VNet for the data tier | VPC firewall rules targeting the `app` network tag (load balancer ranges and IAP only) | 2.5, 6.4 |
+| Two app VMs in different zones, **no public IPs, no inbound SSH**, configured only by cloud-init, running ITL Pay Lite from your registry image | EC2 + Session Manager, IMDSv2 | VMs + Bastion (or run-command), managed identity | Compute Engine + IAP TCP forwarding and OS Login, attached service account | 5.4, 6.5 |
+| A private managed PostgreSQL, encrypted, TLS required, 7-day backups | RDS | Flexible Server (private access) | Cloud SQL, private IP through private services access | 6.7 |
+| The database password only in a vault, read by the VMs' identities | Secrets Manager | Key Vault (RBAC) | Secret Manager | 6.2, 6.7 |
+| A load balancer with a health check on `/health`, HTTPS with a valid certificate on at least one cloud, HTTP redirected to HTTPS | ALB + ACM + Route 53 alias | Application Gateway + Key Vault certificate + Azure DNS alias | Global external Application Load Balancer + Google-managed certificate + Cloud DNS | 2.4, 6.8 |
+| Logs in the cloud, a dashboard, and at least two alerts by email (healthy hosts, and one database alert) | CloudWatch Logs, alarms, SNS | Log Analytics, alert rules, action group | Ops Agent, Cloud Logging, alerting policy, notification channel | 6.9 |
+| Budgets and tags or labels on everything (`owner`, `purpose=capstone-1`) | Budgets | Cost Management budget | Cloud Billing budget; labels | 6.1 |
 
-You may run both clouds' environments at different times to save credit; you don't need them running together.
+You may run the three clouds' environments at different times to save credit; you don't need them running together. Suggested order: AWS and Azure in week 13 (by hand, then by script), Google Cloud and the comparison in week 14.
 
 ## Two ways to build it
 
 1. **By hand first**, in the consoles and CLIs, following Module 6. Take notes as you go.
-2. **Then by script:** `deploy-aws.sh` and `deploy-azure.sh` that build the whole environment from nothing, and `destroy-aws.sh` / `destroy-azure.sh` that remove it. The scripts must:
-   - use strict mode, pass `shellcheck`, check which account/subscription they're in, and ask before changing anything (topics 3.2, 6.3);
+2. **Then by script:** `deploy-aws.sh`, `deploy-azure.sh` and `deploy-gcp.sh` that build the whole environment from nothing, and `destroy-aws.sh`, `destroy-azure.sh` and `destroy-gcp.sh` that remove it. The scripts must:
+   - use strict mode, pass `shellcheck`, check which account, subscription or project they're in, and ask before changing anything (topics 3.2, 6.3);
    - be safe to run twice (check before create);
    - tag every resource;
    - never print or store secrets.
@@ -51,18 +51,18 @@ A **public GitHub repository** (or private and shared with the mentors) containi
 | Path | What |
 | --- | --- |
 | `README.md` | What it is, a diagram, how to deploy and destroy, how to test, cost estimate, status badge |
-| `docs/architecture-aws.md`, `docs/architecture-azure.md` | Mermaid diagrams (network, security rules, request flow) |
-| `docs/address-plan.md` | Both address plans, with the overlap check |
+| `docs/architecture-aws.md`, `docs/architecture-azure.md`, `docs/architecture-gcp.md` | Mermaid diagrams (network, security rules, request flow) |
+| `docs/address-plan.md` | All three address plans, with the overlap check |
 | `docs/adr/0001-region-choice.md`, `docs/adr/0002-...md` | At least two decision records (for example region; how admins get access; where TLS ends) |
-| `docs/runbooks/api-503.md`, `docs/runbooks/restore-database.md` | Runbooks for both clouds, tested, with "last tested" dates |
-| `docs/comparison.md` | One page: AWS vs Azure for this system. What was easier, what cost more (with your pricing-calculator estimates), what surprised you, and **which cloud you'd recommend for a Nigerian bank, and why** |
+| `docs/runbooks/api-503.md`, `docs/runbooks/restore-database.md` | Runbooks for all three clouds, tested, with "last tested" dates |
+| `docs/comparison.md` | One or two pages: AWS vs Azure vs Google Cloud for this system. What was easier, what cost more (with your pricing-calculator estimates), what surprised you, and **which cloud you'd recommend for a Nigerian bank, and why** |
 | `docs/evidence/` | Screenshots or command output proving each requirement (see the checklist below) |
 | `cloud-init.yaml`, `scripts/deploy-*.sh`, `scripts/destroy-*.sh`, `scripts/itlpay-start.sh` | The automation |
 | `.github/workflows/checks.yml` | `shellcheck` on every script (topic 4.2) |
 
 ### Evidence checklist
 
-For **each** cloud:
+For **each** of the three clouds:
 
 - [ ] `curl https://<your-name>/health` returns `{"status":"UP","db":"up"}` (HTTP on one cloud if you have no domain; say so)
 - [ ] A transfer succeeds, and balances still add up
@@ -81,21 +81,21 @@ Submit the repository link in **Capstone 1 submission** on itlearning.tech. The 
 
 | Criterion | 0: Missing | 1: Beginning | 2: Developing | 3: Competent | 4: Strong |
 | --- | --- | --- | --- | --- | --- |
-| **1. It works, on both clouds** | Not deployed | Deployed on one cloud only, or not working end to end | Works on both, with gaps (no HTTPS anywhere, one zone only) | Works on both: two zones, HTTPS on at least one, health checks, transfers succeed | As 3, plus HTTPS on both, failover demonstrated and timed |
+| **1. It works, on all three clouds** | Not deployed | Deployed on one or two clouds only, or not working end to end | Works on all three, with gaps (no HTTPS anywhere, one zone only) | Works on all three: two zones, HTTPS on at least one, health checks, transfers succeed | As 3, plus HTTPS on all three, failover demonstrated and timed |
 | **2. Security** | Public database, open SSH, or secrets in Git | Several exposures (public VMs, keys on VMs, wide security rules) | Mostly private; one significant gap | Private tiers, no inbound SSH, identities instead of keys, password in a vault, TLS to the database, narrow rules | As 3, plus evidence for every rule (reachability checks, flow logs) and IMDSv2 / Entra login |
-| **3. Automation** | No scripts | Partial scripts; manual steps needed | Scripts deploy most of it; not re-runnable or not shellcheck-clean | Deploy and destroy scripts for both clouds; strict mode, shellcheck-clean, idempotent, context checks, tags | As 3, plus proven by a full destroy and redeploy recorded in the evidence |
+| **3. Automation** | No scripts | Partial scripts; manual steps needed | Scripts deploy most of it; not re-runnable or not shellcheck-clean | Deploy and destroy scripts for all three clouds; strict mode, shellcheck-clean, idempotent, context checks, tags | As 3, plus proven by a full destroy and redeploy recorded in the evidence |
 | **4. Operability** | No monitoring or runbooks | Logs only | Some alerts or a dashboard; runbooks untested | Logs centralised, dashboard, two tested alerts per cloud, two tested runbooks, a timed database restore | As 3, plus alert descriptions linking runbooks, and RTO/RPO written down |
 | **5. Communication and cost** | No README or docs | README only | README and diagrams; comparison thin | Clear README, diagrams, address plans, two ADRs, a reasoned comparison with cost estimates | As 3, written so a hiring manager understands it in five minutes, with a cost table per cloud |
 
 ## The two certificate routes
 
-- **Self-Study (free):** submit the repository, then record a **15–20 minute defence** and link it from your README (a GitHub release is best): a demo on both clouds, the network and security design, your scripts, a walk-through of one incident from your runbook, and your recommendation from the comparison. Then send the administrator a message on itlearning.tech asking for your check. The administrator quick-checks it within **15 working days**.
+- **Self-Study (free):** submit the repository, then record a **15–20 minute defence** and link it from your README (a GitHub release is best): a demo on all three clouds, the network and security design, your scripts, a walk-through of one incident from your runbook, and your recommendation from the comparison. Then send the administrator a message on itlearning.tech asking for your check. The administrator quick-checks it within **15 working days**.
 - **Mentor-Verified (mentorship):** a live defence with a mentor, including a live "break and fix": the mentor breaks one thing in your environment (a rule, a probe, a secret permission) and you diagnose and fix it with the method from topic 2.6.
 
 ## Keep the bill near zero
 
-Build one cloud at a time, in focused sessions. The expensive items are the **load balancers** (especially Application Gateway), **NAT gateways** and the **databases**; destroy them when you stop for the day, and redeploy with your script. Check both bills the next day. If your credit is running low, tell your mentor before you start: the evidence can be gathered in two or three short sessions per cloud.
+Build one cloud at a time, in focused sessions. The expensive items are the **load balancers** (especially Application Gateway and Google's forwarding rules), **NAT gateways and Cloud NAT** and the **databases**; destroy them when you stop for the day, and redeploy with your script. Check all three bills the next day. If your credit is running low, tell your mentor before you start: the evidence can be gathered in two or three short sessions per cloud.
 
 ## Before you start
 
-Re-read the topic 6.1 guardrails, check your budgets exist, and make sure you can sign in to both clouds as your everyday user (not root or Global Administrator).
+Re-read the topic 6.1 guardrails, check your budgets exist, and make sure you can sign in to all three clouds as your everyday user (not root, Global Administrator or the project Owner for daily work).

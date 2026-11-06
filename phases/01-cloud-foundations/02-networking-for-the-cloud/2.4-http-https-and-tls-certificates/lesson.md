@@ -125,6 +125,7 @@ curl -sv https://itlearning.tech -o /dev/null 2>&1 | grep -i "expire date"
 | **Let's Encrypt** (with `certbot` or Caddy) | Free | Automatic, every 60–90 days | Your own servers, VMs, Kubernetes (with cert-manager, Phase 2) |
 | **AWS Certificate Manager (ACM)** | Free for use with AWS load balancers, CloudFront and API Gateway | Automatic | AWS load balancers; you can't download the private key |
 | **Azure**: App Service managed certificates, Front Door managed certificates, or certificates in **Key Vault** | Free managed options; Key Vault can also hold certificates from a CA you pay | Automatic for managed ones; Key Vault can auto-renew with partner CAs | App Service, Front Door, Application Gateway (which reads the certificate from Key Vault) |
+| **Google Cloud**: Google-managed certificates and **Certificate Manager** | Free with Google Cloud load balancers | Automatic | Google Cloud load balancers; issued once DNS points at the load balancer |
 | Paid CA (for extended validation or company policy) | Paid | Manual or semi-automatic | Some banks and regulated companies |
 
 The rule: **automate renewal**. Manual renewals are how certificates expire. Even with automation, monitor expiry (Phase 3) and alert 30 days ahead.
@@ -142,7 +143,7 @@ sudo certbot --nginx -d app.example.com
 
 In the cloud, you choose where the encrypted connection is decrypted (**terminated**):
 
-- **At the load balancer** (most common): the load balancer holds the certificate, decrypts, and sends plain HTTP to the app servers inside the private network. Simple, and the certificate is managed in one place (ACM or Key Vault).
+- **At the load balancer** (most common): the load balancer holds the certificate, decrypts, and sends plain HTTP to the app servers inside the private network. Simple, and the certificate is managed in one place (ACM, Key Vault or Google Certificate Manager).
 - **At the load balancer, then encrypted again** to the app servers: required by many banks and by PCI DSS rules for card data, so traffic is never plain text, even inside the network.
 - **Passed through to the app**: the load balancer forwards encrypted traffic untouched (a layer-4 load balancer) and the app holds the certificate.
 
@@ -166,7 +167,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 

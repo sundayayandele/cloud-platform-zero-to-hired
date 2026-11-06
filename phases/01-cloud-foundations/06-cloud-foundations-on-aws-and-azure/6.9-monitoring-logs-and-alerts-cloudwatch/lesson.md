@@ -6,6 +6,7 @@
 - Create alarms/alerts that notify you by email: 5xx errors, unhealthy targets, high CPU, low database storage, and the bill.
 - Build a small dashboard for ITL Pay on each cloud.
 - Write alert runbooks and avoid alert fatigue.
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -126,6 +127,45 @@ Notice the **description links to a runbook** (topic 4.3). Every alert that can 
 
 Build a small dashboard on each cloud with: requests and 5xx count (load balancer), healthy hosts, response time, database CPU and free storage, VM CPU. Then run the failure test from topic 6.8 (stop one app server, then both) and watch the dashboard, the alerts and your email. Note how long each alert took to fire and to clear. This is a miniature "game day", which Phase 3 makes routine.
 
+## Google Cloud: Cloud Monitoring and Cloud Logging
+
+| | Google Cloud |
+| --- | --- |
+| Metrics | **Cloud Monitoring** (for example `compute.googleapis.com/...`, `loadbalancing.googleapis.com/https/request_count`, `cloudsql.googleapis.com/database/disk/utilization`) |
+| Logs store | **Cloud Logging**: log buckets (the `_Default` bucket keeps logs 30 days unless you change it) |
+| Query language | The **Logging query language** in Logs Explorer; **Log Analytics** adds SQL |
+| Agent on VMs | **Ops Agent** (memory, disk, and log files) |
+| Alerts | **Alerting policies** → **notification channels** (email, SMS, Slack, webhooks, Pub/Sub) |
+| Checks from outside | **Uptime checks** |
+| Dashboards | Cloud Monitoring dashboards |
+
+**Logs from the VMs:** install the Ops Agent (the VM's service account needs `roles/logging.logWriter` and `roles/monitoring.metricWriter`):
+
+```bash
+curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh
+sudo bash add-google-cloud-ops-agent-repo.sh --also-install
+```
+
+For the container's output, Docker's **`gcplogs` log driver** sends it straight to Cloud Logging: `docker run ... --log-driver=gcplogs ...`. Search in **Logs Explorer**:
+
+```text
+resource.type="gce_instance"
+jsonPayload.message=~"Transfer|ERROR|unreachable" OR textPayload=~"Transfer|ERROR|unreachable"
+```
+
+**Alerts for ITL Pay on Google Cloud:**
+
+| Alert | Google Cloud |
+| --- | --- |
+| Users are getting errors | `loadbalancing.googleapis.com/https/request_count` filtered to `response_code_class = 500`, as a rate |
+| The service is down from outside | An **uptime check** on `https://api-gcp.../health`, with an alerting policy on it |
+| Database storage running out | `cloudsql.googleapis.com/database/disk/utilization` > 0.85 |
+| Database CPU saturated | `cloudsql.googleapis.com/database/cpu/utilization` > 0.85 for 15 minutes |
+| VM disk almost full | Ops Agent `agent.googleapis.com/disk/percent_used` > 85 |
+| Spending | Cloud Billing budget (topic 6.1) |
+
+Create a notification channel (Monitoring → Alerting → Edit notification channels → Email), then an uptime check and an alerting policy in the console; put the runbook link in the policy's **documentation** field, which is included in every notification. Set the retention of the `_Default` log bucket deliberately (30 days is the free default; longer costs money).
+
 ## Practice
 
 1. Ship ITL Pay Lite's logs to CloudWatch Logs and to Log Analytics. Make five transfers (including one with insufficient funds) and find them with Logs Insights and KQL.
@@ -133,6 +173,7 @@ Build a small dashboard on each cloud with: requests and 5xx count (load balance
 3. Add one database alert on each cloud (free storage or CPU).
 4. Build the dashboard in section 6 on both clouds and take a screenshot for your capstone repository.
 5. Write the runbook `docs/runbooks/api-503.md` that your alerts link to, covering both clouds (start from the example in topic 4.3).
+6. **Google Cloud:** install the Ops Agent, find your transfers in Logs Explorer, create an uptime check and an alerting policy with email notifications, and test it by stopping the app.
 
 ## Watch
 
@@ -141,10 +182,12 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 - [Basics of Amazon CloudWatch and CloudWatch Metrics | AWS Tutorials for Beginners](https://www.youtube.com/watch?v=Yxl7e88cTAQ) · Tiny Technical Tutorials · 11 min. Amazon CloudWatch and its metrics.
 - [What is Azure Monitor?](https://www.youtube.com/watch?v=eSutaPE80PM) · Microsoft Azure · 5 min. What Azure Monitor is, from Microsoft.
 - [How to get started with Azure Monitor Log Analytics](https://www.youtube.com/watch?v=-aMecR2Nrfc) · Microsoft Azure · 5 min. Getting started with Log Analytics, from Microsoft.
+- [Monitoring compute infrastructure with the Cloud Ops Agent](https://www.youtube.com/watch?v=Fzd6WP0_bWM) · Google Cloud Tech · 7 min. Monitoring VMs with the Ops Agent, from Google.
+- [EP. 18 - GCP Cloud Logging And Monitoring Explained For Beginners](https://www.youtube.com/watch?v=y3ooH7ps93E) · Tech Tutorials with Piyush · 17 min. Cloud Logging and Cloud Monitoring for beginners.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -157,4 +200,9 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 - [Amazon CloudWatch Getting Started](https://skillbuilder.aws/learn/HS1HSVQRHK/amazon-cloudwatch-getting-started/9Y34KP2H1T)
 - [Introduction to Amazon CloudWatch Logs](https://skillbuilder.aws/learn/H5K7BTCH6K/introduction-to-amazon-cloudwatch-logs/WMQKV8ZS4V)
 - [Amazon EC2 Observability, Monitoring, and Troubleshooting](https://skillbuilder.aws/learn/NVQMVRTS5H/amazon-ec2-observability-monitoring-and-troubleshooting/RC947H252R)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Logging and Monitoring in Google Cloud](https://www.skills.google/course_templates/99)
+- [Scaling with Google Cloud Operations](https://www.skills.google/course_templates/271)
 

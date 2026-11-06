@@ -6,6 +6,7 @@
 - Point a DNS name at each load balancer with **Route 53** and **Azure DNS** alias records.
 - Spread backends across two zones and show the service survives one server being stopped.
 - Explain the other options (NLB, Azure Load Balancer, Front Door, CloudFront, WAF) and when each fits.
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -145,6 +146,47 @@ That's the essence of high availability: redundant servers in different zones, h
 
 Load balancers bill every hour. Delete the ALB, its listeners and target group; on Azure delete the Application Gateway and its public IP (or the whole resource group). Keep your scripts: Capstone 1 rebuilds all of this.
 
+## Google Cloud: Cloud Load Balancing
+
+Google's **global external Application Load Balancer** is built from separate pieces, which looks like more work at first but maps exactly onto the ideas in this topic:
+
+| Piece | What it is | AWS / Azure equivalent |
+| --- | --- | --- |
+| **Instance group** (with a named port `http:8080`) | The backends | Target group / backend pool |
+| **Health check** | `GET /health` on 8080 | Target group health check / health probe |
+| **Backend service** | Backends + health check + settings | Target group settings / backend settings |
+| **URL map** | Routing rules | Listener rules / routing rules |
+| **Target HTTPS proxy** + **certificate** | TLS termination | HTTPS listener + ACM / Key Vault certificate |
+| **Forwarding rule** + **static IP** | The front door: one global IP address | The load balancer's DNS name / frontend IP |
+
+```bash
+gcloud compute instance-groups unmanaged create itlpay-ig --zone=africa-south1-a
+gcloud compute instance-groups unmanaged add-instances itlpay-ig --zone=africa-south1-a --instances=itlpay-app-1,itlpay-app-2
+gcloud compute instance-groups unmanaged set-named-ports itlpay-ig --zone=africa-south1-a --named-ports=http:8080
+
+gcloud compute health-checks create http itlpay-hc --port=8080 --request-path=/health --check-interval=10s --unhealthy-threshold=3
+gcloud compute backend-services create itlpay-be --global --protocol=HTTP --port-name=http \
+  --health-checks=itlpay-hc --load-balancing-scheme=EXTERNAL_MANAGED
+gcloud compute backend-services add-backend itlpay-be --global --instance-group=itlpay-ig --instance-group-zone=africa-south1-a
+gcloud compute url-maps create itlpay-urlmap --default-service=itlpay-be
+
+gcloud compute addresses create itlpay-ip --global
+gcloud compute ssl-certificates create itlpay-cert --domains=api-gcp.ada.labs.example --global      # Google-managed certificate
+gcloud compute target-https-proxies create itlpay-https --url-map=itlpay-urlmap --ssl-certificates=itlpay-cert
+gcloud compute forwarding-rules create itlpay-https-rule --global --load-balancing-scheme=EXTERNAL_MANAGED \
+  --address=itlpay-ip --target-https-proxy=itlpay-https --ports=443
+
+gcloud compute backend-services get-health itlpay-be --global
+```
+
+(For production, put the app servers in a **managed instance group** across two zones instead of an unmanaged group; the health check then also replaces broken VMs.)
+
+**DNS and the certificate:** create an A record for `api-gcp.ada.labs.example` pointing at the reserved IP (`gcloud compute addresses describe itlpay-ip --global --format="value(address)"`) in **Cloud DNS** or wherever your domain's DNS is. Google-managed certificates are issued only **after** DNS points at the load balancer, and provisioning can take up to an hour (`gcloud compute ssl-certificates describe itlpay-cert --global` shows `ACTIVE` when ready). For the HTTP-to-HTTPS redirect, add a second URL map that redirects, a target HTTP proxy and a forwarding rule on port 80.
+
+If backends are **unhealthy**, first check the firewall rule from topic 6.4 that allows `35.191.0.0/16` and `130.211.0.0/22` to port 8080 on VMs tagged `app`: the same "timed out, so it's a firewall" lesson as on Azure.
+
+The global load balancer has one anycast IP served from Google's edge worldwide, which suits users spread across countries. Regional load balancers exist too, and **Cloud Armor** adds a web application firewall. Forwarding rules are billed per hour, so delete the load balancer pieces after the lab (forwarding rules, proxy, certificate, URL map, backend service, health check, instance group, address).
+
 ## Practice
 
 1. Build the ALB with two targets in two AZs, first with HTTP only, and show both targets healthy. Then do the same with Application Gateway and two VMs.
@@ -152,6 +194,7 @@ Load balancers bill every hour. Delete the ALB, its listeners and target group; 
 3. Add HTTPS with a real certificate on at least one cloud (both if you have a domain), plus the HTTP→HTTPS redirect. Check the certificate with `curl -v` or `openssl s_client`.
 4. Run the high-availability test in section 5 on both clouds and record detection times.
 5. Use the pricing calculators to estimate one month of your setup on each cloud (load balancer, two small VMs, smallest database, NAT gateway). Which items dominate?
+6. **Google Cloud:** build the global external Application Load Balancer with two backends, test HTTPS (or HTTP only if you have no domain), and repeat the high-availability test from section 5.
 
 ## Watch
 
@@ -159,10 +202,12 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 - [Create an Application Load Balancer (ALB) in AWS | AWS Elastic Load Balancing Tutorial for Beginners](https://www.youtube.com/watch?v=ZGGpEwThhrM) · Tiny Technical Tutorials · 11 min. Creating an Application Load Balancer in AWS.
 - [Introduction to Azure Application Gateway | AZ-104 | Episode 14](https://www.youtube.com/watch?v=53rKarX6e34) · Microsoft Learn · 9 min. Introduction to Azure Application Gateway, from Microsoft Learn.
+- [What is Cloud Load Balancing?](https://www.youtube.com/watch?v=h8EqM6Xt3MA) · Google Cloud Tech · 5 min. What Cloud Load Balancing is, from Google.
+- [How to Configure Backend Services for Global External HTTP(S) Load Balancer](https://www.youtube.com/watch?v=rknxoOyMRSY) · Google Cloud Tech · 5 min. Backend services for the global external load balancer, from Google.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -175,4 +220,9 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 - [Application Load Balancer Getting Started](https://skillbuilder.aws/learn/72MYSKW681/application-load-balancer-getting-started/1TVTD6FGSD)
 - [AWS Certificate Manager Getting Started](https://skillbuilder.aws/learn/P9ZA4PJ1RM/aws-certificate-manager-getting-started/CBRYCPRHHJ)
 - [Amazon Route 53 Getting Started](https://skillbuilder.aws/learn/XJBJ1PF1R2/amazon-route-53-getting-started/J1VS14GBPM)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Implementing Cloud Load Balancing for Compute Engine](https://www.skills.google/course_templates/648)
+- [Elastic Google Cloud Infrastructure: Scaling and Automation](https://www.skills.google/course_templates/178)
 

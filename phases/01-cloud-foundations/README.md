@@ -1,10 +1,10 @@
-# Phase 1: Cloud Foundations (weeks 1–13)
+# Phase 1: Cloud Foundations (weeks 1–14)
 
-Linux, networking, Bash and Python, Git, containers, and the foundations of AWS and Azure side by side. Capstone 1 deploys ITL Pay on both clouds.
+Linux, networking, Bash and Python, Git, containers, and the foundations of AWS, Azure and Google Cloud side by side. Capstone 1 deploys ITL Pay on all three clouds.
 
-Certification targets: AWS Certified Cloud Practitioner and Microsoft Azure Fundamentals (AZ-900).
+Certification targets: AWS Certified Cloud Practitioner, Microsoft Azure Fundamentals (AZ-900), Google Cloud Digital Leader.
 
-Every cloud topic follows four steps: the idea without a vendor, the AWS lab, the Azure lab with the same checks, and a comparison.
+Every cloud topic follows the same steps: the idea without a vendor, the AWS lab, the Azure lab and the Google Cloud lab with the same checks, and a comparison.
 
 ## Module 1: Linux and the command line (weeks 1–2)
 
@@ -44,24 +44,25 @@ Every cloud topic follows four steps: the idea without a vendor, the AWS lab, th
 - [5.3 Docker Compose: running ITL Pay on your laptop](05-containers/5.3-docker-compose-running-itl-pay/lesson.md) (week 9)
 - [5.4 Registries and image security: GHCR, ECR and ACR](05-containers/5.4-registries-and-image-security-ghcr-ecr/lesson.md) (week 9)
 
-## Module 6: Cloud foundations on AWS and Azure (weeks 10–12)
+## Module 6: Cloud foundations on AWS, Azure and Google Cloud (weeks 10–12)
 
-- [6.1 Cloud concepts, accounts and subscriptions, regions, and billing guardrails](06-cloud-foundations-on-aws-and-azure/6.1-cloud-concepts-accounts/lesson.md) (week 10)
-- [6.2 Identity and access: IAM, and Entra ID with Azure RBAC](06-cloud-foundations-on-aws-and-azure/6.2-identity-and-access-iam-and-entra-id/lesson.md) (week 10)
-- [6.3 The AWS CLI and the Azure CLI side by side](06-cloud-foundations-on-aws-and-azure/6.3-the-aws-cli-and-the-azure-cli-side/lesson.md) (week 10)
-- [6.4 Private networks: VPC and VNet](06-cloud-foundations-on-aws-and-azure/6.4-private-networks-vpc-and-vnet/lesson.md) (week 11)
-- [6.5 Virtual machines: EC2 and Azure Virtual Machines](06-cloud-foundations-on-aws-and-azure/6.5-virtual-machines-ec2-and-azure-virtual/lesson.md) (week 11)
-- [6.6 Object storage: S3 and Blob Storage](06-cloud-foundations-on-aws-and-azure/6.6-object-storage-s3-and-blob-storage/lesson.md) (week 11)
-- [6.7 Managed PostgreSQL: RDS and Azure Database for PostgreSQL](06-cloud-foundations-on-aws-and-azure/6.7-managed-postgresql-rds-and-azure/lesson.md) (week 12)
-- [6.8 Load balancers, DNS and HTTPS on both clouds](06-cloud-foundations-on-aws-and-azure/6.8-load-balancers-dns-and-https-on-both/lesson.md) (week 12)
-- [6.9 Monitoring, logs and alerts: CloudWatch and Azure Monitor](06-cloud-foundations-on-aws-and-azure/6.9-monitoring-logs-and-alerts-cloudwatch/lesson.md) (week 12)
+- [6.1 Cloud concepts, accounts, subscriptions and projects, regions, and billing guardrails](06-cloud-foundations-on-aws-and-azure/6.1-cloud-concepts-accounts/lesson.md) (week 10)
+- [6.2 Identity and access: AWS IAM, Entra ID with Azure RBAC, and Google Cloud IAM](06-cloud-foundations-on-aws-and-azure/6.2-identity-and-access-iam-and-entra-id/lesson.md) (week 10)
+- [6.3 The AWS, Azure and Google Cloud CLIs side by side](06-cloud-foundations-on-aws-and-azure/6.3-the-aws-cli-and-the-azure-cli-side/lesson.md) (week 10)
+- [6.4 Private networks: VPC, VNet and Google Cloud VPC](06-cloud-foundations-on-aws-and-azure/6.4-private-networks-vpc-and-vnet/lesson.md) (week 11)
+- [6.5 Virtual machines: EC2, Azure Virtual Machines and Compute Engine](06-cloud-foundations-on-aws-and-azure/6.5-virtual-machines-ec2-and-azure-virtual/lesson.md) (week 11)
+- [6.6 Object storage: S3, Blob Storage and Cloud Storage](06-cloud-foundations-on-aws-and-azure/6.6-object-storage-s3-and-blob-storage/lesson.md) (week 11)
+- [6.7 Managed PostgreSQL: RDS, Azure Database for PostgreSQL and Cloud SQL](06-cloud-foundations-on-aws-and-azure/6.7-managed-postgresql-rds-and-azure/lesson.md) (week 12)
+- [6.8 Load balancers, DNS and HTTPS on all three clouds](06-cloud-foundations-on-aws-and-azure/6.8-load-balancers-dns-and-https-on-both/lesson.md) (week 12)
+- [6.9 Monitoring, logs and alerts: CloudWatch, Azure Monitor and Cloud Monitoring](06-cloud-foundations-on-aws-and-azure/6.9-monitoring-logs-and-alerts-cloudwatch/lesson.md) (week 12)
 
-## Capstone 1 (week 13)
+## Capstone 1 (weeks 13–14)
 
-[ITL Pay on AWS and Azure, by hand then by script](capstone-1/README.md): the brief, the evidence checklist and the rubric.
+[ITL Pay on AWS, Azure and Google Cloud, by hand then by script](capstone-1/README.md): the brief, the evidence checklist and the rubric.
 
 ## Labs
 
 - [`labs/access-log`](../../labs/access-log/generate.py): the practice web server log (topic 1.2)
 - [`labs/url-checker`](../../labs/url-checker/checker.py): a tested Python operations tool (topics 3.4 and 3.5)
 - [`labs/itlpay-lite`](../../labs/itlpay-lite/README.md): the transfers API used in Module 5 and Capstone 1
+- [`labs/terraform-network`](../../labs/terraform-network/README.md): ITL Pay's network as Terraform on all three clouds (Module 7)

@@ -25,14 +25,15 @@ This course takes you through all four, in that order:
 
 A typical day in a junior cloud role looks like this: read the overnight alerts, fix a server that has run out of disk space, review a colleague's change to the network, add a new storage bucket for a team (with the right access rules), answer a developer who can't reach the database, and write down what you did so the next person can repeat it. Every one of those tasks starts in a terminal.
 
-## 2. Why two clouds
+## 2. Why three clouds
 
-You will learn **AWS and Azure side by side**. AWS has the most cloud job adverts worldwide. Azure is strong with banks, telecoms and government across Nigeria and the rest of Africa, and with many European employers. The ideas are the same on both (a private network, a virtual machine, a storage bucket, a permission); only the names and the buttons differ. So every cloud topic in this course has four steps:
+You will learn **AWS, Azure and Google Cloud side by side**. AWS has the most cloud job adverts worldwide. Azure is strong with banks, telecoms and government across Nigeria and the rest of Africa, and with many European employers. Google Cloud is strong in data, AI and start-ups, has a region in Johannesburg, and its Kubernetes service is widely used. The ideas are the same on all three (a private network, a virtual machine, a storage bucket, a permission); only the names and the buttons differ. So every cloud topic in this course has five steps:
 
 1. **The idea**, explained without any vendor.
 2. **The AWS lab**: build it.
 3. **The Azure lab**: build the same thing, and pass the same checks.
-4. **The comparison**: names, defaults, costs, and one place where the two differ.
+4. **The Google Cloud lab**: build it a third time.
+5. **The comparison**: names, defaults, costs, and the places where they differ.
 
 You won't open a cloud account until Module 6 (week 10). Modules 1 to 5 run entirely on your own computer or in Codespaces, for free.
 
@@ -173,7 +174,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 

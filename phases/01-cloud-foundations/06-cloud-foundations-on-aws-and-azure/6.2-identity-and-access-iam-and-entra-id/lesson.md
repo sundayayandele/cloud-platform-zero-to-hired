@@ -6,6 +6,7 @@
 - Give a workload (a VM, a container, a pipeline) access **without any stored keys**: IAM roles and managed identities.
 - Apply least privilege, MFA and access reviews on both clouds.
 - Investigate "access denied" errors from the logs, and know where to look for who did what (CloudTrail, the Azure Activity Log).
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -129,6 +130,35 @@ The same idea covers containers (ECS task roles, EKS Pod Identity; AKS Workload 
 5. **Check the logs**: CloudTrail event history shows `AccessDenied` events with details; the Azure Activity Log shows failed operations. The **IAM Policy Simulator** and Azure's **Check access** blade test what an identity can do.
 6. **Remember propagation**: new permissions can take a few minutes (often longer for Azure role assignments) to take effect.
 
+## Google Cloud IAM
+
+Google Cloud uses the same ideas with its own names:
+
+| Part | Google Cloud |
+| --- | --- |
+| A person or a team | A Google account, a **Google group**, or a whole Workspace / Cloud Identity domain (all called **principals**) |
+| A workload's identity | A **service account** (for example `itlpay-app@PROJECT_ID.iam.gserviceaccount.com`) |
+| A set of permissions | A **role**: *basic* (Owner, Editor, Viewer: too broad for real work), *predefined* (for example `roles/storage.objectViewer`) or *custom* |
+| Granting | An **allow policy** on a resource: a list of **bindings**, each "these principals get this role" |
+| Where it applies | Organization, folder, project, or a single resource (a bucket, a secret); bindings are **inherited downwards** |
+| Organisation-wide limits | Organization Policy constraints; IAM deny policies |
+| Audit log | **Cloud Audit Logs** (Admin Activity logs are always on) |
+
+```bash
+# Read-only access to a project for a group
+gcloud projects add-iam-policy-binding cpe-lab-ada \
+  --member="group:itlpay-devs@example.com" --role="roles/viewer"
+
+# One service account may read objects in one bucket, and nothing else
+gcloud storage buckets add-iam-policy-binding gs://itlpay-statements-ada \
+  --member="serviceAccount:itlpay-app@cpe-lab-ada.iam.gserviceaccount.com" \
+  --role="roles/storage.objectViewer"
+```
+
+**Workloads without keys** (the rule from section 4 applies here too): attach a **service account** to the VM (topic 6.5) and the Google Cloud SDKs and `gcloud` get short-lived tokens from the **metadata server** automatically. **Never create service account keys** (JSON key files) for workloads: they're long-lived secrets that leak. Many organisations switch on the Organization Policy constraint that forbids creating them. For GitHub Actions and other clouds, **Workload Identity Federation** exchanges an outside token for Google credentials (Phase 2); on GKE, **Workload Identity** does the same for pods.
+
+**Investigating "permission denied" on Google Cloud:** the error names the missing permission, for example `Permission 'storage.objects.get' denied on resource`. Check who you are (`gcloud auth list`, `gcloud config list`), use the console's **Policy Troubleshooter**, and grant the predefined role that contains exactly that permission, at the narrowest resource. The **IAM Recommender** shows permissions that a principal hasn't used for 90 days, so you can take them away.
+
 ## Practice
 
 Use the accounts and budgets from topic 6.1. Delete everything at the end.
@@ -138,6 +168,7 @@ Use the accounts and budgets from topic 6.1. Delete everything at the end.
 3. **AWS:** write the narrow S3 read policy from section 2 for a test bucket, attach it to a role trusted by EC2, and (in topic 6.5) use it from a VM with no keys.
 4. **Azure:** create a storage account, and give a managed identity *Storage Blob Data Reader* on it only (you'll use it from a VM in topic 6.5).
 5. Find your own actions from today in **CloudTrail event history** and the **Azure Activity Log**. Write down one event from each: who, what, when, from which IP address.
+6. **Google Cloud:** create a service account `itlpay-app`, give it `roles/storage.objectViewer` on one bucket only, and use the Policy Troubleshooter to confirm it can't read a second bucket. Find one of your own actions in Cloud Audit Logs.
 
 ## Watch
 
@@ -146,10 +177,12 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 - [AWS IAM Core Concepts You NEED to Know](https://www.youtube.com/watch?v=_ZCTvmaPgao) · Be A Better Dev · 22 min. AWS IAM users, groups, roles and policies.
 - [AZ-900 Episode 28 | Azure Role-based Access Control (RBAC)](https://www.youtube.com/watch?v=4v7ffXxOnwU) · Adam Marczak - Azure for Everyone · 14 min. Azure role-based access control (AZ-900).
 - [Microsoft Entra ID Beginner's Tutorial (Azure Active Directory)](https://www.youtube.com/watch?v=0qZzcK1mHwA) · Microsoft Mechanics · 13 min. Microsoft Entra ID for beginners, from Microsoft.
+- [What is Cloud IAM?](https://www.youtube.com/watch?v=xQClVtAECdg) · Google Cloud Tech · 10 min. What Cloud IAM is, from Google.
+- [What are Service Accounts?](https://www.youtube.com/watch?v=xXk1YlkKW_k) · Google Cloud Tech · 6 min. Service accounts on Google Cloud, from Google.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -161,4 +194,10 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 
 - [Introduction to AWS Identity and Access Management (IAM)](https://skillbuilder.aws/learn/XFPX3M7HAQ/introduction-to-aws-identity-and-access-management-iam/DQJ3N5QRRU)
 - [AWS Identity and Access Management (IAM) - Troubleshooting](https://skillbuilder.aws/learn/ESGHTNXQFZ/aws-identity-and-access-management-iam--troubleshooting/3MQXNQUUQ4)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Manage Security in Google Cloud](https://www.skills.google/course_templates/21)
+- [Security Best Practices in Google Cloud](https://www.skills.google/course_templates/87)
+- [Introduction to Cloud Identity](https://www.skills.google/course_templates/44)
 

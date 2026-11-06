@@ -6,6 +6,7 @@
 - Give the VM an identity (IAM role, managed identity) and use it to reach other services without keys.
 - Stop, start, resize and delete VMs correctly, and know what keeps costing money afterwards.
 - Explain scale sets / Auto Scaling groups and when to use containers or managed platforms instead.
+- Do the same on **Google Cloud**, and compare the three clouds.
 
 ## Why this matters at work
 
@@ -144,6 +145,46 @@ For more than one server, don't launch them one at a time. **Auto Scaling groups
 
 When not to use VMs at all: if the app is already a container, managed container platforms (App Runner, ECS Fargate, Azure Container Apps) remove the OS from your responsibility. Capstone 1 uses VMs on purpose, so you learn what those platforms do for you.
 
+## Google Cloud: Compute Engine
+
+| Choice | Google Cloud |
+| --- | --- |
+| Image | Public images such as `ubuntu-2404-lts-amd64` from the project `ubuntu-os-cloud` (always the latest in that family) |
+| Size naming | `e2-small`: family E2 (cost-optimised, shared-core sizes `e2-micro`, `e2-small`, `e2-medium`); N2/N4 general, C3 compute, M3 memory; T2A and C4A are ARM |
+| Cheapest for labs | `e2-micro` (in the Always Free tier in some US regions) or `e2-small` |
+| Disk | Persistent Disk / Hyperdisk; `pd-balanced` is a good default |
+| Discounts | Sustained-use and committed-use discounts; **Spot VMs** |
+
+**Access without an open port:** Google's equivalent of Session Manager and Bastion is **Identity-Aware Proxy (IAP) TCP forwarding**: you connect through Google's identity check, and the VM needs no external IP. The firewall rule from topic 6.4 allows port 22 only from IAP's range `35.235.240.0/20`, and your user needs the **IAP-secured Tunnel User** role. **OS Login** (metadata `enable-oslogin=TRUE`) makes SSH use your Google identity and IAM roles instead of keys you manage.
+
+**The same cloud-init file** works: Ubuntu images on Compute Engine read cloud-init from the `user-data` metadata key.
+
+```bash
+gcloud iam service-accounts create itlpay-app --display-name="ITL Pay app servers"
+gcloud compute instances create itlpay-app-1 --zone=africa-south1-a --machine-type=e2-small \
+  --image-family=ubuntu-2404-lts-amd64 --image-project=ubuntu-os-cloud \
+  --subnet=app --no-address --tags=app \
+  --service-account="itlpay-app@$(gcloud config get-value project).iam.gserviceaccount.com" --scopes=cloud-platform \
+  --metadata=enable-oslogin=TRUE --metadata-from-file=user-data=cloud-init.yaml \
+  --shielded-secure-boot --labels=owner=ada,purpose=topic-6-5
+
+gcloud compute ssh itlpay-app-1 --zone=africa-south1-a --tunnel-through-iap     # then: curl -s localhost:8080/health
+```
+
+- `--no-address` means no external IP: unreachable from the internet, and outbound only through Cloud NAT.
+- `--service-account` attaches the VM's identity; with `--scopes=cloud-platform`, **IAM roles alone** decide what it may do. Grant that service account only what it needs (topics 6.6, 6.7, 6.9).
+- On the VM, `gcloud auth list` shows the service account; there are no keys on disk.
+
+You can also run a one-off command without a session: `gcloud compute ssh ... --tunnel-through-iap --command="curl -s localhost:8080/health"`.
+
+| Action | Google Cloud | Still billed? |
+| --- | --- | --- |
+| Stop | `gcloud compute instances stop` | Disks and static IPs: yes. Compute: no |
+| Resize | Stop, `gcloud compute instances set-machine-type`, start | |
+| Delete | `gcloud compute instances delete` (the boot disk is deleted by default; check extra disks) | Leftover disks, snapshots, reserved IPs: yes |
+| Many identical VMs | **Instance templates** + **managed instance groups** (autohealing, autoscaling, across zones) | |
+| Patching | **VM Manager** OS patch management | |
+
 ## Practice
 
 1. Push your ITL Pay Lite image to GHCR (topic 5.4) and make it public, so the VMs can pull it without credentials.
@@ -151,6 +192,7 @@ When not to use VMs at all: if the app is already a container, managed container
 3. Prove the VM has no public IP and that nothing on the internet can reach it (Reachability Analyzer / IP flow verify from topic 6.4).
 4. From each VM, show its cloud identity (`aws sts get-caller-identity`; `az login --identity && az account show`).
 5. Stop/deallocate both VMs and check in each console that compute billing stopped; then delete them, and find and delete any leftover disks and IPs.
+6. **Google Cloud:** launch `itlpay-app-1` with the same cloud-init file, connect with `gcloud compute ssh --tunnel-through-iap`, check `/health` and `gcloud auth list`, then delete it and check no disks are left.
 
 ## Watch
 
@@ -160,10 +202,12 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 - [Azure Virtual Machine (VM) Tutorial | Infrastructure as a Service (IaaS) intro](https://www.youtube.com/watch?v=iUaTq06m26g) · Adam Marczak - Azure for Everyone · 25 min. Creating and using an Azure virtual machine.
 - [AWS Sessions Manager Overview](https://www.youtube.com/watch?v=cUEFGKaZOyU) · Amazon Web Services · 5 min. AWS Systems Manager Session Manager, from AWS.
 - [How to use Azure Bastion to access virtual machines | Azure Tips and Tricks](https://www.youtube.com/watch?v=epWKTGGa_wY) · Microsoft Azure · 2 min. Connecting to VMs with Azure Bastion, from Microsoft.
+- [How to Create a Virtual Machine (VM) on Google Cloud Platform (GCP)](https://www.youtube.com/watch?v=g2Il8cxNv18) · Kahan Data Solutions · 11 min. Creating a virtual machine on Compute Engine.
+- [GCP Security: Using Identity Aware Proxy with SSH](https://www.youtube.com/watch?v=7Xo6MhifbpY) · webpwnized · 5 min. SSH through Identity-Aware Proxy, with no external IP.
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
@@ -176,4 +220,9 @@ Free, self-paced courses from the two clouds that go with this topic. They're op
 - [Amazon EC2 Getting Started](https://skillbuilder.aws/learn/2JS8J94MC5/amazon-ec2-getting-started/9XXKVZU682)
 - [Build with Amazon EC2](https://skillbuilder.aws/learn/DMG1BSGQNN/build-with-amazon-ec2/B7FZRSJADX)
 - [AWS Systems Manager Getting Started (Session Manager)](https://skillbuilder.aws/learn/1AG8ZGZN4Z/aws-systems-manager-getting-started/PKCXBQX7M5)
+
+**Google Cloud (Google Skills, formerly Cloud Skills Boost):**
+
+- [Essential Google Cloud Infrastructure: Foundation](https://www.skills.google/course_templates/50)
+- [Elastic Google Cloud Infrastructure: Scaling and Automation](https://www.skills.google/course_templates/178)
 

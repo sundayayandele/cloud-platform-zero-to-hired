@@ -92,13 +92,13 @@ Negative answers are cached too: if someone looked up a name **before** you crea
 
 ## 6. Public and private DNS in the cloud
 
-| | AWS | Azure |
-| --- | --- | --- |
-| Public zones (names the internet can resolve) | Route 53 **public hosted zones** | Azure DNS **public zones** |
-| Private zones (names only your networks can resolve) | Route 53 **private hosted zones**, associated with VPCs | Azure **Private DNS zones**, linked to VNets |
-| Pointing the apex at a load balancer | Alias records | Alias record sets |
-| Built-in resolver for machines in the network | The VPC resolver (`.2` address, also `169.254.169.253`) | Azure-provided DNS (`168.63.129.16`) |
-| Health-checked and routing policies | Route 53 health checks; weighted, latency, failover, geolocation routing | Azure Traffic Manager (DNS-based routing) |
+| | AWS | Azure | Google Cloud |
+| --- | --- | --- | --- |
+| Public zones (names the internet can resolve) | Route 53 **public hosted zones** | Azure DNS **public zones** | Cloud DNS **public zones** |
+| Private zones (names only your networks can resolve) | Route 53 **private hosted zones**, associated with VPCs | Azure **Private DNS zones**, linked to VNets | Cloud DNS **private zones**, visible to chosen VPCs |
+| Pointing the apex at a load balancer | Alias records | Alias record sets | A records pointing at the load balancer's static anycast IP (no alias type needed) |
+| Built-in resolver for machines in the network | The VPC resolver (`.2` address, also `169.254.169.253`) | Azure-provided DNS (`168.63.129.16`) | The metadata server (`169.254.169.254`) |
+| Health-checked and routing policies | Route 53 health checks; weighted, latency, failover, geolocation routing | Azure Traffic Manager (DNS-based routing) | Cloud DNS routing policies (weighted, geolocation, failover) |
 
 **Private DNS** lets you give internal services names such as `db.internal.itlpay` that only resolve inside your network, so applications don't hard-code IP addresses. It's also how **private endpoints** work: a managed database or storage account gets a private IP address in your network, and a private DNS zone makes its usual name resolve to that private address from inside the network, while the internet still sees the public one. When that zone isn't linked to the right VNet or VPC, the name resolves to the public address and the connection fails or goes the wrong way. It's one of the most common cloud DNS faults.
 
@@ -134,7 +134,7 @@ English videos with English captions, checked on 2026-11-06. On itlearning.tech 
 
 ## Further learning (free)
 
-Free, self-paced courses from the two clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn and a free AWS Builder ID for AWS Skill Builder to track your progress.
+Free, self-paced courses from the clouds that go with this topic. They're optional: use them to go deeper or to prepare for the certification exams. Sign in with a free Microsoft account for Microsoft Learn, a free AWS Builder ID for AWS Skill Builder, and a Google account for Google Skills (its courses are free; some hands-on labs use credits).
 
 **Azure (Microsoft Learn):**
 
