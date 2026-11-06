@@ -1,0 +1,286 @@
+{
+ "title": "Cloud & Platform Engineer: Zero to Hired",
+ "short": "CPE",
+ "clouds": [
+  "AWS",
+  "Azure"
+ ],
+ "design": "java-learn-from-zero-2hire: lms/new-courses/cloud-platform-engineer.md",
+ "phases": [
+  {
+   "number": 1,
+   "slug": "01-cloud-foundations",
+   "title": "Cloud Foundations",
+   "weeks": "1-13",
+   "status": "written",
+   "summary": "Linux, networking, Bash and Python, Git, containers, and the foundations of AWS and Azure side by side. Capstone 1 deploys ITL Pay on both clouds.",
+   "certifications": [
+    "AWS Certified Cloud Practitioner",
+    "Microsoft Azure Fundamentals (AZ-900)"
+   ],
+   "modules": [
+    {
+     "number": 1,
+     "slug": "01-linux-and-the-command-line",
+     "title": "Linux and the command line",
+     "weeks": "1-2",
+     "topics": [
+      {
+       "id": "1.1",
+       "slug": "1.1-your-lab-a-terminal-a-linux-machine",
+       "title": "Your lab: a terminal, a Linux machine and how this course works",
+       "week": 1
+      },
+      {
+       "id": "1.2",
+       "slug": "1.2-files-directories-text-and-pipes",
+       "title": "Files, directories, text and pipes",
+       "week": 1
+      },
+      {
+       "id": "1.3",
+       "slug": "1.3-users-groups-permissions-and-sudo",
+       "title": "Users, groups, permissions and sudo",
+       "week": 1
+      },
+      {
+       "id": "1.4",
+       "slug": "1.4-processes-services-with-systemd-and-logs",
+       "title": "Processes, services with systemd, and logs",
+       "week": 2
+      },
+      {
+       "id": "1.5",
+       "slug": "1.5-packages-ssh-keys-and-working",
+       "title": "Packages, SSH keys and working on a remote server",
+       "week": 2
+      }
+     ]
+    },
+    {
+     "number": 2,
+     "slug": "02-networking-for-the-cloud",
+     "title": "Networking for the cloud",
+     "weeks": "3-4",
+     "topics": [
+      {
+       "id": "2.1",
+       "slug": "2.1-how-data-moves-ip-tcp-udp-and-ports",
+       "title": "How data moves: IP, TCP, UDP and ports",
+       "week": 3
+      },
+      {
+       "id": "2.2",
+       "slug": "2.2-addresses-and-subnets-ipv4-cidr",
+       "title": "Addresses and subnets: IPv4, CIDR and private ranges",
+       "week": 3
+      },
+      {
+       "id": "2.3",
+       "slug": "2.3-dns-how-names-become-addresses",
+       "title": "DNS: how names become addresses",
+       "week": 3
+      },
+      {
+       "id": "2.4",
+       "slug": "2.4-http-https-and-tls-certificates",
+       "title": "HTTP, HTTPS and TLS certificates",
+       "week": 4
+      },
+      {
+       "id": "2.5",
+       "slug": "2.5-routing-nat-firewalls-and-load-balancers",
+       "title": "Routing, NAT, firewalls and load balancers",
+       "week": 4
+      },
+      {
+       "id": "2.6",
+       "slug": "2.6-troubleshooting-a-connection-step",
+       "title": "Troubleshooting a connection step by step",
+       "week": 4
+      }
+     ]
+    },
+    {
+     "number": 3,
+     "slug": "03-scripting-and-automation",
+     "title": "Scripting and automation",
+     "weeks": "5-6",
+     "topics": [
+      {
+       "id": "3.1",
+       "slug": "3.1-bash-scripting-variables-conditions",
+       "title": "Bash scripting: variables, conditions, loops and functions",
+       "week": 5
+      },
+      {
+       "id": "3.2",
+       "slug": "3.2-safe-scripts-quoting-errors-and-running",
+       "title": "Safe scripts: quoting, errors and running twice",
+       "week": 5
+      },
+      {
+       "id": "3.3",
+       "slug": "3.3-scheduling-cron-and-systemd-timers",
+       "title": "Scheduling: cron and systemd timers",
+       "week": 5
+      },
+      {
+       "id": "3.4",
+       "slug": "3.4-python-for-operations-files-json",
+       "title": "Python for operations: files, JSON and REST APIs",
+       "week": 6
+      },
+      {
+       "id": "3.5",
+       "slug": "3.5-testing-your-automation-with-pytest",
+       "title": "Testing your automation with pytest",
+       "week": 6
+      }
+     ]
+    },
+    {
+     "number": 4,
+     "slug": "04-git-github-and-docs-as-code",
+     "title": "Git, GitHub and docs-as-code",
+     "weeks": "7",
+     "topics": [
+      {
+       "id": "4.1",
+       "slug": "4.1-git-and-github-essentials",
+       "title": "Git and GitHub essentials",
+       "week": 7
+      },
+      {
+       "id": "4.2",
+       "slug": "4.2-pull-requests-code-review-and-branch",
+       "title": "Pull requests, code review and branch protection",
+       "week": 7
+      },
+      {
+       "id": "4.3",
+       "slug": "4.3-docs-as-code-readmes-runbooks-diagrams",
+       "title": "Docs as code: READMEs, runbooks, diagrams and decision records",
+       "week": 7
+      }
+     ]
+    },
+    {
+     "number": 5,
+     "slug": "05-containers",
+     "title": "Containers",
+     "weeks": "8-9",
+     "topics": [
+      {
+       "id": "5.1",
+       "slug": "5.1-containers-what-they-are-and-how-to-run",
+       "title": "Containers: what they are and how to run them",
+       "week": 8
+      },
+      {
+       "id": "5.2",
+       "slug": "5.2-building-images-dockerfiles-layers",
+       "title": "Building images: Dockerfiles, layers and multi-stage builds",
+       "week": 8
+      },
+      {
+       "id": "5.3",
+       "slug": "5.3-docker-compose-running-itl-pay",
+       "title": "Docker Compose: running ITL Pay on your laptop",
+       "week": 9
+      },
+      {
+       "id": "5.4",
+       "slug": "5.4-registries-and-image-security-ghcr-ecr",
+       "title": "Registries and image security: GHCR, ECR and ACR",
+       "week": 9
+      }
+     ]
+    },
+    {
+     "number": 6,
+     "slug": "06-cloud-foundations-on-aws-and-azure",
+     "title": "Cloud foundations on AWS and Azure",
+     "weeks": "10-12",
+     "topics": [
+      {
+       "id": "6.1",
+       "slug": "6.1-cloud-concepts-accounts",
+       "title": "Cloud concepts, accounts and subscriptions, regions, and billing guardrails",
+       "week": 10
+      },
+      {
+       "id": "6.2",
+       "slug": "6.2-identity-and-access-iam-and-entra-id",
+       "title": "Identity and access: IAM, and Entra ID with Azure RBAC",
+       "week": 10
+      },
+      {
+       "id": "6.3",
+       "slug": "6.3-the-aws-cli-and-the-azure-cli-side",
+       "title": "The AWS CLI and the Azure CLI side by side",
+       "week": 10
+      },
+      {
+       "id": "6.4",
+       "slug": "6.4-private-networks-vpc-and-vnet",
+       "title": "Private networks: VPC and VNet",
+       "week": 11
+      },
+      {
+       "id": "6.5",
+       "slug": "6.5-virtual-machines-ec2-and-azure-virtual",
+       "title": "Virtual machines: EC2 and Azure Virtual Machines",
+       "week": 11
+      },
+      {
+       "id": "6.6",
+       "slug": "6.6-object-storage-s3-and-blob-storage",
+       "title": "Object storage: S3 and Blob Storage",
+       "week": 11
+      },
+      {
+       "id": "6.7",
+       "slug": "6.7-managed-postgresql-rds-and-azure",
+       "title": "Managed PostgreSQL: RDS and Azure Database for PostgreSQL",
+       "week": 12
+      },
+      {
+       "id": "6.8",
+       "slug": "6.8-load-balancers-dns-and-https-on-both",
+       "title": "Load balancers, DNS and HTTPS on both clouds",
+       "week": 12
+      },
+      {
+       "id": "6.9",
+       "slug": "6.9-monitoring-logs-and-alerts-cloudwatch",
+       "title": "Monitoring, logs and alerts: CloudWatch and Azure Monitor",
+       "week": 12
+      }
+     ]
+    }
+   ],
+   "capstone": {
+    "week": 13,
+    "title": "ITL Pay on AWS and Azure, by hand then by script",
+    "brief": "phases/01-cloud-foundations/capstone-1/README.md"
+   }
+  },
+  {
+   "number": 2,
+   "slug": "02-devops-iac",
+   "title": "DevOps and Infrastructure as Code",
+   "weeks": "14-24",
+   "status": "planned",
+   "summary": "Terraform on both clouds, CI/CD with keyless login, Kubernetes and Helm (EKS and AKS), secrets and observability. Capstone 2: pipeline to production on two clouds."
+  },
+  {
+   "number": 3,
+   "slug": "03-platform-sre",
+   "title": "Platform Engineering and SRE",
+   "weeks": "25-34",
+   "status": "planned",
+   "summary": "GitOps, reliability targets and incident response, a self-service platform that deploys to either cloud, cloud security, FinOps and AI for operations. Capstone 3: run a two-cloud platform."
+  }
+ ]
+}

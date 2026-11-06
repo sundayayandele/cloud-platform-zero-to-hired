@@ -1,0 +1,677 @@
+{
+ "1.1": {
+  "azure": [
+   [
+    "Developing in the Windows Subsystem for Linux with Visual Studio Code",
+    "https://learn.microsoft.com/training/modules/developing-in-wsl/"
+   ],
+   [
+    "Introduction to Azure Cloud Shell",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-cloud-shell/"
+   ],
+   [
+    "Code with GitHub Codespaces",
+    "https://learn.microsoft.com/training/modules/code-with-github-codespaces/"
+   ]
+  ],
+  "aws": [
+   [
+    "Getting Started with AWS Cloud Essentials",
+    "https://skillbuilder.aws/learn/Y738EQQD49/getting-started-with-aws-cloud-essentials/YEWD5RAWZJ"
+   ],
+   [
+    "Edit Files Visually in AWS CloudShell",
+    "https://skillbuilder.aws/learn/GSCTVGSKGR/edit-files-visually-in-aws-cloudshell/DKJKGXECCQ"
+   ]
+  ]
+ },
+ "1.2": {
+  "azure": [
+   [
+    "Introduction to Azure Cloud Shell (practise the commands in the browser)",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-cloud-shell/"
+   ]
+  ],
+  "aws": [
+   [
+    "Edit Files Visually in AWS CloudShell",
+    "https://skillbuilder.aws/learn/GSCTVGSKGR/edit-files-visually-in-aws-cloudshell/DKJKGXECCQ"
+   ]
+  ]
+ },
+ "1.3": {
+  "azure": [
+   [
+    "Describe identity concepts",
+    "https://learn.microsoft.com/training/modules/describe-identity-principles-concepts/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to AWS Identity and Access Management (IAM)",
+    "https://skillbuilder.aws/learn/XFPX3M7HAQ/introduction-to-aws-identity-and-access-management-iam/DQJ3N5QRRU"
+   ]
+  ]
+ },
+ "1.4": {
+  "azure": [
+   [
+    "Guided Project: Deploy and administer Linux virtual machines on Azure",
+    "https://learn.microsoft.com/training/modules/guided-project-deploy-administer-linux-virtual-machines-azure/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Systems Manager Getting Started",
+    "https://skillbuilder.aws/learn/1AG8ZGZN4Z/aws-systems-manager-getting-started/PKCXBQX7M5"
+   ]
+  ]
+ },
+ "1.5": {
+  "azure": [
+   [
+    "Develop on a remote machine using SSH in Visual Studio Code",
+    "https://learn.microsoft.com/training/modules/develop-on-remote-machine/"
+   ],
+   [
+    "Deploy and administer Linux virtual machines on Azure (learning path)",
+    "https://learn.microsoft.com/training/paths/deploy-administer-linux-virtual-machines-azure/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to Amazon EC2",
+    "https://skillbuilder.aws/learn/9VNGAHHAUU/introduction-to-amazon-ec2/AJZEJRN2BQ"
+   ]
+  ]
+ },
+ "2.1": {
+  "azure": [
+   [
+    "Introduction to Azure Virtual Networks",
+    "https://learn.microsoft.com/training/modules/introduction-to-azure-virtual-networks/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Networking Basics",
+    "https://skillbuilder.aws/learn/S1VYRYHD8V/aws-networking-basics/SKP7248UVF"
+   ]
+  ]
+ },
+ "2.2": {
+  "azure": [
+   [
+    "Introduction to Azure Virtual Networks",
+    "https://learn.microsoft.com/training/modules/introduction-to-azure-virtual-networks/"
+   ],
+   [
+    "AZ-104: Configure and manage virtual networks for Azure administrators (learning path)",
+    "https://learn.microsoft.com/training/paths/az-104-manage-virtual-networks/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Networking Basics",
+    "https://skillbuilder.aws/learn/S1VYRYHD8V/aws-networking-basics/SKP7248UVF"
+   ],
+   [
+    "Configuring and Deploying VPCs with Multiple Subnets",
+    "https://skillbuilder.aws/learn/4HWA8PME5S/configuring-and-deploying-vpcs-with-multiple-subnets/BTRCDVX2RU"
+   ],
+   [
+    "AWS IPv6 Fundamentals and VPC Connectivity",
+    "https://skillbuilder.aws/learn/MU4KD6CAFP/aws-ipv6-fundamentals-and-vpc-connectivity/2S862CT52F"
+   ]
+  ]
+ },
+ "2.3": {
+  "azure": [
+   [
+    "Introduction to Azure DNS",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-dns/"
+   ],
+   [
+    "Host your domain on Azure DNS",
+    "https://learn.microsoft.com/training/modules/host-domain-azure-dns/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon Route 53 - Basics",
+    "https://skillbuilder.aws/learn/XQA7PTD4D6/amazon-route-53--basics/Y4ERFCYTP1"
+   ],
+   [
+    "Amazon Route 53 Getting Started",
+    "https://skillbuilder.aws/learn/XJBJ1PF1R2/amazon-route-53-getting-started/J1VS14GBPM"
+   ]
+  ]
+ },
+ "2.4": {
+  "azure": [
+   [
+    "Manage certificates and monitor Azure Key Vault",
+    "https://learn.microsoft.com/training/modules/manage-certificates-monitor-key-vault/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Certificate Manager Getting Started",
+    "https://skillbuilder.aws/learn/P9ZA4PJ1RM/aws-certificate-manager-getting-started/CBRYCPRHHJ"
+   ],
+   [
+    "Automate certificates with ACME support in AWS Certificate Manager",
+    "https://skillbuilder.aws/learn/8539TFPHDF/automate-certificates-with-acme-support-in-aws-certificate-manager/C6K59ZQ86M"
+   ]
+  ]
+ },
+ "2.5": {
+  "azure": [
+   [
+    "Configure network security groups",
+    "https://learn.microsoft.com/training/modules/configure-network-security-groups/"
+   ],
+   [
+    "Introduction to Azure Load Balancer",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-load-balancer/"
+   ],
+   [
+    "Introduction to Secure Network Infrastructure with Azure network security (learning path)",
+    "https://learn.microsoft.com/training/paths/secure-networking-infrastructure/"
+   ]
+  ],
+  "aws": [
+   [
+    "Understanding AWS Networking Gateways",
+    "https://skillbuilder.aws/learn/DYWKWCJ9Y1/understanding-aws-networking-gateways/484J82ZCEZ"
+   ],
+   [
+    "Differences Between Security Groups and NACLs",
+    "https://skillbuilder.aws/learn/WZ7B7G3RZ4/differences-between-security-groups-and-nacls/G59RY3EZGG"
+   ],
+   [
+    "Elastic Load Balancing (ELB) Getting Started",
+    "https://skillbuilder.aws/learn/2Q7X7W6V7G/elastic-load-balancing-elb-getting-started/XHYHBUHUTA"
+   ]
+  ]
+ },
+ "2.6": {
+  "azure": [
+   [
+    "Troubleshoot network security issues with Microsoft Azure",
+    "https://learn.microsoft.com/training/modules/troubleshoot-network-security-issues/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon Virtual Private Cloud (Amazon VPC) - Troubleshooting",
+    "https://skillbuilder.aws/learn/YHWW7BTY89/amazon-virtual-private-cloud-amazon-vpc--troubleshooting/YTMMRFE2KJ"
+   ],
+   [
+    "Elastic Load Balancing (ELB) - Troubleshooting",
+    "https://skillbuilder.aws/learn/5R5Q9TN3H4/elastic-load-balancing-elb--troubleshooting/GZTEH5S7D2"
+   ]
+  ]
+ },
+ "3.1": {
+  "azure": [
+   [
+    "Guided project: Manage Azure resources with Cloud Shell and the Azure CLI",
+    "https://learn.microsoft.com/training/modules/guided-project-manage-resources-cloud-shell-cli/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Command Line Interface (AWS CLI) Getting Started",
+    "https://skillbuilder.aws/learn/HNQT94X934/aws-command-line-interface-aws-cli-getting-started/QHT6C7ZHDA"
+   ]
+  ]
+ },
+ "3.2": {
+  "azure": [
+   [
+    "Maintain a secure repository by using GitHub best practices",
+    "https://learn.microsoft.com/training/modules/maintain-secure-repository-github/"
+   ]
+  ],
+  "aws": [
+   [
+    "Getting Started with DevOps on AWS",
+    "https://skillbuilder.aws/learn/R4B13K95YQ/getting-started-with-devops-on-aws/38NHHYRV1R"
+   ]
+  ]
+ },
+ "3.3": {
+  "azure": [
+   [
+    "Automate development tasks by using GitHub Actions",
+    "https://learn.microsoft.com/training/modules/github-actions-automate-tasks/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Systems Manager Getting Started",
+    "https://skillbuilder.aws/learn/1AG8ZGZN4Z/aws-systems-manager-getting-started/PKCXBQX7M5"
+   ]
+  ]
+ },
+ "3.4": {
+  "azure": [
+   [
+    "Write your first Python code",
+    "https://learn.microsoft.com/training/modules/write-first-python-code/"
+   ],
+   [
+    "Work with data in Python",
+    "https://learn.microsoft.com/training/modules/work-with-data-python/"
+   ]
+  ],
+  "aws": [
+   [
+    "Build with AWS Command Line Interface (AWS CLI)",
+    "https://skillbuilder.aws/learn/AVW7M7MTWY/build-with-aws-command-line-interface-aws-cli/BBYQYTJG3M"
+   ]
+  ]
+ },
+ "3.5": {
+  "azure": [
+   [
+    "Build continuous integration workflows by using GitHub Actions",
+    "https://learn.microsoft.com/training/modules/github-actions-ci/"
+   ]
+  ],
+  "aws": [
+   [
+    "Getting Started with DevOps on AWS",
+    "https://skillbuilder.aws/learn/R4B13K95YQ/getting-started-with-devops-on-aws/38NHHYRV1R"
+   ]
+  ]
+ },
+ "4.1": {
+  "azure": [
+   [
+    "Introduction to Git",
+    "https://learn.microsoft.com/training/modules/intro-to-git/"
+   ],
+   [
+    "Introduction to GitHub",
+    "https://learn.microsoft.com/training/modules/introduction-to-github/"
+   ],
+   [
+    "Describe how Git manages source control",
+    "https://learn.microsoft.com/training/modules/describe-how-git-manages-source-control/"
+   ]
+  ],
+  "aws": [
+   [
+    "Getting Started with DevOps on AWS",
+    "https://skillbuilder.aws/learn/R4B13K95YQ/getting-started-with-devops-on-aws/38NHHYRV1R"
+   ]
+  ]
+ },
+ "4.2": {
+  "azure": [
+   [
+    "Manage repository changes by using pull requests on GitHub",
+    "https://learn.microsoft.com/training/modules/manage-changes-pull-requests-github/"
+   ],
+   [
+    "Settle competing commits by using merge conflict resolution on GitHub",
+    "https://learn.microsoft.com/training/modules/resolve-merge-conflicts-github/"
+   ],
+   [
+    "Build continuous integration workflows by using GitHub Actions",
+    "https://learn.microsoft.com/training/modules/github-actions-ci/"
+   ]
+  ],
+  "aws": [
+   [
+    "Getting Started with DevOps on AWS",
+    "https://skillbuilder.aws/learn/R4B13K95YQ/getting-started-with-devops-on-aws/38NHHYRV1R"
+   ]
+  ]
+ },
+ "4.3": {
+  "azure": [
+   [
+    "Communicate effectively on GitHub using Markdown",
+    "https://learn.microsoft.com/training/modules/communicate-using-markdown/"
+   ],
+   [
+    "Upload your project by using GitHub best practices",
+    "https://learn.microsoft.com/training/modules/upload-project-github/"
+   ]
+  ],
+  "aws": []
+ },
+ "5.1": {
+  "azure": [
+   [
+    "Build a containerized web application with Docker",
+    "https://learn.microsoft.com/training/modules/intro-to-containers/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to Container Basics",
+    "https://skillbuilder.aws/learn/WU72QMK76B/introduction-to-container-basics/5Y4MUBRATZ"
+   ],
+   [
+    "Introduction to Containers",
+    "https://skillbuilder.aws/learn/CUCA1DK47V/introduction-to-containers/XJ58VC1FF5"
+   ]
+  ]
+ },
+ "5.2": {
+  "azure": [
+   [
+    "Build a containerized web application with Docker",
+    "https://learn.microsoft.com/training/modules/intro-to-containers/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to Containers",
+    "https://skillbuilder.aws/learn/CUCA1DK47V/introduction-to-containers/XJ58VC1FF5"
+   ]
+  ]
+ },
+ "5.3": {
+  "azure": [
+   [
+    "Use a Docker container as a development environment with Visual Studio Code",
+    "https://learn.microsoft.com/training/modules/use-docker-container-dev-env-vs-code/"
+   ]
+  ],
+  "aws": [
+   [
+    "Containers Learning Series for Amazon ECS Overview",
+    "https://skillbuilder.aws/learn/3EU3GFYDGG/containers-learning-series-for-amazon-ecs-overview/8HYE69VDXV"
+   ]
+  ]
+ },
+ "5.4": {
+  "azure": [
+   [
+    "Deploy and use Azure Container Registry",
+    "https://learn.microsoft.com/training/modules/deploy-use-azure-container-registry/"
+   ],
+   [
+    "Implement security controls for Azure Container Registry, Container Instances, and Container Apps",
+    "https://learn.microsoft.com/training/modules/implement-security-controls-containers/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon ECR Getting Started",
+    "https://skillbuilder.aws/learn/M494WWS5EF/amazon-ecr-getting-started/N5CQ7DC6HT"
+   ],
+   [
+    "Build With Amazon Elastic Container Registry (Amazon ECR)",
+    "https://skillbuilder.aws/learn/PT6R6CVEFP/build-with-amazon-elastic-container-registry-amazon-ecr/ZGKSY75UZA"
+   ]
+  ]
+ },
+ "6.1": {
+  "azure": [
+   [
+    "Introduction to Cloud Infrastructure: Describe cloud concepts (learning path, AZ-900)",
+    "https://learn.microsoft.com/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/"
+   ],
+   [
+    "Introduction to Cloud Infrastructure: Describe Azure architecture and services (learning path, AZ-900)",
+    "https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/"
+   ],
+   [
+    "Guided project: Set up cost guardrails in Azure",
+    "https://learn.microsoft.com/training/modules/guided-project-cost-guardrails/"
+   ],
+   [
+    "Introduction to analyzing costs and creating budgets with Microsoft Cost Management",
+    "https://learn.microsoft.com/training/modules/analyze-costs-create-budgets-azure-cost-management/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Cloud Practitioner Essentials (Cloud Practitioner exam prep)",
+    "https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials/8D79F3AVR7"
+   ],
+   [
+    "AWS Cloud Quest: Cloud Practitioner (hands-on game)",
+    "https://skillbuilder.aws/learn/FU5WCYVGKY/aws-cloud-quest-cloud-practitioner/JF9TKU68GT"
+   ],
+   [
+    "AWS Budgets Getting Started",
+    "https://skillbuilder.aws/learn/778TKSGH8Z/aws-budgets-getting-started/XAZ7B7K32D"
+   ],
+   [
+    "AWS Billing and Cost Management",
+    "https://skillbuilder.aws/learn/J59SS92GUN/aws-billing-and-cost-management/25JXE6WYAY"
+   ]
+  ]
+ },
+ "6.2": {
+  "azure": [
+   [
+    "Describe Azure identity, access, and security",
+    "https://learn.microsoft.com/training/modules/describe-azure-identity-access-security/"
+   ],
+   [
+    "Secure your Azure resources with Azure role-based access control (Azure RBAC)",
+    "https://learn.microsoft.com/training/modules/secure-azure-resources-with-rbac/"
+   ],
+   [
+    "Guided Project: Set up new employee access (Entra ID and RBAC)",
+    "https://learn.microsoft.com/training/modules/guided-project-new-employee-access/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to AWS Identity and Access Management (IAM)",
+    "https://skillbuilder.aws/learn/XFPX3M7HAQ/introduction-to-aws-identity-and-access-management-iam/DQJ3N5QRRU"
+   ],
+   [
+    "AWS Identity and Access Management (IAM) - Troubleshooting",
+    "https://skillbuilder.aws/learn/ESGHTNXQFZ/aws-identity-and-access-management-iam--troubleshooting/3MQXNQUUQ4"
+   ]
+  ]
+ },
+ "6.3": {
+  "azure": [
+   [
+    "Guided project: Manage Azure resources with Cloud Shell and the Azure CLI",
+    "https://learn.microsoft.com/training/modules/guided-project-manage-resources-cloud-shell-cli/"
+   ],
+   [
+    "Introduction to Azure Cloud Shell",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-cloud-shell/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Command Line Interface (AWS CLI) Getting Started",
+    "https://skillbuilder.aws/learn/HNQT94X934/aws-command-line-interface-aws-cli-getting-started/QHT6C7ZHDA"
+   ],
+   [
+    "Build with AWS Command Line Interface (AWS CLI)",
+    "https://skillbuilder.aws/learn/AVW7M7MTWY/build-with-aws-command-line-interface-aws-cli/BBYQYTJG3M"
+   ]
+  ]
+ },
+ "6.4": {
+  "azure": [
+   [
+    "Introduction to Azure Virtual Networks",
+    "https://learn.microsoft.com/training/modules/introduction-to-azure-virtual-networks/"
+   ],
+   [
+    "Configure network security groups",
+    "https://learn.microsoft.com/training/modules/configure-network-security-groups/"
+   ],
+   [
+    "AZ-104: Configure and manage virtual networks for Azure administrators (learning path)",
+    "https://learn.microsoft.com/training/paths/az-104-manage-virtual-networks/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to Amazon Virtual Private Cloud (VPC)",
+    "https://skillbuilder.aws/learn/PH6Z6EVH8Z/introduction-to-amazon-virtual-private-cloud-vpc/PA8H7FUE15"
+   ],
+   [
+    "Configuring and Deploying VPCs with Multiple Subnets",
+    "https://skillbuilder.aws/learn/4HWA8PME5S/configuring-and-deploying-vpcs-with-multiple-subnets/BTRCDVX2RU"
+   ],
+   [
+    "Protecting Your Instance with Security Groups",
+    "https://skillbuilder.aws/learn/QEA4T3Y2EJ/protecting-your-instance-with-security-groups/EAG9U7MHB3"
+   ]
+  ]
+ },
+ "6.5": {
+  "azure": [
+   [
+    "Introduction to Azure virtual machines",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-virtual-machines/"
+   ],
+   [
+    "Plan and implement Azure Bastion",
+    "https://learn.microsoft.com/training/modules/plan-implement-azure-bastion/"
+   ],
+   [
+    "Introduction to Azure Virtual Machine Scale Sets",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-virtual-machine-scale-sets/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon EC2 Getting Started",
+    "https://skillbuilder.aws/learn/2JS8J94MC5/amazon-ec2-getting-started/9XXKVZU682"
+   ],
+   [
+    "Build with Amazon EC2",
+    "https://skillbuilder.aws/learn/DMG1BSGQNN/build-with-amazon-ec2/B7FZRSJADX"
+   ],
+   [
+    "AWS Systems Manager Getting Started (Session Manager)",
+    "https://skillbuilder.aws/learn/1AG8ZGZN4Z/aws-systems-manager-getting-started/PKCXBQX7M5"
+   ]
+  ]
+ },
+ "6.6": {
+  "azure": [
+   [
+    "Describe Azure storage services",
+    "https://learn.microsoft.com/training/modules/describe-azure-storage-services/"
+   ],
+   [
+    "Secure your Azure Storage account",
+    "https://learn.microsoft.com/training/modules/secure-azure-storage-account/"
+   ],
+   [
+    "AZ-104: Implement and manage storage in Azure (learning path)",
+    "https://learn.microsoft.com/training/paths/az-104-manage-storage/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon S3 Getting Started",
+    "https://skillbuilder.aws/learn/H99Y6PR2F7/amazon-s3-getting-started/TCVDGQFEJR"
+   ],
+   [
+    "Securing and Protecting Your Data in Amazon S3",
+    "https://skillbuilder.aws/learn/EQ3KGNCAC8/securing-and-protecting-your-data-in-amazon-simple-storage-service-amazon-s3/S7VEVDJ5D9"
+   ],
+   [
+    "Amazon S3 Cost Optimization",
+    "https://skillbuilder.aws/learn/VURSUWRSKA/amazon-simple-storage-service-amazon-s3-cost-optimization/6ZZF9NUFTH"
+   ]
+  ]
+ },
+ "6.7": {
+  "azure": [
+   [
+    "Configure and migrate to Azure Database for PostgreSQL (learning path)",
+    "https://learn.microsoft.com/training/paths/microsoft-learn-azure-database-for-postgresql/"
+   ],
+   [
+    "Manage keys and secrets in Azure Key Vault",
+    "https://learn.microsoft.com/training/modules/manage-keys-secrets-key-vault/"
+   ]
+  ],
+  "aws": [
+   [
+    "Fundamentals of Amazon RDS for PostgreSQL",
+    "https://skillbuilder.aws/learn/AK479CRG5K/fundamentals-of-amazon-rds-for-postgresql/FB4ZR9N2DU"
+   ],
+   [
+    "Amazon RDS for PostgreSQL - Troubleshooting",
+    "https://skillbuilder.aws/learn/GN8V5D3YQA/amazon-relational-database-service-amazon-rds-for-postgresql--troubleshooting/6PYYKHYNUW"
+   ],
+   [
+    "AWS Secrets Manager Getting Started",
+    "https://skillbuilder.aws/learn/26F7XCFDUX/aws-secrets-manager-getting-started/U1CPGYWQTK"
+   ]
+  ]
+ },
+ "6.8": {
+  "azure": [
+   [
+    "Introduction to Azure Application Gateway",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-application-gateway/"
+   ],
+   [
+    "Introduction to Azure DNS",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-dns/"
+   ],
+   [
+    "Manage certificates and monitor Azure Key Vault",
+    "https://learn.microsoft.com/training/modules/manage-certificates-monitor-key-vault/"
+   ]
+  ],
+  "aws": [
+   [
+    "Application Load Balancer Getting Started",
+    "https://skillbuilder.aws/learn/72MYSKW681/application-load-balancer-getting-started/1TVTD6FGSD"
+   ],
+   [
+    "AWS Certificate Manager Getting Started",
+    "https://skillbuilder.aws/learn/P9ZA4PJ1RM/aws-certificate-manager-getting-started/CBRYCPRHHJ"
+   ],
+   [
+    "Amazon Route 53 Getting Started",
+    "https://skillbuilder.aws/learn/XJBJ1PF1R2/amazon-route-53-getting-started/J1VS14GBPM"
+   ]
+  ]
+ },
+ "6.9": {
+  "azure": [
+   [
+    "Monitor your Azure virtual machines with Azure Monitor",
+    "https://learn.microsoft.com/training/modules/monitor-azure-vm-using-diagnostic-data/"
+   ],
+   [
+    "Write your first query with Kusto Query Language",
+    "https://learn.microsoft.com/training/modules/write-first-query-kusto-query-language/"
+   ],
+   [
+    "Guided project: Monitor Azure with Service Health and Activity Log alerts",
+    "https://learn.microsoft.com/training/modules/guided-project-monitor-service-health-activity-alerts/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon CloudWatch Getting Started",
+    "https://skillbuilder.aws/learn/HS1HSVQRHK/amazon-cloudwatch-getting-started/9Y34KP2H1T"
+   ],
+   [
+    "Introduction to Amazon CloudWatch Logs",
+    "https://skillbuilder.aws/learn/H5K7BTCH6K/introduction-to-amazon-cloudwatch-logs/WMQKV8ZS4V"
+   ],
+   [
+    "Amazon EC2 Observability, Monitoring, and Troubleshooting",
+    "https://skillbuilder.aws/learn/NVQMVRTS5H/amazon-ec2-observability-monitoring-and-troubleshooting/RC947H252R"
+   ]
+  ]
+ }
+}

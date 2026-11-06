@@ -1,0 +1,33 @@
+# Cloud & Platform Engineer: Zero to Hired
+
+A free, self-paced path from basic computer use to a hireable cloud, DevOps and platform engineer, with **AWS and Azure
+taught side by side**. Take it on [itlearning.tech](https://itlearning.tech), where you get the topic quizzes, the
+weekly plan, the capstone checks and a certificate, or read it here.
+
+| Item | Details |
+| --- | --- |
+| Clouds | AWS and Azure, side by side; GCP by comparison |
+| Tools | Linux, Bash, Python, Git and GitHub, Docker, then Terraform, GitHub Actions, Kubernetes and more |
+| Length | 34 weeks in three phases, about 15–20 hours a week |
+| Cost | Free. Labs run on your own computer or within the clouds' free offers, with budget alerts from the day you open an account |
+
+## What's here
+
+- [The curriculum](CURRICULUM.md): every phase, module and topic.
+- [Phase 1: Cloud Foundations](phases/01-cloud-foundations/README.md) (weeks 1–13): 32 lessons, each with practice
+  tasks, videos and free further learning from Microsoft Learn and AWS Skill Builder, and
+  [Capstone 1](phases/01-cloud-foundations/capstone-1/README.md).
+- [Labs](labs/): the practice log generator, the URL checker and ITL Pay Lite, the payments API used in Module 5 and
+  Capstone 1.
+- [Further learning](resources/further-learning.json): the Microsoft Learn and AWS Skill Builder courses for each topic.
+
+Phases 2 (DevOps and Infrastructure as Code) and 3 (Platform Engineering and SRE) follow.
+
+## How to use it
+
+1. Join the course on [itlearning.tech](https://itlearning.tech) for the quizzes, the weekly plan and the certificate.
+2. Read each lesson, do its practice tasks, and keep your own learning log on GitHub (lesson 1.1).
+3. Use the labs: copy a lab folder into your own repository and work there.
+4. Stuck? Ask in *Questions and help* on itlearning.tech, with what you tried and the exact error.
+
+This repository is generated from the course's source; please report mistakes through itlearning.tech.

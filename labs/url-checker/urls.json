@@ -1,0 +1,5 @@
+{"checks": [
+  {"name": "itlearning-tech", "url": "https://itlearning.tech", "expect": 200},
+  {"name": "github-api", "url": "https://api.github.com", "expect": 200},
+  {"name": "missing-page", "url": "https://itlearning.tech/no-such-page", "expect": 200}
+]}

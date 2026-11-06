@@ -1,0 +1,33 @@
+# ITL Pay Lite on your laptop: the API and PostgreSQL (topic 5.3)
+#   docker compose up -d --build
+#   curl localhost:8080/health
+#   docker compose down          (add -v to delete the database volume too)
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: itlpay
+      POSTGRES_USER: itlpay
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-local-only-password}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U itlpay -d itlpay"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://itlpay:${DB_PASSWORD:-local-only-password}@db:5432/itlpay
+      APP_ENV: local
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  db-data:
