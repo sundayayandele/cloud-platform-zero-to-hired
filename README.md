@@ -21,7 +21,10 @@ weekly plan, the capstone checks and a certificate, or read it here.
   Capstone 1.
 - [Further learning](resources/further-learning.json): the Microsoft Learn and AWS Skill Builder courses for each topic.
 
-Phases 2 (DevOps and Infrastructure as Code) and 3 (Platform Engineering and SRE) follow.
+- [Phase 2: DevOps and Infrastructure as Code](CURRICULUM.md) (weeks 14–24), being written: Module 7 (Terraform on AWS and
+  Azure) is ready, with the [Terraform network lab](labs/terraform-network/README.md).
+
+Phase 3 (Platform Engineering and SRE) follows.
 
 ## How to use it
 

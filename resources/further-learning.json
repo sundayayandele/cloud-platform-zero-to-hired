@@ -673,5 +673,145 @@
     "https://skillbuilder.aws/learn/NVQMVRTS5H/amazon-ec2-observability-monitoring-and-troubleshooting/RC947H252R"
    ]
   ]
+ },
+ "7.1": {
+  "azure": [
+   [
+    "Introduction to infrastructure as code using Terraform",
+    "https://learn.microsoft.com/training/modules/terraform-introduction-to-infrastructure-as-code/"
+   ],
+   [
+    "Fundamentals of Terraform on Azure (learning path)",
+    "https://learn.microsoft.com/training/paths/terraform-fundamentals/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS CloudFormation Getting Started",
+    "https://skillbuilder.aws/learn/RH22P2RXU4/aws-cloudformation-getting-started/KEK5BT6HSE"
+   ],
+   [
+    "Faster and Safer Infrastructure Deployment with AWS CloudFormation and CDK",
+    "https://skillbuilder.aws/learn/V8MQ93JRH6/faster-and-safer-infrastructure-deployment-with-aws-cloudformation-and-cdk/7WDJCSKBQV"
+   ]
+  ],
+  "terraform": [
+   [
+    "Get started with Terraform on AWS",
+    "https://developer.hashicorp.com/terraform/tutorials/aws-get-started"
+   ],
+   [
+    "Get started with Terraform on Azure",
+    "https://developer.hashicorp.com/terraform/tutorials/azure-get-started"
+   ]
+  ]
+ },
+ "7.2": {
+  "azure": [
+   [
+    "Fundamentals of Terraform on Azure (learning path)",
+    "https://learn.microsoft.com/training/paths/terraform-fundamentals/"
+   ]
+  ],
+  "aws": [],
+  "terraform": [
+   [
+    "Customize Terraform configuration with variables",
+    "https://developer.hashicorp.com/terraform/tutorials/configuration-language/variables"
+   ],
+   [
+    "Modules",
+    "https://developer.hashicorp.com/terraform/tutorials/modules"
+   ]
+  ]
+ },
+ "7.3": {
+  "azure": [
+   [
+    "Fundamentals of Terraform on Azure (learning path)",
+    "https://learn.microsoft.com/training/paths/terraform-fundamentals/"
+   ]
+  ],
+  "aws": [],
+  "terraform": [
+   [
+    "Manage Terraform state",
+    "https://developer.hashicorp.com/terraform/tutorials/state"
+   ]
+  ]
+ },
+ "7.4": {
+  "azure": [
+   [
+    "Implement security controls in infrastructure as code",
+    "https://learn.microsoft.com/training/modules/implement-security-controls-infrastructure-as-code/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS CloudFormation Stacks - Troubleshooting",
+    "https://skillbuilder.aws/learn/RXN7Y5H87R/aws-cloudformation-stacks--troubleshooting/9EESANBHDE"
+   ]
+  ],
+  "terraform": [
+   [
+    "Write Terraform tests",
+    "https://developer.hashicorp.com/terraform/tutorials/configuration-language/test"
+   ],
+   [
+    "Terraform Associate (003) exam preparation",
+    "https://developer.hashicorp.com/terraform/tutorials/certification-003"
+   ]
+  ]
+ },
+ "7.5": {
+  "azure": [
+   [
+    "Enforce governance with Azure Policy and resource locks",
+    "https://learn.microsoft.com/training/modules/enforce-governance-azure-policy-resource-locks/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Config Getting Started",
+    "https://skillbuilder.aws/learn/HUGPFMV5AJ/aws-config-getting-started/WC7YDT5MNB"
+   ]
+  ],
+  "terraform": [
+   [
+    "Manage resource drift",
+    "https://developer.hashicorp.com/terraform/tutorials/state/resource-drift"
+   ],
+   [
+    "Import Terraform configuration",
+    "https://developer.hashicorp.com/terraform/tutorials/state/state-import"
+   ],
+   [
+    "Use configuration to move resources",
+    "https://developer.hashicorp.com/terraform/tutorials/configuration-language/move-config"
+   ]
+  ]
+ },
+ "7.6": {
+  "azure": [
+   [
+    "Fundamentals of Bicep (learning path)",
+    "https://learn.microsoft.com/training/paths/fundamentals-bicep/"
+   ],
+   [
+    "Deploy Azure infrastructure by using JSON ARM templates",
+    "https://learn.microsoft.com/training/modules/create-azure-resource-manager-template-vs-code/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS CloudFormation Getting Started",
+    "https://skillbuilder.aws/learn/RH22P2RXU4/aws-cloudformation-getting-started/KEK5BT6HSE"
+   ],
+   [
+    "AWS Cloud Development Kit (CDK) Getting Started",
+    "https://skillbuilder.aws/learn/XP346HYHM9/aws-cloud-development-kit-cdk-getting-started/D6C46ND6ZQ"
+   ]
+  ]
  }
 }

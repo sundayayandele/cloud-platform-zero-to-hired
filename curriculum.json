@@ -271,8 +271,172 @@
    "slug": "02-devops-iac",
    "title": "DevOps and Infrastructure as Code",
    "weeks": "14-24",
-   "status": "planned",
-   "summary": "Terraform on both clouds, CI/CD with keyless login, Kubernetes and Helm (EKS and AKS), secrets and observability. Capstone 2: pipeline to production on two clouds."
+   "status": "building",
+   "summary": "Terraform on both clouds, CI/CD with keyless login, Kubernetes and Helm (EKS and AKS), secrets and observability. Capstone 2: pipeline to production on two clouds.",
+   "certifications": [
+    "AWS Certified Solutions Architect – Associate or Microsoft Azure Administrator (AZ-104)",
+    "HashiCorp Terraform Associate"
+   ],
+   "modules": [
+    {
+     "number": 7,
+     "slug": "07-terraform-on-aws-and-azure",
+     "title": "Terraform on AWS and Azure",
+     "weeks": "14-16",
+     "topics": [
+      {
+       "id": "7.1",
+       "slug": "7.1-infrastructure-as-code-and-your-first",
+       "title": "Infrastructure as code and your first Terraform",
+       "week": 14
+      },
+      {
+       "id": "7.2",
+       "slug": "7.2-variables-outputs-data-sources",
+       "title": "Variables, outputs, data sources and modules",
+       "week": 14
+      },
+      {
+       "id": "7.3",
+       "slug": "7.3-state-remote-backends-locking",
+       "title": "State: remote backends, locking and environments",
+       "week": 15
+      },
+      {
+       "id": "7.4",
+       "slug": "7.4-quality-gates-fmt-validate-tflint",
+       "title": "Quality gates: fmt, validate, tflint, checkov and plan review",
+       "week": 15
+      },
+      {
+       "id": "7.5",
+       "slug": "7.5-drift-imports-and-refactoring-safely",
+       "title": "Drift, imports and refactoring safely",
+       "week": 16
+      },
+      {
+       "id": "7.6",
+       "slug": "7.6-reading-cloudformation-and-bicep",
+       "title": "Reading CloudFormation and Bicep",
+       "week": 16
+      }
+     ]
+    },
+    {
+     "number": 8,
+     "slug": "08-ci-cd-with-github-actions",
+     "title": "CI/CD with GitHub Actions",
+     "weeks": "17-18",
+     "topics": [
+      {
+       "id": "8.1",
+       "slug": "8.1-pipelines-in-depth-jobs-runners-caching",
+       "title": "Pipelines in depth: jobs, runners, caching and reuse",
+       "week": 17
+      },
+      {
+       "id": "8.2",
+       "slug": "8.2-build-scan-sign-and-publish-images",
+       "title": "Build, scan, sign and publish images with an SBOM",
+       "week": 17
+      },
+      {
+       "id": "8.3",
+       "slug": "8.3-keyless-login-from-github-to-aws",
+       "title": "Keyless login from GitHub to AWS and Azure with OIDC",
+       "week": 18
+      },
+      {
+       "id": "8.4",
+       "slug": "8.4-terraform-in-the-pipeline-environments",
+       "title": "Terraform in the pipeline: environments and approvals",
+       "week": 18
+      }
+     ]
+    },
+    {
+     "number": 9,
+     "slug": "09-kubernetes-and-helm-on-eks-and-aks",
+     "title": "Kubernetes and Helm on EKS and AKS",
+     "weeks": "19-20",
+     "topics": [
+      {
+       "id": "9.1",
+       "slug": "9.1-kubernetes-architecture-and-your-first",
+       "title": "Kubernetes architecture and your first workloads",
+       "week": 19
+      },
+      {
+       "id": "9.2",
+       "slug": "9.2-services-ingress-configmaps-and-secrets",
+       "title": "Services, Ingress, ConfigMaps and Secrets",
+       "week": 19
+      },
+      {
+       "id": "9.3",
+       "slug": "9.3-probes-resources-autoscaling-and-storage",
+       "title": "Probes, resources, autoscaling and storage",
+       "week": 20
+      },
+      {
+       "id": "9.4",
+       "slug": "9.4-packaging-with-helm",
+       "title": "Packaging with Helm",
+       "week": 20
+      },
+      {
+       "id": "9.5",
+       "slug": "9.5-eks-and-aks-networking-identity-for-pods",
+       "title": "EKS and AKS: networking, identity for pods and upgrades",
+       "week": 20
+      }
+     ]
+    },
+    {
+     "number": 10,
+     "slug": "10-configuration-and-secrets",
+     "title": "Configuration and secrets",
+     "weeks": "21",
+     "topics": [
+      {
+       "id": "10.1",
+       "slug": "10.1-configuration-management-with-ansible",
+       "title": "Configuration management with Ansible",
+       "week": 21
+      },
+      {
+       "id": "10.2",
+       "slug": "10.2-secrets-in-the-cloud-secrets-manager-key",
+       "title": "Secrets in the cloud: Secrets Manager, Key Vault and External Secrets",
+       "week": 21
+      }
+     ]
+    },
+    {
+     "number": 11,
+     "slug": "11-observability",
+     "title": "Observability",
+     "weeks": "22",
+     "topics": [
+      {
+       "id": "11.1",
+       "slug": "11.1-metrics-and-alerts-with-prometheus",
+       "title": "Metrics and alerts with Prometheus and Grafana",
+       "week": 22
+      },
+      {
+       "id": "11.2",
+       "slug": "11.2-logs-and-traces-loki-opentelemetry",
+       "title": "Logs and traces: Loki, OpenTelemetry and the clouds' own tools",
+       "week": 22
+      }
+     ]
+    }
+   ],
+   "capstone": {
+    "week": "23-24",
+    "title": "Pipeline to production on two clouds"
+   }
   },
   {
    "number": 3,
