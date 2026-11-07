@@ -102,11 +102,11 @@ Certification targets: AWS Certified Solutions Architect – Associate, Microsof
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 9.1 Kubernetes architecture and your first workloads | 20 | Coming next |
-| 9.2 Services, Ingress, ConfigMaps and Secrets | 20 | Coming next |
-| 9.3 Probes, resources, autoscaling and storage | 21 | Coming next |
-| 9.4 Packaging with Helm | 21 | Coming next |
-| 9.5 EKS, AKS and GKE: networking, identity for pods and upgrades | 21 | Coming next |
+| [9.1 Kubernetes architecture and your first workloads](phases/02-devops-iac/09-kubernetes-and-helm-on-eks-and-aks/9.1-kubernetes-architecture-and-your-first/lesson.md) | 20 | Written |
+| [9.2 Services, Ingress, ConfigMaps and Secrets](phases/02-devops-iac/09-kubernetes-and-helm-on-eks-and-aks/9.2-services-ingress-configmaps-and-secrets/lesson.md) | 20 | Written |
+| [9.3 Probes, resources, autoscaling and storage](phases/02-devops-iac/09-kubernetes-and-helm-on-eks-and-aks/9.3-probes-resources-autoscaling-and-storage/lesson.md) | 21 | Written |
+| [9.4 Packaging with Helm](phases/02-devops-iac/09-kubernetes-and-helm-on-eks-and-aks/9.4-packaging-with-helm/lesson.md) | 21 | Written |
+| [9.5 EKS, AKS and GKE: networking, identity for pods and upgrades](phases/02-devops-iac/09-kubernetes-and-helm-on-eks-and-aks/9.5-eks-and-aks-networking-identity-for-pods/lesson.md) | 21 | Written |
 
 ### Module 10: Configuration and secrets (weeks 22)
 

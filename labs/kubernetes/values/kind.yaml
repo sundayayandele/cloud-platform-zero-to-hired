@@ -1,0 +1,10 @@
+# A local kind cluster (and the course's CI): the image is loaded into the cluster with `kind load docker-image`.
+image:
+  repository: itlpay-lite
+  tag: ci
+  pullPolicy: Never
+replicaCount: 2
+autoscaling:
+  enabled: false
+podDisruptionBudget:
+  minAvailable: 1

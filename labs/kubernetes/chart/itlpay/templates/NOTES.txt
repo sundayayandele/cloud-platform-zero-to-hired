@@ -1,0 +1,6 @@
+ITL Pay Lite {{ .Chart.AppVersion }} is installed as release "{{ .Release.Name }}" in namespace "{{ .Release.Namespace }}".
+
+Check it:
+  kubectl -n {{ .Release.Namespace }} rollout status deploy/{{ include "itlpay.fullname" . }}
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "itlpay.fullname" . }} 8080:{{ .Values.service.port }}
+  curl localhost:8080/health

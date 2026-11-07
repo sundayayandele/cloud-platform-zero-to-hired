@@ -1,0 +1,51 @@
+# Topic 9.3: scale between 3 and 10 pods on CPU (needs metrics-server, which EKS, AKS and GKE provide or offer as an add-on),
+# and keep at least 2 running during node upgrades and drains.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: itlpay
+  namespace: itlpay
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: itlpay
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: itlpay
+  namespace: itlpay
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: itlpay
+---
+# Only the API may reach the database (needs a network plugin that enforces NetworkPolicy: all three clouds offer one)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-from-itlpay-only
+  namespace: itlpay
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: postgres
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: itlpay
+      ports:
+        - port: 5432

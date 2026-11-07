@@ -1,0 +1,16 @@
+# Google GKE (topic 9.5).
+# Traffic: the GKE Gateway controller (for example gatewayClassName gke-l7-global-external-managed on the Gateway).
+# Pod identity: Workload Identity Federation for GKE: grant IAM roles directly to the principal
+# principal://iam.googleapis.com/projects/NUMBER/locations/global/workloadIdentityPools/PROJECT.svc.id.goog/subject/ns/itlpay/sa/itlpay
+# so no annotation is needed here.
+image:
+  repository: africa-south1-docker.pkg.dev/<project>/itlpay/itlpay-lite
+  digest: sha256:REPLACE
+env:
+  APP_ENV: dev
+httpRoute:
+  enabled: true
+  parentRefs:
+    - name: public
+      namespace: gateway
+  hostnames: ["itlpay-gcp.example.com"]

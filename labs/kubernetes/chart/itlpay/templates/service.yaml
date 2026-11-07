@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "itlpay.fullname" . }}
+  labels:
+    {{- include "itlpay.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "itlpay.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: http

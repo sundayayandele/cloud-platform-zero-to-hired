@@ -1073,5 +1073,147 @@
     "https://www.skills.google/course_templates/443"
    ]
   ]
+ },
+ "9.1": {
+  "azure": [
+   [
+    "Deploy containers by using Azure Kubernetes Service (learning path)",
+    "https://learn.microsoft.com/training/paths/deploy-manage-containers-azure-kubernetes-service/"
+   ],
+   [
+    "Plan an Azure Kubernetes Service deployment",
+    "https://learn.microsoft.com/training/modules/plan-azure-kubernetes-service-deployment/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to Kubernetes Core Concepts",
+    "https://skillbuilder.aws/learn/U4Z3BPGK9Y/introduction-to-kubernetes-core-concepts/DZCQ4QTSJT"
+   ],
+   [
+    "Why run your Kubernetes workloads on Amazon EKS?",
+    "https://skillbuilder.aws/learn/6MCV5DBF5N/why-run-your-kubernetes-workloads-on-amazons-elastic-kubernetes-service-eks/W4BB5XPWB8"
+   ]
+  ],
+  "gcp": [
+   [
+    "Getting Started with Google Kubernetes Engine",
+    "https://www.skills.google/course_templates/2"
+   ],
+   [
+    "Kubernetes in Google Cloud (skill badge)",
+    "https://www.skills.google/course_templates/744"
+   ]
+  ]
+ },
+ "9.2": {
+  "azure": [
+   [
+    "Configure applications on Azure Kubernetes Service",
+    "https://learn.microsoft.com/training/modules/configure-apps-azure-kubernetes-service/"
+   ],
+   [
+    "Deploy applications to Azure Kubernetes Service",
+    "https://learn.microsoft.com/training/modules/deploy-applications-azure-kubernetes-service/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to Kubernetes Core Concepts",
+    "https://skillbuilder.aws/learn/U4Z3BPGK9Y/introduction-to-kubernetes-core-concepts/DZCQ4QTSJT"
+   ]
+  ],
+  "gcp": [
+   [
+    "Architecting with Google Kubernetes Engine: Workloads",
+    "https://www.skills.google/course_templates/34"
+   ],
+   [
+    "Configure Google Kubernetes Engine Networking",
+    "https://www.skills.google/course_templates/660"
+   ]
+  ]
+ },
+ "9.3": {
+  "azure": [
+   [
+    "Configure scaling in Azure Kubernetes Service",
+    "https://learn.microsoft.com/training/modules/configure-scaling-azure-kubernetes-service/"
+   ],
+   [
+    "Monitor and troubleshoot applications on Azure Kubernetes Service",
+    "https://learn.microsoft.com/training/modules/monitor-apps-azure-kubernetes-service/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon Elastic Kubernetes Service (EKS) Getting Started",
+    "https://skillbuilder.aws/learn/MHH12MUT32/amazon-elastic-kubernetes-service-eks-getting-started/41CC6FD698"
+   ]
+  ],
+  "gcp": [
+   [
+    "Architecting with Google Kubernetes Engine: Production",
+    "https://www.skills.google/course_templates/33"
+   ],
+   [
+    "Optimize Costs for Google Kubernetes Engine",
+    "https://www.skills.google/course_templates/655"
+   ]
+  ]
+ },
+ "9.4": {
+  "azure": [
+   [
+    "Guided project: deploy applications to Azure Kubernetes Service",
+    "https://learn.microsoft.com/training/modules/project-deploy-applications-azure-kubernetes-service/"
+   ]
+  ],
+  "gcp": [
+   [
+    "Deploy Kubernetes Applications on Google Cloud (skill badge)",
+    "https://www.skills.google/course_templates/663"
+   ]
+  ]
+ },
+ "9.5": {
+  "azure": [
+   [
+    "Deploy an Azure Kubernetes Service cluster",
+    "https://learn.microsoft.com/training/modules/deploy-azure-kubernetes-service-cluster/"
+   ],
+   [
+    "Configure an Azure Kubernetes Service cluster",
+    "https://learn.microsoft.com/training/modules/configure-azure-kubernetes-service-cluster/"
+   ],
+   [
+    "Implement security controls for Azure Kubernetes Service",
+    "https://learn.microsoft.com/training/modules/implement-security-controls-kubernetes/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon Elastic Kubernetes Service (EKS) Getting Started",
+    "https://skillbuilder.aws/learn/MHH12MUT32/amazon-elastic-kubernetes-service-eks-getting-started/41CC6FD698"
+   ],
+   [
+    "Why run your Kubernetes workloads on Amazon EKS?",
+    "https://skillbuilder.aws/learn/6MCV5DBF5N/why-run-your-kubernetes-workloads-on-amazons-elastic-kubernetes-service-eks/W4BB5XPWB8"
+   ]
+  ],
+  "gcp": [
+   [
+    "Architecting with Google Kubernetes Engine: Foundations",
+    "https://www.skills.google/course_templates/32"
+   ],
+   [
+    "Google Kubernetes Engine Best Practices: Security",
+    "https://www.skills.google/course_templates/732"
+   ],
+   [
+    "Manage Kubernetes in Google Cloud (skill badge)",
+    "https://www.skills.google/course_templates/783"
+   ]
+  ]
  }
 }

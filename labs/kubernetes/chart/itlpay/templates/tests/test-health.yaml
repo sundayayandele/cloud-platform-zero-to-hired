@@ -1,0 +1,29 @@
+# `helm test RELEASE` runs this pod: it passes if /health answers 200 (API up and database reachable)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "itlpay.fullname" . }}-test-health
+  labels:
+    {{- include "itlpay.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: curl
+      image: curlimages/curl:8.11.1
+      args: ["--fail", "--silent", "--show-error", "--max-time", "5", "http://{{ include "itlpay.fullname" . }}:{{ .Values.service.port }}/health"]
+      resources:
+        requests: { cpu: 10m, memory: 16Mi }
+        limits: { memory: 32Mi }
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]

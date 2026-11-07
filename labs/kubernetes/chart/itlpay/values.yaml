@@ -1,0 +1,59 @@
+# Defaults for every cluster. Override per cloud with -f ../../values/<cloud>.yaml (topic 9.5).
+
+image:
+  repository: ghcr.io/OWNER/itlpay-lite
+  tag: "" # defaults to the chart's appVersion
+  digest: "" # sha256:... wins over the tag when set (topic 8.2: deploy by digest)
+  pullPolicy: IfNotPresent
+
+replicaCount: 3
+
+env:
+  APP_ENV: dev
+  LOG_LEVEL: INFO
+
+database:
+  # A Secret, created outside the chart, with a DATABASE_URL key (topic 9.2; topic 10.2 fills it from the cloud's
+  # secret store with External Secrets). The chart never contains the password.
+  existingSecret: itlpay-db
+
+serviceAccount:
+  create: true
+  annotations: {} # pod identity on AKS and GKE (topic 9.5)
+  automountToken: false
+
+podLabels: {} # AKS workload identity needs azure.workload.identity/use: "true"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
+
+service:
+  port: 80
+
+httpRoute:
+  enabled: false
+  parentRefs: [] # e.g. [{name: public, namespace: gateway}]
+  hostnames: []
+
+ingress:
+  enabled: false # for clusters that still use an Ingress controller
+  className: ""
+  annotations: {}
+  host: ""
+  tls: []
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+
+podDisruptionBudget:
+  minAvailable: 2
+
+nodeSelector: {}
+tolerations: []

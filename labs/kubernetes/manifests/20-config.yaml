@@ -1,0 +1,11 @@
+# Topic 9.2: settings that aren't secret live in a ConfigMap. DATABASE_URL is secret, so it lives in a Secret:
+#   pw=$(kubectl -n itlpay get secret postgres -o jsonpath='{.data.POSTGRES_PASSWORD}' | base64 -d)
+#   kubectl -n itlpay create secret generic itlpay-db --from-literal=DATABASE_URL="postgresql://itlpay:$pw@postgres:5432/itlpay"
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itlpay
+  namespace: itlpay
+data:
+  APP_ENV: dev
+  LOG_LEVEL: INFO

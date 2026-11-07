@@ -1,0 +1,15 @@
+# Amazon EKS (topic 9.5).
+# Traffic: the AWS Load Balancer Controller implements the Gateway API (an ALB per Gateway); the platform team creates the
+# Gateway "public" in namespace "gateway". Pod identity: EKS Pod Identity associates an IAM role with this service account
+# from outside the cluster (aws eks create-pod-identity-association), so no annotation is needed here.
+image:
+  repository: <account>.dkr.ecr.af-south-1.amazonaws.com/itlpay-lite
+  digest: sha256:REPLACE
+env:
+  APP_ENV: dev
+httpRoute:
+  enabled: true
+  parentRefs:
+    - name: public
+      namespace: gateway
+  hostnames: ["itlpay-aws.example.com"]

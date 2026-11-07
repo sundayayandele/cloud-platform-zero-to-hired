@@ -1,0 +1,99 @@
+# Topics 9.1-9.3: the API as a Deployment (three replicas, spread across nodes and zones) behind a ClusterIP Service.
+# Replace IMAGE with your image from topic 8.2, by digest: ghcr.io/YOU/itlpay-lite@sha256:...
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: itlpay
+  namespace: itlpay
+  labels:
+    app.kubernetes.io/name: itlpay
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0 # never fewer than 3 ready pods during a rollout
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: itlpay
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: itlpay
+    spec:
+      automountServiceAccountToken: false # the API never talks to Kubernetes
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001 # the image's USER is a name (app); Kubernetes needs the number to check non-root
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: itlpay
+      containers:
+        - name: api
+          image: IMAGE
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: itlpay
+            - secretRef:
+                name: itlpay-db
+          # Topic 9.3: readiness asks "should I get traffic?" (/health checks the database);
+          # liveness asks "is the process stuck?" and must NOT depend on the database, or a database outage
+          # would restart every pod in a loop.
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 2
+            failureThreshold: 30
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { memory: 256Mi } # no CPU limit: avoids throttling; requests do the scheduling
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: itlpay
+  namespace: itlpay
+  labels:
+    app.kubernetes.io/name: itlpay
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: itlpay
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

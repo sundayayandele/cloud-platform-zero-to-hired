@@ -1,0 +1,10 @@
+# Topic 9.1: a namespace per application and environment.
+# "restricted" Pod Security: the API server refuses pods that run as root, add capabilities or allow privilege escalation.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: itlpay
+  labels:
+    app.kubernetes.io/part-of: itlpay
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/warn: restricted

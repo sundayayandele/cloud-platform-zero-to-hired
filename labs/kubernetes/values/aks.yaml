@@ -1,0 +1,19 @@
+# Azure AKS (topic 9.5).
+# Traffic: Application Gateway for Containers implements the Gateway API. Pod identity: Microsoft Entra Workload ID:
+# a user-assigned managed identity with a federated credential for system:serviceaccount:itlpay:itlpay.
+image:
+  repository: itlpayacr.azurecr.io/itlpay-lite
+  digest: sha256:REPLACE
+env:
+  APP_ENV: dev
+serviceAccount:
+  annotations:
+    azure.workload.identity/client-id: "<managed identity client ID>"
+podLabels:
+  azure.workload.identity/use: "true"
+httpRoute:
+  enabled: true
+  parentRefs:
+    - name: public
+      namespace: gateway
+  hostnames: ["itlpay-azure.example.com"]
