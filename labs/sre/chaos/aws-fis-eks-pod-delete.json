@@ -1,0 +1,28 @@
+{
+  "description": "Topic 13.3: delete one ITL Pay pod on EKS; stop at once if the error budget alarm fires",
+  "roleArn": "arn:aws:iam::<account>:role/itlpay-fis",
+  "targets": {
+    "itlpay-pods": {
+      "resourceType": "aws:eks:pod",
+      "parameters": {
+        "clusterIdentifier": "arn:aws:eks:af-south-1:<account>:cluster/itlpay-dev",
+        "namespace": "itlpay",
+        "selectorType": "labelSelector",
+        "selectorValue": "app.kubernetes.io/name=itlpay",
+        "targetContainerName": "api"
+      },
+      "selectionMode": "COUNT(1)"
+    }
+  },
+  "actions": {
+    "delete-one-pod": {
+      "actionId": "aws:eks:pod-delete",
+      "parameters": { "kubernetesServiceAccount": "fis-experiment", "gracePeriodSeconds": "0" },
+      "targets": { "Pods": "itlpay-pods" }
+    }
+  },
+  "stopConditions": [
+    { "source": "aws:cloudwatch:alarm", "value": "arn:aws:cloudwatch:af-south-1:<account>:alarm:itlpay-error-budget-burn" }
+  ],
+  "tags": { "project": "itlpay", "purpose": "chaos-experiment" }
+}

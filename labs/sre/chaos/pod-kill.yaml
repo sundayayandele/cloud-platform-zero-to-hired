@@ -1,0 +1,14 @@
+# Hypothesis: if one ITL Pay pod dies suddenly, customers barely notice (two replicas, readiness, a disruption budget).
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: itlpay-pod-kill
+  namespace: itlpay
+spec:
+  action: pod-kill
+  mode: one # one random pod: the blast radius is limited on purpose
+  gracePeriod: 0 # no graceful shutdown: like a node dying
+  selector:
+    namespaces: [itlpay]
+    labelSelectors:
+      app.kubernetes.io/name: itlpay

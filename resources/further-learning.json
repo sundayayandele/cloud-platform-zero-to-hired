@@ -1377,5 +1377,79 @@
     "https://www.skills.google/course_templates/783"
    ]
   ]
+ },
+ "13.1": {
+  "azure": [
+   [
+    "Introduction to Site Reliability Engineering (SRE)",
+    "https://learn.microsoft.com/training/modules/intro-to-site-reliability-engineering/"
+   ],
+   [
+    "Azure Well-Architected Framework: Reliability",
+    "https://learn.microsoft.com/training/modules/azure-well-architected-reliability/"
+   ]
+  ],
+  "gcp": [
+   [
+    "Developing a Google SRE Culture",
+    "https://www.skills.google/course_templates/95"
+   ]
+  ]
+ },
+ "13.2": {
+  "azure": [
+   [
+    "Improve your reliability with modern operations practices: incident response",
+    "https://learn.microsoft.com/training/modules/improve-reliability-incidents/"
+   ],
+   [
+    "Improve your reliability with modern operations practices: monitoring",
+    "https://learn.microsoft.com/training/modules/improve-reliability-monitoring/"
+   ]
+  ],
+  "gcp": [
+   [
+    "Developing a Google SRE Culture",
+    "https://www.skills.google/course_templates/95"
+   ],
+   [
+    "Observability in Google Cloud",
+    "https://www.skills.google/course_templates/864"
+   ]
+  ]
+ },
+ "13.3": {
+  "azure": [
+   [
+    "Introduction to application resiliency in Azure",
+    "https://learn.microsoft.com/training/modules/introduction-application-resiliency-azure/"
+   ]
+  ]
+ },
+ "13.4": {
+  "azure": [
+   [
+    "Design a solution for backup and disaster recovery",
+    "https://learn.microsoft.com/training/modules/design-solution-for-backup-disaster-recovery/"
+   ],
+   [
+    "Describe high availability and disaster recovery strategies",
+    "https://learn.microsoft.com/training/modules/describe-high-availability-disaster-recovery-strategies/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Elastic Disaster Recovery Getting Started",
+    "https://skillbuilder.aws/learn/7WQ5EEXCJE/aws-elastic-disaster-recovery-getting-started/55ETVSR1E5"
+   ],
+   [
+    "AWS purpose-built database recovery: business continuity and disaster recovery strategies",
+    "https://skillbuilder.aws/learn/GC7UP23JS4/aws-purposebuilt-database-recovery-a-guide-to-business-continuity-and-disaster-recovery-strategies/TYYEXEDYXJ"
+   ],
+   [
+    "Amazon S3 Business Continuity and Disaster Recovery",
+    "https://skillbuilder.aws/learn/PS5FF6JM8X/amazon-simple-storage-service-amazon-s3-business-continuity-and-disaster-recovery/YVFDT8PZ8W"
+   ]
+  ]
  }
 }

@@ -1,0 +1,57 @@
+# Topic 13.4: a small S3-compatible object store for the lab's backups (SeaweedFS, Apache 2.0). On the clouds, Velero
+# writes to S3, Azure Blob Storage or Cloud Storage instead. (MinIO's community edition stopped publishing releases in
+# late 2025 and its repository is archived, so the lab doesn't use it.)
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: backup
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: seaweedfs-s3
+  namespace: backup
+stringData:
+  # Lab-only credentials for a store that never leaves the cluster
+  s3.json: |
+    {"identities": [{"name": "velero", "credentials": [{"accessKey": "velero", "secretKey": "velero-lab-only"}],
+                     "actions": ["Admin", "Read", "Write", "List", "Tagging"]}]}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seaweedfs
+  namespace: backup
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: seaweedfs }
+  template:
+    metadata:
+      labels: { app: seaweedfs }
+    spec:
+      containers:
+        - name: seaweedfs
+          image: chrislusf/seaweedfs:4.48
+          args: ["server", "-dir=/data", "-s3", "-s3.port=8333", "-s3.config=/etc/seaweedfs/s3.json", "-volume.max=0"]
+          ports:
+            - { name: s3, containerPort: 8333 }
+          readinessProbe:
+            tcpSocket: { port: s3 }
+            periodSeconds: 5
+          volumeMounts:
+            - { name: data, mountPath: /data }
+            - { name: config, mountPath: /etc/seaweedfs }
+      volumes:
+        - { name: data, emptyDir: {} }
+        - { name: config, secret: { secretName: seaweedfs-s3 } }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seaweedfs
+  namespace: backup
+spec:
+  selector: { app: seaweedfs }
+  ports:
+    - { name: s3, port: 8333, targetPort: s3 }

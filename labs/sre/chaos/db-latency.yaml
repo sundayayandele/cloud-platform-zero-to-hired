@@ -1,0 +1,18 @@
+# Hypothesis: with 300 ms extra latency to the database, /health and transfers get slower but don't fail,
+# and the latency SLO alert (ITLPaySlowRequests) would fire if it lasted 10 minutes.
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: itlpay-db-latency
+  namespace: itlpay
+spec:
+  action: delay
+  mode: all
+  selector:
+    namespaces: [itlpay]
+    labelSelectors:
+      app.kubernetes.io/name: postgres
+  delay:
+    latency: 300ms
+    jitter: 0ms
+  duration: 90s # it stops by itself, even if no one is watching

@@ -2,5 +2,5 @@ apiVersion: v2
 name: itlpay
 description: ITL Pay Lite, the course's payments API, for any Kubernetes cluster (EKS, AKS, GKE, kind)
 type: application
-version: 0.2.0 # the chart's version: bump on every chart change
-appVersion: "1.1.0" # the application's version: the default image tag
+version: 0.2.2 # the chart's version: bump on every chart change
+appVersion: "1.2.0" # the application's version: the default image tag

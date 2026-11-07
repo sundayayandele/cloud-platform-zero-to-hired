@@ -1,0 +1,15 @@
+{
+  "location": "southafricanorth",
+  "identity": { "type": "SystemAssigned" },
+  "properties": {
+    "selectors": [
+      { "type": "List", "id": "aks", "targets": [ { "type": "ChaosTarget",
+        "id": "/subscriptions/<sub>/resourceGroups/rg-itlpay-aks/providers/Microsoft.ContainerService/managedClusters/itlpay-dev/providers/Microsoft.Chaos/targets/Microsoft-AzureKubernetesServiceChaosMesh" } ] }
+    ],
+    "steps": [ { "name": "Kill one ITL Pay pod", "branches": [ { "name": "pod-kill", "actions": [ {
+      "type": "continuous", "name": "urn:csci:microsoft:azureKubernetesServiceChaosMesh:podChaos/2.2", "duration": "PT1M", "selectorId": "aks",
+      "parameters": [ { "key": "jsonSpec",
+        "value": "{\"action\":\"pod-kill\",\"mode\":\"one\",\"gracePeriod\":0,\"selector\":{\"namespaces\":[\"itlpay\"],\"labelSelectors\":{\"app.kubernetes.io/name\":\"itlpay\"}}}" } ]
+    } ] } ] } ]
+  }
+}

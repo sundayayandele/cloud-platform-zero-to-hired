@@ -28,7 +28,8 @@ weekly plan, the capstone checks and a certificate, or read it here.
   [secrets lab](labs/secrets/README.md), the [observability lab](labs/observability/README.md), and
   [Capstone 2](phases/02-devops-iac/capstone-2/README.md) with its [starter kit](labs/capstone-2-starter/README.md).
 - [Phase 3: Platform Engineering and SRE](CURRICULUM.md) (weeks 26–35), being written: Module 12 (GitOps and progressive
-  delivery) is ready, with the [GitOps lab](labs/gitops/README.md).
+  delivery) and Module 13 (site reliability engineering) are ready, with the [GitOps lab](labs/gitops/README.md) and
+  the [SRE lab](labs/sre/README.md).
 
 Phase 3 (Platform Engineering and SRE) follows.
 

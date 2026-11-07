@@ -11,6 +11,11 @@ if ! kind get clusters | grep -qx "$cluster"; then
   kind create cluster --name "$cluster" --wait 120s
 fi
 kubectl config use-context "kind-$cluster" >/dev/null
+# kind's storage provisioner makes hostPath volumes by default; Velero's file system backup can't copy those (topic 13.4),
+# so ask for "local" volumes instead (the same disk, a volume type Velero supports)
+if kubectl get storageclass standard -o jsonpath='{.provisioner}' 2>/dev/null | grep -qx rancher.io/local-path; then
+  kubectl annotate storageclass standard defaultVolumeType=local --overwrite >/dev/null
+fi
 
 docker build -t itlpay-lite:ci ../itlpay-lite
 kind load docker-image itlpay-lite:ci --name "$cluster"

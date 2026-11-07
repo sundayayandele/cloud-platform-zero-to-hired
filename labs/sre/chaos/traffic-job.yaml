@@ -1,0 +1,44 @@
+# Steady traffic from inside the cluster while an experiment runs; the last log line is the result:
+#   RESULT ok=<n> failed=<n> median_s=<seconds>
+# (Inside the cluster, because a port-forward from your laptop is pinned to one pod: killing it would break the test.)
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: traffic
+  namespace: itlpay
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: traffic
+          image: curlimages/curl:8.11.1
+          env:
+            - { name: URL, value: http://itlpay/health }
+            - { name: DURATION, value: "60" }
+          command: ["sh", "-c"]
+          args:
+            - |
+              end=$(( $(date +%s) + DURATION )); ok=0; failed=0; : > /tmp/times
+              while [ "$(date +%s)" -lt "$end" ]; do
+                if t=$(curl -fsS -o /dev/null -w '%{time_total}' --max-time 3 "$URL"); then
+                  ok=$((ok + 1)); echo "$t" >> /tmp/times
+                else
+                  failed=$((failed + 1))
+                fi
+                sleep 0.2
+              done
+              median=$(sort -n /tmp/times | awk '{a[NR]=$1} END {if (NR) print a[int((NR+1)/2)]; else print 0}')
+              echo "RESULT ok=$ok failed=$failed median_s=$median"
+          resources:
+            requests: { cpu: 10m, memory: 16Mi }
+            limits: { memory: 32Mi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }

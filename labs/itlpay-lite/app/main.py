@@ -18,6 +18,7 @@ import uuid
 from contextlib import asynccontextmanager
 
 import psycopg
+from psycopg_pool import ConnectionPool
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
@@ -53,12 +54,30 @@ def db_url() -> str:
     return url
 
 
-def connect() -> psycopg.Connection:
-    return psycopg.connect(db_url(), connect_timeout=3)
+# A connection pool (version 1.2.0). Opening a PostgreSQL connection takes several network round trips; the chaos
+# experiment in topic 13.3 showed that with 300 ms of extra latency to the database, a new connection per request made
+# /health take 2.4 s and most requests time out. A pool keeps connections open, so a request costs one round trip.
+pool: ConnectionPool | None = None
+
+
+def get_pool() -> ConnectionPool:
+    global pool
+    if pool is None:
+        # autocommit: a read is one round trip (no separate COMMIT); transfers still use an explicit transaction.
+        # No check on every checkout (it would cost another round trip): a broken connection is discarded when it fails.
+        pool = ConnectionPool(db_url(), min_size=1, max_size=int(os.environ.get("DB_POOL_SIZE", "10")), open=False,
+                              kwargs={"connect_timeout": 3, "autocommit": True})
+    return pool
+
+
+def connect():
+    """A connection from the pool, checked before use and returned when the block ends."""
+    return get_pool().connection(timeout=5)
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
+    get_pool().open(wait=False)  # don't block start-up if the database isn't up yet
     try:
         with connect() as conn:
             conn.execute(SCHEMA)
@@ -66,6 +85,7 @@ async def lifespan(_app: FastAPI):
     except Exception as e:  # start anyway; /health reports the problem
         log.error("Database not ready at start-up: %s", e)
     yield
+    get_pool().close()
 
 
 app = FastAPI(title="ITL Pay Lite", lifespan=lifespan)

@@ -142,10 +142,10 @@ Certification targets: Certified Kubernetes Administrator (CKA); optionally AWS 
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 13.1 Reliability in practice: SLO policy, toil and capacity | 28 | Coming next |
-| 13.2 Incident response, on-call and blameless post-mortems | 28 | Coming next |
-| 13.3 Chaos engineering: AWS FIS, Azure Chaos Studio and Chaos Mesh | 29 | Coming next |
-| 13.4 Backup and disaster recovery across clouds | 29 | Coming next |
+| [13.1 Reliability in practice: SLO policy, toil and capacity](phases/03-platform-sre/13-site-reliability-engineering/13.1-reliability-in-practice-slo-policy-toil/lesson.md) | 28 | Written |
+| [13.2 Incident response, on-call and blameless post-mortems](phases/03-platform-sre/13-site-reliability-engineering/13.2-incident-response-on-call-post-mortems/lesson.md) | 28 | Written |
+| [13.3 Chaos engineering: AWS FIS, Azure Chaos Studio and Chaos Mesh](phases/03-platform-sre/13-site-reliability-engineering/13.3-chaos-engineering-on-three-clouds/lesson.md) | 29 | Written |
+| [13.4 Backup and disaster recovery across clouds](phases/03-platform-sre/13-site-reliability-engineering/13.4-backup-and-disaster-recovery-across-clouds/lesson.md) | 29 | Written |
 
 ### Module 14: Platform engineering (weeks 30–31)
 

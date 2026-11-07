@@ -14,6 +14,9 @@ A tiny transfers API (Python, FastAPI, PostgreSQL) used in Module 5 (containers)
 | `DATABASE_URL` | `postgresql://user:password@host:5432/dbname` (required) |
 | `APP_ENV` | `local`, `staging`, `prod`; shown by `/health` |
 | `LOG_LEVEL` | `INFO` (default) or `DEBUG` |
+| `LOG_FORMAT` | `text` (default) or `json` (Module 11) |
+| `DB_POOL_SIZE` | Most database connections kept open (default 10). Since 1.2.0 the API uses a connection pool: topic 13.3's chaos experiment showed why |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | Turns on OpenTelemetry traces (Module 11) |
 
 ## Run it
 

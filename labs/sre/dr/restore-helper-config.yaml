@@ -1,0 +1,15 @@
+# Topic 13.4: when Velero restores a volume's data, it adds a "restore-wait" container to the restored pod. The itlpay
+# namespace enforces the "restricted" Pod Security level (topic 9.1), so that container must comply, or the API server
+# refuses the restored database pod. This ConfigMap tells Velero how to configure it.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fs-restore-action-config
+  namespace: velero
+  labels:
+    velero.io/plugin-config: ""
+    velero.io/pod-volume-restore: RestoreItemAction
+data:
+  secCtx: |
+    {"allowPrivilegeEscalation": false, "capabilities": {"drop": ["ALL"]}, "runAsNonRoot": true,
+     "seccompProfile": {"type": "RuntimeDefault"}}

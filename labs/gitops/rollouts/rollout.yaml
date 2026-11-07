@@ -47,6 +47,7 @@ spec:
           readinessProbe:
             httpGet: { path: /health, port: http }
             periodSeconds: 5
+            timeoutSeconds: 3 # /health waits for the database: the 1 s default turned slowness into an outage (topic 13.3)
           livenessProbe:
             tcpSocket: { port: http }
             periodSeconds: 10
