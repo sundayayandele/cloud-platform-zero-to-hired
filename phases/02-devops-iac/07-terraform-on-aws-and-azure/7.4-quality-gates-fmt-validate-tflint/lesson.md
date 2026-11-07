@@ -180,7 +180,7 @@ In topic 8.4 you'll run these in GitHub Actions on every pull request, with the 
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [8 Terraform Best Practices that will improve your TF workflow immediately](https://www.youtube.com/watch?v=gxPykhPxRW0) · TechWorld with Nana · 9 min. Eight Terraform best practices for a team workflow.
 - [Scan Terraform Code for Security Issues with Checkov | Automate IaC Security in CI/CD](https://www.youtube.com/watch?v=0e4t588Lv1Y) · Cloudamy · 8 min. Scanning Terraform for security issues with checkov.

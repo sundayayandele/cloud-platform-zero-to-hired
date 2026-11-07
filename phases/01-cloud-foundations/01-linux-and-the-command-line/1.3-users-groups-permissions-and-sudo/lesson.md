@@ -167,7 +167,7 @@ The rule is the same everywhere: start with no access, grant the smallest set th
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Linux File Permissions in 5 Minutes | MUST Know!](https://www.youtube.com/watch?v=LnKoncbQBsM) · Travis Media · 6 min. File permissions and chmod in five minutes.
 - [Linux Crash Course - Understanding File & Directory Permissions](https://www.youtube.com/watch?v=4e669hSjaX8) (optional, longer) · Learn Linux TV · 36 min. Files and directory permissions in depth, including ownership.

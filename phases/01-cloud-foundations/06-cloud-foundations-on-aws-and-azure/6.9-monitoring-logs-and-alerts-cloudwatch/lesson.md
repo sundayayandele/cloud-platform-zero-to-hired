@@ -177,7 +177,7 @@ Create a notification channel (Monitoring → Alerting → Edit notification cha
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Basics of Amazon CloudWatch and CloudWatch Metrics | AWS Tutorials for Beginners](https://www.youtube.com/watch?v=Yxl7e88cTAQ) · Tiny Technical Tutorials · 11 min. Amazon CloudWatch and its metrics.
 - [What is Azure Monitor?](https://www.youtube.com/watch?v=eSutaPE80PM) · Microsoft Azure · 5 min. What Azure Monitor is, from Microsoft.

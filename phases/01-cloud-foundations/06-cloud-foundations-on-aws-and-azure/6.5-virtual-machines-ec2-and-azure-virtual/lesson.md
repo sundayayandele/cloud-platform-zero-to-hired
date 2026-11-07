@@ -196,7 +196,7 @@ You can also run a one-off command without a session: `gcloud compute ssh ... --
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [UPDATED - Amazon/AWS EC2 Basics | Create an EC2 Instance | AWS Tutorials for Beginners](https://www.youtube.com/watch?v=YH_DVenJHII) · Tiny Technical Tutorials · 12 min. Creating an EC2 instance.
 - [Azure Virtual Machine (VM) Tutorial | Infrastructure as a Service (IaaS) intro](https://www.youtube.com/watch?v=iUaTq06m26g) · Adam Marczak - Azure for Everyone · 25 min. Creating and using an Azure virtual machine.

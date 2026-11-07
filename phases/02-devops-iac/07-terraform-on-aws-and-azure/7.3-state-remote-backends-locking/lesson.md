@@ -157,7 +157,7 @@ Prefer 2 or 3 between teams; 1 is fine within one team's configurations.
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Managing Terraform State Files](https://www.youtube.com/watch?v=UDBVCzg2IRo) · Spacelift · 15 min. Managing Terraform state files safely.
 - [Remote Backend State with Terraform and Azure Storage](https://www.youtube.com/watch?v=mpoTI660_Yg) · Travis Roberts · 9 min. Remote state in an Azure storage account.

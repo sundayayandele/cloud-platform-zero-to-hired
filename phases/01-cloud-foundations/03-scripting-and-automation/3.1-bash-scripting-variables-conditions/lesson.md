@@ -280,7 +280,7 @@ Two new pieces: `${pct%\%}` removes a trailing `%` from the value (Bash can trim
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [you need to learn BASH Scripting RIGHT NOW!! // EP 1](https://www.youtube.com/watch?v=SPwyp2NG-bE) · NetworkChuck · 12 min. A first Bash script, from zero.
 - [Bash Scripting Tutorial for Beginners](https://www.youtube.com/watch?v=tK9Oc6AEnR4) (optional, longer) · freeCodeCamp.org · 48 min. A complete Bash scripting course for beginners.

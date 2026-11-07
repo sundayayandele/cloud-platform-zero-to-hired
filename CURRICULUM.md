@@ -93,10 +93,10 @@ Certification targets: AWS Certified Solutions Architect – Associate, Microsof
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 8.1 Pipelines in depth: jobs, runners, caching and reuse | 18 | Coming next |
-| 8.2 Build, scan, sign and publish images with an SBOM | 18 | Coming next |
-| 8.3 Keyless login from GitHub to AWS, Azure and Google Cloud with OIDC | 19 | Coming next |
-| 8.4 Terraform in the pipeline: environments and approvals | 19 | Coming next |
+| [8.1 Pipelines in depth: jobs, runners, caching and reuse](phases/02-devops-iac/08-ci-cd-with-github-actions/8.1-pipelines-in-depth-jobs-runners-caching/lesson.md) | 18 | Written |
+| [8.2 Build, scan, sign and publish images with an SBOM](phases/02-devops-iac/08-ci-cd-with-github-actions/8.2-build-scan-sign-and-publish-images/lesson.md) | 18 | Written |
+| [8.3 Keyless login from GitHub to AWS, Azure and Google Cloud with OIDC](phases/02-devops-iac/08-ci-cd-with-github-actions/8.3-keyless-login-from-github-to-aws/lesson.md) | 19 | Written |
+| [8.4 Terraform in the pipeline: environments and approvals](phases/02-devops-iac/08-ci-cd-with-github-actions/8.4-terraform-in-the-pipeline-environments/lesson.md) | 19 | Written |
 
 ### Module 9: Kubernetes and Helm on EKS, AKS and GKE (weeks 20–21)
 

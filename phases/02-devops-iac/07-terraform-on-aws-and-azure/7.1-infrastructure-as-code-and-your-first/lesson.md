@@ -233,7 +233,7 @@ Three rules you must know now (topic 7.3 goes further):
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Terraform in 100 Seconds](https://www.youtube.com/watch?v=tomUWcQ0P3k) · Fireship · 2 min. Terraform in 100 seconds.
 - [Terraform Explained](https://www.youtube.com/watch?v=HmxkYNv1ksg) · IBM Technology · 9 min. What Terraform is and how it works, from IBM.

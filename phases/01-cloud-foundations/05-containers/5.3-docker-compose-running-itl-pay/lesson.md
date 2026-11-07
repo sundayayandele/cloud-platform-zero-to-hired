@@ -143,7 +143,7 @@ In Capstone 1 you'll first run ITL Pay Lite with Compose on a single VM in each 
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Docker Compose in 12 Minutes](https://www.youtube.com/watch?v=Qw9zlE3t8Ko) · Jake Wright · 12 min. Docker Compose in twelve minutes.
 - [Docker Compose will BLOW your MIND!! (a tutorial)](https://www.youtube.com/watch?v=DM65_JyGxCo) · NetworkChuck · 16 min. Docker Compose with a practical example.

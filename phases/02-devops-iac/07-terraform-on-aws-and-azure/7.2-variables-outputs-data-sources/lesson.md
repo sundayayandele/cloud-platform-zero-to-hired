@@ -188,7 +188,7 @@ The environment folders `envs/dev-aws`, `envs/dev-azure` and `envs/dev-gcp` call
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Terraform Basics: Modules](https://www.youtube.com/watch?v=GSXx8AZjKK4) · Ned in the Cloud · 15 min. Writing and using Terraform modules.
 - [How to Use Terraform Variables & .tfvars Files | Practical Examples](https://www.youtube.com/watch?v=B6l2UbCsH94) · Spacelift · 21 min. Variables and .tfvars files, with practical examples.

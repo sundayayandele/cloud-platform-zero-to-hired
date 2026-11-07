@@ -1,0 +1,210 @@
+# Topics 8.3 and 8.4: Terraform for the three clouds, with keyless login (OIDC), a plan on every pull request,
+# and apply only from main, through a GitHub environment that needs an approval.
+name: terraform
+on:
+  pull_request:
+    paths: ["infra/**"]
+  push:
+    branches: [main]
+    paths: ["infra/**"]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *" # nightly drift check, 03:00 UTC
+
+permissions:
+  contents: read
+
+concurrency:
+  group: terraform-${{ github.ref }}
+  cancel-in-progress: false # never cancel a running apply
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.11.4"
+      - run: terraform fmt -check -recursive infra
+      - name: checkov
+        run: |
+          pip install --quiet checkov==3.2.330
+          checkov -d infra --compact --quiet
+
+  plan:
+    needs: checks
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cloud: [aws, azure, gcp]
+    permissions:
+      contents: read
+      id-token: write # ask GitHub for an OIDC token to exchange for cloud credentials
+      pull-requests: write # post the plan on the pull request
+    defaults:
+      run:
+        working-directory: infra/envs/dev-${{ matrix.cloud }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.11.4"
+
+      # Keyless login to the matrix's cloud: no cloud secret is stored in GitHub
+      - if: matrix.cloud == 'aws'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_PLAN_ROLE_ARN }}
+          aws-region: af-south-1
+      - if: matrix.cloud == 'azure'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - if: matrix.cloud == 'gcp'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_PLAN_SERVICE_ACCOUNT }}
+
+      - run: terraform init -input=false
+        env:
+          ARM_USE_OIDC: "true"
+      - id: plan
+        run: terraform plan -input=false -no-color -out=tfplan -var owner=pipeline
+        env:
+          ARM_USE_OIDC: "true"
+          TF_VAR_subscription_id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_project_id: ${{ vars.GCP_PROJECT_ID }}
+      - name: Keep the plan for the apply job (main only)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-${{ matrix.cloud }}
+          path: infra/envs/dev-${{ matrix.cloud }}/tfplan
+          retention-days: 1
+      - name: Post the plan on the pull request
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          PLAN: ${{ steps.plan.outputs.stdout }}
+          CLOUD: ${{ matrix.cloud }}
+        with:
+          script: |
+            const plan = process.env.PLAN.length > 60000 ? process.env.PLAN.slice(-60000) : process.env.PLAN;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number,
+              body: `### Terraform plan: ${process.env.CLOUD}\n<details><summary>Show plan</summary>\n\n\`\`\`text\n${plan}\n\`\`\`\n</details>`
+            });
+
+  apply:
+    needs: plan
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1 # one cloud at a time
+      matrix:
+        cloud: [aws, azure, gcp]
+    environment: dev-${{ matrix.cloud }} # protection rules: required reviewers, main branch only
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        working-directory: infra/envs/dev-${{ matrix.cloud }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.11.4"
+      - if: matrix.cloud == 'aws'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_APPLY_ROLE_ARN }}
+          aws-region: af-south-1
+      - if: matrix.cloud == 'azure'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - if: matrix.cloud == 'gcp'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_APPLY_SERVICE_ACCOUNT }}
+      - run: terraform init -input=false
+        env:
+          ARM_USE_OIDC: "true"
+      - uses: actions/download-artifact@v4
+        with:
+          name: tfplan-${{ matrix.cloud }}
+          path: infra/envs/dev-${{ matrix.cloud }}
+      - name: Apply exactly the plan that was reviewed (Terraform refuses it if anything changed since)
+        run: terraform apply -input=false tfplan
+        env:
+          ARM_USE_OIDC: "true"
+
+  drift:
+    # Topic 7.5: every night, plan against the real clouds; exit code 2 means "changes": open an issue
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cloud: [aws, azure, gcp]
+    permissions:
+      contents: read
+      id-token: write
+      issues: write
+    defaults:
+      run:
+        working-directory: infra/envs/dev-${{ matrix.cloud }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.11.4"
+          terraform_wrapper: false
+      - if: matrix.cloud == 'aws'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_PLAN_ROLE_ARN }}
+          aws-region: af-south-1
+      - if: matrix.cloud == 'azure'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - if: matrix.cloud == 'gcp'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_PLAN_SERVICE_ACCOUNT }}
+      - run: terraform init -input=false
+        env:
+          ARM_USE_OIDC: "true"
+      - name: Plan with -detailed-exitcode (0 no changes, 1 error, 2 drift)
+        id: drift
+        run: |
+          set +e
+          terraform plan -input=false -no-color -detailed-exitcode -var owner=pipeline > plan.txt
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" -eq 1 ]; then cat plan.txt; exit 1; fi
+        env:
+          ARM_USE_OIDC: "true"
+          TF_VAR_subscription_id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_project_id: ${{ vars.GCP_PROJECT_ID }}
+      - name: Open an issue when the cloud has drifted from the code
+        if: steps.drift.outputs.code == '2'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOUD: ${{ matrix.cloud }}
+        run: |
+          gh issue create --repo "$GITHUB_REPOSITORY" --title "Drift detected in dev-$CLOUD" \
+            --body "The nightly plan found changes made outside Terraform. Decide: undo (apply) or adopt (change the code). Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"

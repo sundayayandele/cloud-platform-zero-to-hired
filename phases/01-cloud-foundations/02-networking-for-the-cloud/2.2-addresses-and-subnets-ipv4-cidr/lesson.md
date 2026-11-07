@@ -134,7 +134,7 @@ Azure has one more thing to know early: some services need a **dedicated subnet 
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Subnetting Explained: Networking Basics](https://www.youtube.com/watch?v=hbdT_Q9DM8w) · WhiteboardDoodles · 12 min. Subnetting explained on a whiteboard.
 - [IP addressing and Subnetting | CIDR | Subnet | TechTerms](https://www.youtube.com/watch?v=OqsXzkXfwRw) · TechTerms · 4 min. IP addressing, subnets and CIDR, animated.

@@ -150,7 +150,7 @@ docker run --rm itlpay-lite:1.0.0 id           # which user it runs as
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Docker Image BEST Practices - From 1.2GB to 10MB](https://www.youtube.com/watch?v=t779DVjCKCs) · Better Stack · 7 min. Making images small and safe: multi-stage builds and more.
 - [Top 8 Docker Best Practices for using Docker in Production](https://www.youtube.com/watch?v=8vXoMqWgbQQ) · TechWorld with Nana · 18 min. Docker best practices for production images.

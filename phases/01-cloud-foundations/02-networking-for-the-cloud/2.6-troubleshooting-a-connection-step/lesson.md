@@ -148,7 +148,7 @@ Notice what the engineer **didn't** do: restart the database, reboot the app ser
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Linux for Programmers #6 | Networking Commands](https://www.youtube.com/watch?v=vDWY3PuHMX8) · Akamai Developers · 14 min. Linux networking commands for troubleshooting.
 - [Basic Linux Network Troubleshooting](https://www.youtube.com/watch?v=PVOuff-p420) · Cumulus Networks · 7 min. A basic Linux network troubleshooting routine.

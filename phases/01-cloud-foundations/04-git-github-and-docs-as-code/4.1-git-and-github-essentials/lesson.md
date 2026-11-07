@@ -166,7 +166,7 @@ The rule: **never rewrite history that others have already pulled** (`--amend`, 
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Git and Github Explained in 7 Minutes | Git and Github Tutorial (2026)](https://www.youtube.com/watch?v=y-an0v208A0) · Tech With Diego · 8 min. Git and GitHub explained in seven minutes.
 - [Git and GitHub Tutorial for Beginners](https://www.youtube.com/watch?v=tRZGeaHPoaw) (optional, longer) · Kevin Stratvert · 46 min. A complete Git and GitHub tutorial for beginners.

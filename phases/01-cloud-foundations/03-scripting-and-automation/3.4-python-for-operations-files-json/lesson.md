@@ -229,7 +229,7 @@ Both find credentials automatically from the environment, your CLI login, or (on
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Python Virtual Environments - Full Tutorial for Beginners](https://www.youtube.com/watch?v=Y21OR1OPC9A) · Tech With Tim · 9 min. Python virtual environments, from scratch.
 - [Python Requests Tutorial: Request Web Pages, Download Images, POST Data, Read JSON, and More](https://www.youtube.com/watch?v=tb8gHvYlCFs) · Corey Schafer · 25 min. Calling web APIs and reading JSON with Python requests.

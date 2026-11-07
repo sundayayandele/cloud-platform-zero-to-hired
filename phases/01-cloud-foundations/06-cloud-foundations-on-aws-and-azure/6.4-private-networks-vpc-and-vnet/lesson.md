@@ -258,7 +258,7 @@ Notice there's no rule allowing anything from the internet to the app tier: the 
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [How to Create an AWS VPC with Public and Private Subnets](https://www.youtube.com/watch?v=ApGz8tpNLgo) · Be A Better Dev · 13 min. Building an AWS VPC with public and private subnets.
 - [AZ-900 Episode 10 | Networking Services | Virtual Network, VPN Gateway, CDN, Load Balancer, App GW](https://www.youtube.com/watch?v=5NMcM4zJPM4) · Adam Marczak - Azure for Everyone · 17 min. Azure networking: virtual networks, gateways and load balancers (AZ-900).

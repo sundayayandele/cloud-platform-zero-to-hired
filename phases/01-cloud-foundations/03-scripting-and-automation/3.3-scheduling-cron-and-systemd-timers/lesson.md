@@ -190,7 +190,7 @@ They all use the same ideas: a schedule (often in cron syntax, sometimes with si
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Linux/Mac Tutorial: Cron Jobs - How to Schedule Commands with crontab](https://www.youtube.com/watch?v=QZJ1drMQz1A) · Corey Schafer · 19 min. Scheduling commands with cron and crontab.
 - [Introduction to systemd timers](https://www.youtube.com/watch?v=DixhIrgMy3M) · tutoriaLinux · 13 min. An introduction to systemd timers.

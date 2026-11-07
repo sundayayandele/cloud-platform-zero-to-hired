@@ -184,7 +184,7 @@ This is the first piece of the CI/CD pipelines you'll build in Phase 2, where th
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [How to create a pull request in 4 min | GitHub for Beginners](https://www.youtube.com/watch?v=nCKdihvneS0) · GitHub · 4 min. Creating a pull request, from GitHub.
 - [How to Review a Pull Request in GitHub the RIGHT Way](https://www.youtube.com/watch?v=lSnbOtw4izI) · CoderDave · 4 min. How to review a pull request well.

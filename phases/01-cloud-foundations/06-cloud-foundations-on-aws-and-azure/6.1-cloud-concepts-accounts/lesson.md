@@ -195,7 +195,7 @@ Surprise costs to watch on Google Cloud: **Cloud NAT** and **load balancer forwa
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [AZ-900 Episode 7 | Geographies, Regions & Availability Zones | Microsoft Azure Fundamentals Course](https://www.youtube.com/watch?v=C-nNw1mGwzE) · Adam Marczak - Azure for Everyone · 15 min. Azure geographies, regions and availability zones (AZ-900).
 - [AWS Global Infrastructure Overview - Regions, Availability Zones, Edge Locations and more](https://www.youtube.com/watch?v=0hlZvybbaGk) · Digital Cloud Training · 6 min. AWS regions, availability zones and edge locations.

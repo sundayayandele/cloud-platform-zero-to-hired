@@ -173,7 +173,7 @@ Work through these in order, and write down what you find as you go:
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [How To Manage Linux Services with systemctl and journalctl | Sysadmin Basics](https://www.youtube.com/watch?v=3kl62YSU9XA) · Akamai Developers · 14 min. Managing services with systemctl and reading logs with journalctl.
 - [Linux Crash Course - The ps Command](https://www.youtube.com/watch?v=wYwGNgsfN3I) · Learn Linux TV · 15 min. Finding and understanding processes with ps.

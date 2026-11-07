@@ -172,7 +172,7 @@ Use the accounts and budgets from topic 6.1. Delete everything at the end.
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [AWS IAM Core Concepts You NEED to Know](https://www.youtube.com/watch?v=_ZCTvmaPgao) · Be A Better Dev · 22 min. AWS IAM users, groups, roles and policies.
 - [AZ-900 Episode 28 | Azure Role-based Access Control (RBAC)](https://www.youtube.com/watch?v=4v7ffXxOnwU) · Adam Marczak - Azure for Everyone · 14 min. Azure role-based access control (AZ-900).

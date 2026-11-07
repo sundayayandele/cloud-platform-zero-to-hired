@@ -236,7 +236,7 @@ Add these lines to `lab-6-3.sh` (after the Azure part, using the same `owner` an
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [AWS CLI Tutorial | Learn to run AWS CLI commands in 10 minutes](https://www.youtube.com/watch?v=21-t7Rkokmo) · AWS Made Easy · 11 min. Running your first AWS CLI commands.
 - [Azure CLI Tutorial](https://www.youtube.com/watch?v=GqpwiyYsNIw) · Adam Marczak - Azure for Everyone · 25 min. The Azure CLI, step by step.

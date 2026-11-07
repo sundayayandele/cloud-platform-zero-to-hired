@@ -149,7 +149,7 @@ If you must use them: work on a copy of the configuration's state first if you c
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Exploring the Import Block in Terraform 1.5](https://www.youtube.com/watch?v=znfh_00EDZ0) · Ned in the Cloud · 24 min. Bringing existing resources into Terraform with import blocks.
 - [Using Moved Blocks in Terraform](https://www.youtube.com/watch?v=fDPB7xbckVM) · Ned in the Cloud · 18 min. Refactoring safely with moved blocks.

@@ -171,7 +171,7 @@ Many companies use both: Terraform for the platform, and native templates for sp
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [AWS CloudFormation for Beginners](https://www.youtube.com/watch?v=2gT1dvbppg8) · Digital Cloud Training · 10 min. AWS CloudFormation for beginners: stacks, templates and change sets.
 - [Azure Bicep explained in 5 mins | Azure Bicep Tutorial for Beginners | 2022](https://www.youtube.com/watch?v=AkZqEIzgcZo) · Talking tech with Techielass · 6 min. Azure Bicep explained in five minutes.

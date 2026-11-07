@@ -210,7 +210,7 @@ Keep ADRs in `docs/adr/` with numbered file names (`0003-production-region.md`).
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [The Only Markdown Crash Course You Will Ever Need](https://www.youtube.com/watch?v=_PPWWRV6gbA) · Web Dev Simplified · 22 min. Markdown, everything you need for READMEs and runbooks.
 - [Mermaid In Markdown, Diagrams As Code: Introduction, How-to, And Demo](https://www.youtube.com/watch?v=qGsQolMh9zE) · PetterTech · 11 min. Diagrams as code with Mermaid in Markdown.

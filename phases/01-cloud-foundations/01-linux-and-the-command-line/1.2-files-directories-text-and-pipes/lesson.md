@@ -190,7 +190,7 @@ Download the practice log provided with this topic on itlearning.tech (`access.l
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Linux PIPES and REDIRECTS: Command Line Ninja Skillz](https://www.youtube.com/watch?v=Kdr0OrCPtyk) · Shawn Powers · 17 min. Pipes and redirection with clear examples.
 - [Linux Crash Course - The grep Command](https://www.youtube.com/watch?v=Tc_jntovCM0) · Learn Linux TV · 15 min. The grep command in depth.

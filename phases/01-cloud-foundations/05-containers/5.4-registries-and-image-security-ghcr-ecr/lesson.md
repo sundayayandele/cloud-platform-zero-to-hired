@@ -153,7 +153,7 @@ ARM servers (Graviton on AWS, Cobalt and Ampere on Azure) are often cheaper for 
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Container Image Scanning with Trivy -- Ep. 1 Trivy Overview](https://www.youtube.com/watch?v=-IH5inFyEqU) · Aqua Security Open Source · 6 min. Scanning container images for vulnerabilities with Trivy.
 - [Docker Concepts: What is a Registry?](https://www.youtube.com/watch?v=jC6J2-YJxbk) · Docker · 2 min. What a container registry is, from Docker.

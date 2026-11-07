@@ -130,7 +130,7 @@ Use `sudo ss -ulnp` for UDP, and `ss -tnp` (without `-l`) to see current connect
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [what is TCP/IP and OSI? // FREE CCNA // EP 3](https://www.youtube.com/watch?v=CRdL1PcherM) · NetworkChuck · 12 min. The TCP/IP and OSI models explained with real examples.
 - [TCP vs UDP Comparison](https://www.youtube.com/watch?v=uwoD5YsGACg) · PowerCert Animated Videos · 5 min. TCP and UDP compared, with animations.

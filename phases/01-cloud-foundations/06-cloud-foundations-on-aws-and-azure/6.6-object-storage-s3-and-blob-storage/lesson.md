@@ -184,7 +184,7 @@ From the topic 6.5 VM (no keys): `gcloud storage cp gs://itlpay-statements-ada-1
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Amazon/AWS S3 (Simple Storage Service) Basics | S3 Tutorial, Creating a Bucket | AWS for Beginners](https://www.youtube.com/watch?v=mDRoyPFJvlU) · Tiny Technical Tutorials · 10 min. Amazon S3 basics: buckets and objects.
 - [AZ-900 Episode 11 | Azure Storage Services | Blob, Queue, Table, Files, Disk and Storage Tiers](https://www.youtube.com/watch?v=_Qlkvd4ZQuo) · Adam Marczak - Azure for Everyone · 19 min. Azure storage services and access tiers (AZ-900).

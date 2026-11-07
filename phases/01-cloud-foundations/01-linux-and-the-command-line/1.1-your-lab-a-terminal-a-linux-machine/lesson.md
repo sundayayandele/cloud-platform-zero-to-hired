@@ -166,7 +166,7 @@ Add an entry every week. Module 4 teaches you to do this from the terminal with 
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [How to install Linux on Windows 11 with WSL for Beginners](https://www.youtube.com/watch?v=zZf4YH4WiZo) · Devtamin · 4 min. Installing Linux on Windows 11 with WSL, step by step.
 - [60 Linux Commands you NEED to know (in 10 minutes)](https://www.youtube.com/watch?v=gd7BXuUQ91w) · NetworkChuck · 11 min. 60 everyday Linux commands, quickly, so the names feel familiar.

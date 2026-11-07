@@ -127,7 +127,7 @@ To use a domain you bought elsewhere (say, from a `.ng` registrar) with Route 53
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [How a DNS Server (Domain Name System) works.](https://www.youtube.com/watch?v=mpQZVYPuDGU) · PowerCert Animated Videos · 6 min. How a DNS lookup works, step by step.
 - [What is DNS? (and how it makes the Internet work)](https://www.youtube.com/watch?v=NiQTs9DbtW4) · NetworkChuck · 24 min. DNS in depth: records, resolvers and caching.

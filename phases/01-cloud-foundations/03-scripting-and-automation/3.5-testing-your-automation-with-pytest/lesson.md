@@ -211,7 +211,7 @@ A red cross on a pull request then means "don't merge yet", and nobody has to re
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [getting started with pytest (beginner - intermediate) anthony explains #518](https://www.youtube.com/watch?v=mzlH8lp4ISA) · anthonywritescode · 13 min. Getting started with pytest.
 - [Please Learn How To Write Tests in Python… • Pytest Tutorial](https://www.youtube.com/watch?v=EgpLj86ZHFQ) (optional, longer) · Tech With Tim · 33 min. Writing tests in Python with pytest, in depth.

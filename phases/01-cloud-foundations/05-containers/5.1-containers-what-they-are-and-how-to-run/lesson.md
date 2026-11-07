@@ -144,7 +144,7 @@ The second container finds `db` through Docker's built-in DNS (topic 2.3). Compo
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Docker in 100 Seconds](https://www.youtube.com/watch?v=Gjnup-PuquQ) · Fireship · 2 min. Docker in 100 seconds.
 - [Virtual Machine (VM) vs Docker](https://www.youtube.com/watch?v=a1M_thDTqmU) · IBM Technology · 9 min. Virtual machines versus containers.

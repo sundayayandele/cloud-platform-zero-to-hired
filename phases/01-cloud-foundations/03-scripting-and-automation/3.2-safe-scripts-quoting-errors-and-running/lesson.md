@@ -215,7 +215,7 @@ log "Done"
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Bash Script BEST Practices You Need to Know, According to Google](https://www.youtube.com/watch?v=Y_erZnIhgKg) · Better Stack · 4 min. Bash best practices, based on Google's style guide.
 - [Write Safer Scripts Using Shellcheck](https://www.youtube.com/watch?v=lHsftCXdjQU) · Mark Alexander · 3 min. Using shellcheck to find bugs in scripts.

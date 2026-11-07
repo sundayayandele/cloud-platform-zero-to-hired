@@ -957,5 +957,121 @@
     "https://www.skills.google/course_templates/443"
    ]
   ]
+ },
+ "8.1": {
+  "azure": [
+   [
+    "Introduction to GitHub Actions",
+    "https://learn.microsoft.com/training/modules/introduction-to-github-actions/"
+   ],
+   [
+    "Automate development tasks by using GitHub Actions",
+    "https://learn.microsoft.com/training/modules/github-actions-automate-tasks/"
+   ],
+   [
+    "Build continuous integration workflows by using GitHub Actions",
+    "https://learn.microsoft.com/training/modules/github-actions-ci/"
+   ],
+   [
+    "Maintain a secure repository by using GitHub best practices",
+    "https://learn.microsoft.com/training/modules/maintain-secure-repository-github/"
+   ]
+  ],
+  "aws": [
+   [
+    "Getting Started with DevOps on AWS",
+    "https://skillbuilder.aws/learn/R4B13K95YQ/getting-started-with-devops-on-aws/38NHHYRV1R"
+   ],
+   [
+    "AWS CodeBuild Getting Started",
+    "https://skillbuilder.aws/learn/QZEH96HXY6/aws-codebuild-getting-started/QVU1KBKFRZ"
+   ],
+   [
+    "AWS CodePipeline Getting Started",
+    "https://skillbuilder.aws/learn/YNKCTVMQ9M/aws-codepipeline-getting-started/UGBY22FZ6P"
+   ]
+  ],
+  "gcp": [
+   [
+    "DevOps Essentials",
+    "https://www.skills.google/course_templates/717"
+   ],
+   [
+    "Implement CI/CD Pipelines on Google Cloud",
+    "https://www.skills.google/course_templates/691"
+   ]
+  ]
+ },
+ "8.2": {
+  "azure": [
+   [
+    "Build and deploy applications to Azure by using GitHub Actions",
+    "https://learn.microsoft.com/training/modules/github-actions-cd/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon ECR Getting Started",
+    "https://skillbuilder.aws/learn/M494WWS5EF/amazon-ecr-getting-started/N5CQ7DC6HT"
+   ],
+   [
+    "Build With Amazon Elastic Container Registry (Amazon ECR)",
+    "https://skillbuilder.aws/learn/PT6R6CVEFP/build-with-amazon-elastic-container-registry-amazon-ecr/ZGKSY75UZA"
+   ]
+  ],
+  "gcp": [
+   [
+    "Implement CI/CD Pipelines on Google Cloud (Cloud Build and Artifact Registry)",
+    "https://www.skills.google/course_templates/691"
+   ]
+  ]
+ },
+ "8.3": {
+  "azure": [
+   [
+    "Build and deploy applications to Azure by using GitHub Actions (includes signing in to Azure from a workflow)",
+    "https://learn.microsoft.com/training/modules/github-actions-cd/"
+   ]
+  ],
+  "aws": [
+   [
+    "Deep Dive with Security: AWS Identity and Access Management (IAM)",
+    "https://skillbuilder.aws/learn/525X5QYY33/deep-dive-with-security-aws-identity-and-access-management-iam/EJR97RFJZ3"
+   ]
+  ],
+  "terraform": [
+   [
+    "Authenticate providers with dynamic credentials",
+    "https://developer.hashicorp.com/terraform/tutorials/cloud/dynamic-credentials"
+   ]
+  ]
+ },
+ "8.4": {
+  "aws": [
+   [
+    "AWS CodePipeline Getting Started (manual approval actions)",
+    "https://skillbuilder.aws/learn/YNKCTVMQ9M/aws-codepipeline-getting-started/UGBY22FZ6P"
+   ]
+  ],
+  "terraform": [
+   [
+    "Automate Terraform with GitHub Actions",
+    "https://developer.hashicorp.com/terraform/tutorials/automation/github-actions"
+   ],
+   [
+    "Running Terraform in automation",
+    "https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform"
+   ]
+  ],
+  "gcp": [
+   [
+    "Implement DevOps Workflows in Google Cloud (skill badge)",
+    "https://www.skills.google/course_templates/716"
+   ],
+   [
+    "Getting Started with Terraform for Google Cloud",
+    "https://www.skills.google/course_templates/443"
+   ]
+  ]
  }
 }

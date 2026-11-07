@@ -212,7 +212,7 @@ elif [[ "$CLOUD" == gcp ]]; then
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [How to Set Up a Postgres Database on Amazon RDS](https://www.youtube.com/watch?v=XF1ZADfH0EQ) · Database Star · 10 min. Setting up PostgreSQL on Amazon RDS.
 - [Create Azure Database for PostgreSQL Flexible Server | Using Azure Portal](https://www.youtube.com/watch?v=AeQi195rg_4) · Cloud Knowledge · 9 min. Creating an Azure Database for PostgreSQL Flexible Server.

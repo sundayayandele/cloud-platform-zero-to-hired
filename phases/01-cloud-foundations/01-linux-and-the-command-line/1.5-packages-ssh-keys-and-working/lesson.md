@@ -178,7 +178,7 @@ The "no open port" options are increasingly the norm at banks and large companie
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [How SSH Works](https://www.youtube.com/watch?v=5JvLV2-ngCI) · Mental Outlaw · 9 min. How SSH works, including keys and host verification.
 - [SSH Keys](https://www.youtube.com/watch?v=dPAw4opzN9g) · RobEdwards · 10 min. Creating and using SSH keys.

@@ -198,7 +198,7 @@ The global load balancer has one anycast IP served from Google's edge worldwide,
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [Create an Application Load Balancer (ALB) in AWS | AWS Elastic Load Balancing Tutorial for Beginners](https://www.youtube.com/watch?v=ZGGpEwThhrM) · Tiny Technical Tutorials · 11 min. Creating an Application Load Balancer in AWS.
 - [Introduction to Azure Application Gateway | AZ-104 | Episode 14](https://www.youtube.com/watch?v=53rKarX6e34) · Microsoft Learn · 9 min. Introduction to Azure Application Gateway, from Microsoft Learn.

@@ -139,7 +139,7 @@ You'll build exactly this, on both clouds, in Module 6 and Capstone 1.
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [NAT Explained - Network Address Translation](https://www.youtube.com/watch?v=FTUV0t6JaDA) · PowerCert Animated Videos · 4 min. Network address translation (NAT) with animations.
 - [What is a Load Balancer?](https://www.youtube.com/watch?v=sCR3SAVdyCc) · IBM Technology · 8 min. What a load balancer does and why.

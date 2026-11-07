@@ -159,7 +159,7 @@ Whichever you choose, redirect HTTP to HTTPS (`301`), and add the `Strict-Transp
 
 ## Watch
 
-English videos with English captions, checked on 2026-11-06. On itlearning.tech they play inside the lesson.
+English videos with English captions, checked on 2026-11-07. On itlearning.tech they play inside the lesson.
 
 - [SSL, TLS, HTTPS Explained](https://www.youtube.com/watch?v=j9QmMEWmcfo) · ByteByteGo · 6 min. SSL, TLS and HTTPS in under six minutes.
 - [HTTP Status Codes Explained In 5 Minutes](https://www.youtube.com/watch?v=qmpUfWN7hh4) · ByteByteGo · 5 min. HTTP status codes and what each family means.
