@@ -21,12 +21,12 @@ weekly plan, the capstone checks and a certificate, or read it here.
   Capstone 1.
 - [Further learning](resources/further-learning.json): the Microsoft Learn, AWS Skill Builder, Google Skills and HashiCorp courses for each topic.
 
-- [Phase 2: DevOps and Infrastructure as Code](CURRICULUM.md) (weeks 15–25), being written: Module 7 (Terraform on AWS, Azure
-  and Google Cloud) , Module 8 (CI/CD with GitHub Actions), Module 9 (Kubernetes and Helm),
-  Module 10 (Ansible and cloud secrets) and Module 11 (observability) are ready, with the [Terraform network lab](labs/terraform-network/README.md),
-  the [pipeline lab](labs/pipelines/README.md), the [Kubernetes lab](labs/kubernetes/README.md), the
-  [Ansible lab](labs/ansible/README.md), the [secrets lab](labs/secrets/README.md) and the
-  [observability lab](labs/observability/README.md).
+- [Phase 2: DevOps and Infrastructure as Code](CURRICULUM.md) (weeks 15–25): Terraform, CI/CD with GitHub Actions,
+  Kubernetes and Helm, Ansible and cloud secrets, and observability (19 lessons), with the
+  [Terraform network lab](labs/terraform-network/README.md), the [pipeline lab](labs/pipelines/README.md), the
+  [Kubernetes lab](labs/kubernetes/README.md), the [Ansible lab](labs/ansible/README.md), the
+  [secrets lab](labs/secrets/README.md), the [observability lab](labs/observability/README.md), and
+  [Capstone 2](phases/02-devops-iac/capstone-2/README.md) with its [starter kit](labs/capstone-2-starter/README.md).
 
 Phase 3 (Platform Engineering and SRE) follows.
 

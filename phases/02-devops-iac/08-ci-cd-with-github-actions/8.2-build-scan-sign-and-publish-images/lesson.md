@@ -55,7 +55,7 @@ Release by pushing a Git tag (`git tag v1.2.0 && git push origin v1.2.0`): the p
 ## 4. Scanning as a gate
 
 ```yaml
-- uses: aquasecurity/trivy-action@0.28.0
+- uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
   with:
     image-ref: itlpay-lite:scan
     severity: HIGH,CRITICAL
@@ -63,7 +63,11 @@ Release by pushing a Git tag (`git tag v1.2.0 && git push origin v1.2.0`): the p
     exit-code: "1"
 ```
 
-`exit-code: "1"` makes the job fail, so the image isn't pushed. Two practical rules:
+`exit-code: "1"` makes the job fail, so the image isn't pushed.
+
+The action is pinned to a **commit SHA**, not a tag, for a real reason. On 19 March 2026, attackers with stolen credentials force-pushed 76 of the 77 version tags of `aquasecurity/trivy-action` to code that stole the secrets of every pipeline that ran it, for about 12 hours (advisory GHSA-69fq-xp46-6x23). Pipelines that used a tag such as `@0.28.0` ran the attacker's code; pipelines pinned to a known-good commit didn't. A security scanner is a privileged tool in your pipeline, so treat it like any other dependency (topic 8.1).
+
+Two practical rules:
 
 - **Gate on what you can fix** (`ignore-unfixed`), or the pipeline stays red for weeks over vulnerabilities nobody can fix yet.
 - **Record exceptions properly**: a `.trivyignore` file listing a CVE, with a comment saying why it doesn't apply and a review date, reviewed in a pull request, like checkov skips (topic 7.4).

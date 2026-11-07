@@ -1,0 +1,116 @@
+# Capstone 2: deploy one signed image digest to one environment. Called by deliver.yml.
+# Each GitHub environment (dev-aws, dev-azure, dev-gcp, prod-<cloud>) holds its own variables:
+#   AWS:   AWS_DEPLOY_ROLE_ARN, AWS_REGION, EKS_CLUSTER   (the role needs an EKS access entry on the cluster)
+#   Azure: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID, AKS_RESOURCE_GROUP, AKS_CLUSTER
+#   GCP:   GCP_WORKLOAD_IDENTITY_PROVIDER, GCP_DEPLOY_SERVICE_ACCOUNT, GKE_CLUSTER, GKE_LOCATION
+# and deploy/values/<environment>.yaml holds the chart values for it.
+name: deploy
+on:
+  workflow_call:
+    inputs:
+      cloud:
+        description: aws, azure or gcp
+        required: true
+        type: string
+      environment:
+        description: The GitHub environment, for example dev-aws or prod-gcp
+        required: true
+        type: string
+      digest:
+        description: The image digest (sha256:...) built and signed by deliver.yml
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: ${{ inputs.environment }}
+    env:
+      CLOUD: ${{ inputs.cloud }}
+      ENVIRONMENT: ${{ inputs.environment }}
+      DIGEST: ${{ inputs.digest }}
+      IMAGE: ghcr.io/${{ github.repository_owner }}/itlpay-lite
+      # the only identity allowed to have signed what we deploy: this repository's deliver workflow, on main
+      SIGNER: https://github.com/${{ github.repository }}/.github/workflows/deliver.yml@refs/heads/main
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refuse anything that isn't a sha256 digest
+        run: |
+          [[ "$DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]] || { echo "not a digest: $DIGEST"; exit 1; }
+          [[ "$CLOUD" =~ ^(aws|azure|gcp)$ ]] || { echo "unknown cloud: $CLOUD"; exit 1; }
+
+      - uses: sigstore/cosign-installer@v3
+      - name: Verify the signature before deploying (topic 8.2)
+        run: |
+          cosign verify "${IMAGE}@${DIGEST}" \
+            --certificate-identity "$SIGNER" \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com > /dev/null
+          echo "Signed by $SIGNER"
+
+      # Keyless login (topic 8.3) and cluster credentials (topic 9.5)
+      - if: inputs.cloud == 'aws'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - if: inputs.cloud == 'aws'
+        env:
+          EKS_CLUSTER: ${{ vars.EKS_CLUSTER }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+        run: aws eks update-kubeconfig --name "$EKS_CLUSTER" --region "$AWS_REGION"
+
+      - if: inputs.cloud == 'azure'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - if: inputs.cloud == 'azure'
+        uses: azure/use-kubelogin@v1.3
+        with:
+          kubelogin-version: v0.2.21
+      - if: inputs.cloud == 'azure'
+        uses: azure/aks-set-context@v5
+        with:
+          resource-group: ${{ vars.AKS_RESOURCE_GROUP }}
+          cluster-name: ${{ vars.AKS_CLUSTER }}
+          use-kubelogin: "true"
+
+      - if: inputs.cloud == 'gcp'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SERVICE_ACCOUNT }}
+      - if: inputs.cloud == 'gcp'
+        uses: google-github-actions/get-gke-credentials@v3
+        with:
+          cluster_name: ${{ vars.GKE_CLUSTER }}
+          location: ${{ vars.GKE_LOCATION }}
+
+      - uses: azure/setup-helm@v5
+        with:
+          version: v4.3.1 # Helm 4: --rollback-on-failure
+
+      - name: Deploy; a release that doesn't become ready rolls back by itself (topic 9.4)
+        run: |
+          helm upgrade --install itlpay deploy/chart/itlpay -n itlpay --create-namespace \
+            -f "deploy/values/${ENVIRONMENT}.yaml" \
+            --set image.repository="$IMAGE" --set image.digest="$DIGEST" \
+            --rollback-on-failure --wait --timeout 10m
+
+      - name: Smoke test (helm test calls /health through the Service)
+        run: helm test itlpay -n itlpay --timeout 2m
+
+      - name: Record what was deployed
+        run: |
+          {
+            echo "### $ENVIRONMENT"
+            echo "Image: \`${IMAGE}@${DIGEST}\`"
+            helm history itlpay -n itlpay --max 3
+          } >> "$GITHUB_STEP_SUMMARY"

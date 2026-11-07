@@ -44,7 +44,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Scan, and fail on HIGH or CRITICAL vulnerabilities that have a fix
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0, pinned by commit: this action's tags were hijacked in March 2026
         with:
           image-ref: itlpay-lite:scan
           severity: HIGH,CRITICAL

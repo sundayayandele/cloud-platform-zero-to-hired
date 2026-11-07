@@ -1,0 +1,109 @@
+# Capstone 2: from a merge to main to production. Build ONE image, then deploy that exact digest to the three dev
+# environments, then (after a reviewer approves the prod environment) to production on the cloud in vars.PROD_CLOUD.
+# Terraform runs in its own workflow (topic 8.4's terraform.yml); this one deploys the application.
+name: deliver
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["docs/**", "**.md", "infra/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deliver
+  cancel-in-progress: false # never cancel a deployment half-way (topic 8.4)
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  image:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+      id-token: write # keyless signing
+    outputs:
+      digest: ${{ steps.push.outputs.digest }}
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/itlpay-lite
+    steps:
+      - uses: actions/checkout@v4
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: type=sha,format=short
+      - uses: docker/setup-buildx-action@v3
+      - name: Build for scanning
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: itlpay-lite:scan
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Scan (fail on fixable HIGH/CRITICAL)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0, pinned by commit: this action's tags were hijacked in March 2026
+        with:
+          image-ref: itlpay-lite:scan
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+      - name: SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: itlpay-lite:scan
+          format: cyclonedx-json
+          output-file: sbom.cdx.json
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+      - uses: sigstore/cosign-installer@v3
+      - name: Sign and attach the SBOM
+        env:
+          DIGEST: ${{ steps.push.outputs.digest }}
+        run: |
+          cosign sign --yes "${IMAGE}@${DIGEST}"
+          cosign attest --yes --type cyclonedx --predicate sbom.cdx.json "${IMAGE}@${DIGEST}"
+
+  dev:
+    needs: image
+    strategy:
+      fail-fast: false
+      matrix:
+        cloud: [aws, azure, gcp]
+    permissions:
+      contents: read
+      id-token: write
+    uses: ./.github/workflows/deploy.yml
+    with:
+      cloud: ${{ matrix.cloud }}
+      environment: dev-${{ matrix.cloud }}
+      digest: ${{ needs.image.outputs.digest }}
+
+  prod:
+    needs: [image, dev] # only after every dev deployment and its smoke tests passed
+    permissions:
+      contents: read
+      id-token: write
+    uses: ./.github/workflows/deploy.yml
+    with:
+      cloud: ${{ vars.PROD_CLOUD }}
+      environment: prod-${{ vars.PROD_CLOUD }} # required reviewers on this environment
+      digest: ${{ needs.image.outputs.digest }}
