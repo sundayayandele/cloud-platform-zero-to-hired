@@ -1,0 +1,39 @@
+# Topic 11.1: kube-prometheus-stack (Prometheus Operator, Prometheus, Alertmanager, Grafana, node-exporter and
+# kube-state-metrics) for a learning cluster:
+#   helm upgrade --install monitoring prometheus-community/kube-prometheus-stack --version 92.11.0 \
+#     -n monitoring --create-namespace -f kube-prometheus-stack-values.yaml --wait
+prometheus:
+  prometheusSpec:
+    # pick up ServiceMonitors and PrometheusRules from every namespace, not only those labelled for this release
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    retention: 2d
+    resources:
+      requests: { cpu: 100m, memory: 400Mi }
+
+alertmanager:
+  config:
+    route:
+      receiver: "null"
+      group_by: [alertname, severity]
+      routes:
+        # In a real team: critical pages the on-call engineer (PagerDuty, Opsgenie, a phone call);
+        # warnings go to a chat channel. Replace "null" with your receivers (topic 11.1).
+        - matchers: ['severity="critical"']
+          receiver: "null"
+    receivers:
+      - name: "null"
+
+grafana:
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard # ConfigMaps with this label become dashboards
+      searchNamespace: ALL
+
+# kind and managed clusters (EKS, AKS, GKE) don't expose these control-plane parts to scraping: don't alert on them
+kubeControllerManager: { enabled: false }
+kubeScheduler: { enabled: false }
+kubeEtcd: { enabled: false }
+kubeProxy: { enabled: false }

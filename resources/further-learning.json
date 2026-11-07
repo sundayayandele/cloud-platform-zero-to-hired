@@ -1259,5 +1259,73 @@
     "https://www.skills.google/course_templates/770"
    ]
   ]
+ },
+ "11.1": {
+  "azure": [
+   [
+    "Guided project: deploy and configure Azure Monitor",
+    "https://learn.microsoft.com/training/modules/guided-project-deploy-configure-azure-monitor/"
+   ],
+   [
+    "Monitor and troubleshoot applications on Azure Kubernetes Service",
+    "https://learn.microsoft.com/training/modules/monitor-apps-azure-kubernetes-service/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon CloudWatch Getting Started",
+    "https://skillbuilder.aws/learn/HS1HSVQRHK/amazon-cloudwatch-getting-started/9Y34KP2H1T"
+   ]
+  ],
+  "gcp": [
+   [
+    "Monitor Environments with Google Cloud Managed Service for Prometheus",
+    "https://www.skills.google/course_templates/761"
+   ],
+   [
+    "Monitoring in Google Cloud",
+    "https://www.skills.google/course_templates/747"
+   ],
+   [
+    "Developing a Google SRE Culture (SLOs and error budgets)",
+    "https://www.skills.google/course_templates/95"
+   ]
+  ]
+ },
+ "11.2": {
+  "azure": [
+   [
+    "Instrument an app with OpenTelemetry",
+    "https://learn.microsoft.com/training/modules/instrument-app-opentelemetry/"
+   ],
+   [
+    "Write your first query with Kusto Query Language",
+    "https://learn.microsoft.com/training/modules/write-first-query-kusto-query-language/"
+   ],
+   [
+    "Create and configure a Log Analytics workspace",
+    "https://learn.microsoft.com/training/modules/create-configure-log-analytics-workspace/"
+   ]
+  ],
+  "aws": [
+   [
+    "Introduction to Amazon CloudWatch Logs",
+    "https://skillbuilder.aws/learn/H5K7BTCH6K/introduction-to-amazon-cloudwatch-logs/WMQKV8ZS4V"
+   ],
+   [
+    "AWS X-Ray Getting Started",
+    "https://skillbuilder.aws/learn/UD8KP8QN46/aws-xray-getting-started/2JNHS9K8EH"
+   ]
+  ],
+  "gcp": [
+   [
+    "Logging and Monitoring in Google Cloud",
+    "https://www.skills.google/course_templates/99"
+   ],
+   [
+    "Observability in Google Cloud",
+    "https://www.skills.google/course_templates/864"
+   ]
+  ]
  }
 }

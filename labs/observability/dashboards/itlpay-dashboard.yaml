@@ -1,0 +1,144 @@
+# Topic 11.1: the ITL Pay dashboard as code. Grafana's sidecar loads every ConfigMap labelled grafana_dashboard: "1".
+#   kubectl apply -f dashboards/itlpay-dashboard.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itlpay-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  itlpay.json: |
+    {
+     "title": "ITL Pay Lite",
+     "uid": "itlpay-lite",
+     "schemaVersion": 39,
+     "tags": [
+      "itlpay",
+      "cpe"
+     ],
+     "time": {
+      "from": "now-1h",
+      "to": "now"
+     },
+     "refresh": "30s",
+     "panels": [
+      {
+       "id": 1,
+       "type": "timeseries",
+       "title": "Requests per second by route",
+       "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+       },
+       "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "reqps"
+        },
+        "overrides": []
+       },
+       "targets": [
+        {
+         "refId": "A",
+         "expr": "sum by (route) (rate(http_requests_total{job=\"itlpay\"}[5m]))",
+         "legendFormat": "{{route}}"
+        }
+       ]
+      },
+      {
+       "id": 2,
+       "type": "timeseries",
+       "title": "Error ratio (5xx) against the 0.5% budget",
+       "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+       },
+       "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "percentunit"
+        },
+        "overrides": []
+       },
+       "targets": [
+        {
+         "refId": "A",
+         "expr": "itlpay:http_errors:ratio_rate5m",
+         "legendFormat": "5m"
+        },
+        {
+         "refId": "B",
+         "expr": "itlpay:http_errors:ratio_rate1h",
+         "legendFormat": "1h"
+        }
+       ]
+      },
+      {
+       "id": 3,
+       "type": "timeseries",
+       "title": "Latency p95 (excluding /health)",
+       "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+       },
+       "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "s"
+        },
+        "overrides": []
+       },
+       "targets": [
+        {
+         "refId": "A",
+         "expr": "itlpay:http_request_duration_seconds:p95_5m",
+         "legendFormat": "p95"
+        }
+       ]
+      },
+      {
+       "id": 4,
+       "type": "timeseries",
+       "title": "Transfers by result",
+       "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+       },
+       "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "ops"
+        },
+        "overrides": []
+       },
+       "targets": [
+        {
+         "refId": "A",
+         "expr": "sum by (result) (rate(itlpay_transfers_total{job=\"itlpay\"}[5m]))",
+         "legendFormat": "{{result}}"
+        }
+       ]
+      }
+     ]
+    }

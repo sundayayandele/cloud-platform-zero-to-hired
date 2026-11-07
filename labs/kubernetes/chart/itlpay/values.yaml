@@ -11,6 +11,18 @@ replicaCount: 3
 env:
   APP_ENV: dev
   LOG_LEVEL: INFO
+  LOG_FORMAT: json # one JSON object per log line (topic 11.2)
+  # Traces (topic 11.2): set the collector's OTLP/HTTP address to turn them on, for example
+  # OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector.monitoring:4318
+  OTEL_SERVICE_NAME: itlpay-lite
+
+metrics:
+  serviceMonitor:
+    enabled: false # needs the Prometheus Operator (kube-prometheus-stack, topic 11.1)
+    interval: 30s
+    labels: {} # some Prometheus installs only pick up ServiceMonitors with a given label, e.g. release: monitoring
+  prometheusRule:
+    enabled: false
 
 database:
   # A Secret, created outside the chart, with a DATABASE_URL key (topic 9.2; topic 10.2 fills it from the cloud's

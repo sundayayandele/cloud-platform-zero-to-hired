@@ -1,0 +1,50 @@
+# Topic 11.1: recording rules and alerts for ITL Pay Lite, in plain Prometheus format.
+# The chart wraps this file in a PrometheusRule; labs/observability/itlpay.rules.test.yml unit-tests it with promtool:
+#   promtool check rules rules/itlpay.rules.yml && promtool test rules ../../../observability/itlpay.rules.test.yml
+#
+# SLO: 99.5% of requests succeed (not 5xx) over 30 days. Error budget: 0.5%.
+groups:
+  - name: itlpay.recording
+    rules:
+      - record: itlpay:http_requests:rate5m
+        expr: sum(rate(http_requests_total{job="itlpay"}[5m]))
+      - record: itlpay:http_errors:ratio_rate5m
+        expr: sum(rate(http_requests_total{job="itlpay",status=~"5.."}[5m])) / sum(rate(http_requests_total{job="itlpay"}[5m]))
+      - record: itlpay:http_errors:ratio_rate1h
+        expr: sum(rate(http_requests_total{job="itlpay",status=~"5.."}[1h])) / sum(rate(http_requests_total{job="itlpay"}[1h]))
+      - record: itlpay:http_request_duration_seconds:p95_5m
+        expr: histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job="itlpay",route!="/health"}[5m])))
+
+  - name: itlpay.alerts
+    rules:
+      - alert: ITLPayDown
+        expr: sum(up{job="itlpay"}) == 0 or absent(up{job="itlpay"})
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ITL Pay: no API pod can be scraped"
+          description: "Prometheus has not reached any ITL Pay pod for 2 minutes. Runbook: check pods, events and the last rollout."
+          runbook_url: "https://github.com/OWNER/itlpay/blob/main/docs/runbooks/itlpay-down.md"
+
+      # Multi-window burn rate (topic 11.1): page when the error budget would be gone in about 2 days at this rate.
+      # 14.4 x 0.5% = 7.2% errors, over both the last hour and the last 5 minutes (so it also stops quickly).
+      - alert: ITLPayErrorBudgetBurn
+        expr: itlpay:http_errors:ratio_rate1h > (14.4 * 0.005) and itlpay:http_errors:ratio_rate5m > (14.4 * 0.005)
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ITL Pay is failing {{ $value | humanizePercentage }} of requests"
+          description: "The 30-day error budget is burning about 14 times too fast. Check /health, the database and recent deploys."
+          runbook_url: "https://github.com/OWNER/itlpay/blob/main/docs/runbooks/itlpay-errors.md"
+
+      - alert: ITLPaySlowRequests
+        expr: itlpay:http_request_duration_seconds:p95_5m > 0.5
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ITL Pay p95 latency is {{ $value | humanizeDuration }}"
+          description: "95% of requests should finish within 500 ms. Check database latency and CPU throttling."
+          runbook_url: "https://github.com/OWNER/itlpay/blob/main/docs/runbooks/itlpay-slow.md"

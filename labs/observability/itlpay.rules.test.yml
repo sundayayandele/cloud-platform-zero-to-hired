@@ -1,0 +1,85 @@
+# Topic 11.1: unit tests for the alert rules, run by the course's CI:
+#   promtool test rules itlpay.rules.test.yml
+# Each test feeds made-up time series and says which alerts must (or must not) be firing at a given time.
+rule_files:
+  - ../kubernetes/chart/itlpay/rules/itlpay.rules.yml
+
+evaluation_interval: 1m
+
+tests:
+  - name: every pod down for 2 minutes pages
+    interval: 1m
+    input_series:
+      - series: 'up{job="itlpay", instance="10.0.0.1:8080"}'
+        values: "1 1 0 0 0 0 0"
+    alert_rule_test:
+      - eval_time: 3m
+        alertname: ITLPayDown
+        exp_alerts: [] # down for 1 minute: still pending
+      - eval_time: 5m
+        alertname: ITLPayDown
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+            exp_annotations:
+              summary: "ITL Pay: no API pod can be scraped"
+              description: "Prometheus has not reached any ITL Pay pod for 2 minutes. Runbook: check pods, events and the last rollout."
+              runbook_url: "https://github.com/OWNER/itlpay/blob/main/docs/runbooks/itlpay-down.md"
+
+  - name: 10% errors burns the budget and pages
+    interval: 1m
+    input_series:
+      # 100 requests a minute, 10 of them 5xx
+      - series: 'http_requests_total{job="itlpay", route="/api/v1/transfers", status="201"}'
+        values: "0+90x90"
+      - series: 'http_requests_total{job="itlpay", route="/api/v1/transfers", status="500"}'
+        values: "0+10x90"
+    alert_rule_test:
+      - eval_time: 30m
+        alertname: ITLPayErrorBudgetBurn
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+            exp_annotations:
+              summary: "ITL Pay is failing 10% of requests"
+              description: "The 30-day error budget is burning about 14 times too fast. Check /health, the database and recent deploys."
+              runbook_url: "https://github.com/OWNER/itlpay/blob/main/docs/runbooks/itlpay-errors.md"
+
+  - name: 1% errors uses budget slowly and does not page
+    interval: 1m
+    input_series:
+      - series: 'http_requests_total{job="itlpay", route="/api/v1/transfers", status="201"}'
+        values: "0+99x90"
+      - series: 'http_requests_total{job="itlpay", route="/api/v1/transfers", status="500"}'
+        values: "0+1x90"
+    alert_rule_test:
+      - eval_time: 60m
+        alertname: ITLPayErrorBudgetBurn
+        exp_alerts: []
+
+  - name: slow transfers for 10 minutes warn
+    interval: 1m
+    input_series:
+      # every request takes between 0.5 s and 1 s
+      - series: 'http_request_duration_seconds_bucket{job="itlpay", route="/api/v1/transfers", le="0.5"}'
+        values: "0+0x30"
+      - series: 'http_request_duration_seconds_bucket{job="itlpay", route="/api/v1/transfers", le="1"}'
+        values: "0+10x30"
+      - series: 'http_request_duration_seconds_bucket{job="itlpay", route="/api/v1/transfers", le="+Inf"}'
+        values: "0+10x30"
+    promql_expr_test:
+      - expr: itlpay:http_request_duration_seconds:p95_5m
+        eval_time: 15m
+        exp_samples:
+          - labels: "itlpay:http_request_duration_seconds:p95_5m"
+            value: 0.975
+    alert_rule_test:
+      - eval_time: 20m
+        alertname: ITLPaySlowRequests
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+            exp_annotations:
+              summary: "ITL Pay p95 latency is 975ms"
+              description: "95% of requests should finish within 500 ms. Check database latency and CPU throttling."
+              runbook_url: "https://github.com/OWNER/itlpay/blob/main/docs/runbooks/itlpay-slow.md"

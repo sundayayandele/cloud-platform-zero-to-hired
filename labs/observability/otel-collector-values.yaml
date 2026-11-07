@@ -1,0 +1,33 @@
+# Topic 11.2: an OpenTelemetry Collector that receives traces over OTLP and, for the lab, prints them to its log
+# (the "debug" exporter). In production you'd send them to Tempo, Jaeger, AWS X-Ray, Azure Monitor or Cloud Trace.
+#   helm upgrade --install otel-collector open-telemetry/opentelemetry-collector --version 0.177.0 \
+#     -n monitoring -f otel-collector-values.yaml --wait
+mode: deployment
+fullnameOverride: otel-collector
+image:
+  repository: otel/opentelemetry-collector-k8s
+config:
+  # Only what the lab needs: OTLP in, traces out to the log. The chart's defaults also receive Jaeger and Zipkin and
+  # print the Collector's own metrics, which would flood the log ("null" removes a default in Helm).
+  receivers:
+    jaeger: null
+    zipkin: null
+    prometheus: null
+  exporters:
+    debug:
+      verbosity: detailed
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        processors: [memory_limiter, batch]
+        exporters: [debug]
+      metrics: null
+      logs: null
+ports:
+  jaeger-compact: { enabled: false }
+  jaeger-thrift: { enabled: false }
+  jaeger-grpc: { enabled: false }
+  zipkin: { enabled: false }
+resources:
+  limits: { memory: 256Mi }

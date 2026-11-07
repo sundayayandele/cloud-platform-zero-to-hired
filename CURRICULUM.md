@@ -119,8 +119,8 @@ Certification targets: AWS Certified Solutions Architect – Associate, Microsof
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 11.1 Metrics and alerts with Prometheus and Grafana | 23 | Coming next |
-| 11.2 Logs and traces: Loki, OpenTelemetry and the clouds' own tools | 23 | Coming next |
+| [11.1 Metrics and alerts with Prometheus and Grafana](phases/02-devops-iac/11-observability/11.1-metrics-and-alerts-with-prometheus/lesson.md) | 23 | Written |
+| [11.2 Logs and traces: Loki, OpenTelemetry and the clouds' own tools](phases/02-devops-iac/11-observability/11.2-logs-and-traces-loki-opentelemetry/lesson.md) | 23 | Written |
 
 ### Capstone 2 (weeks 24–25): Pipeline to production across three clouds
 

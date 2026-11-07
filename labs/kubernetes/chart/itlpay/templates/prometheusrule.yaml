@@ -1,0 +1,14 @@
+{{- if .Values.metrics.prometheusRule.enabled }}
+# Topic 11.1: the alerts travel with the application, from rules/itlpay.rules.yml (unit-tested with promtool)
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "itlpay.fullname" . }}
+  labels:
+    {{- include "itlpay.labels" . | nindent 4 }}
+    {{- with .Values.metrics.serviceMonitor.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+{{ .Files.Get "rules/itlpay.rules.yml" | indent 2 }}
+{{- end }}

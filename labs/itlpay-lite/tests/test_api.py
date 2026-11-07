@@ -47,3 +47,25 @@ def test_insufficient_funds_is_refused(client):
 ])
 def test_bad_transfers(client, body, status):
     assert client.post("/api/v1/transfers", json=body).status_code == status
+
+
+def test_metrics_count_transfers_by_result_and_use_route_templates(client):
+    client.post("/api/v1/transfers", json={"from": "ACC-1001", "to": "ACC-2002", "amount_kobo": 100})
+    client.post("/api/v1/transfers", json={"from": "ACC-2002", "to": "ACC-1001", "amount_kobo": 10**15})
+    client.get("/api/v1/transfers/TRF-DOESNOTEXIST")
+    text = client.get("/metrics").text
+    assert 'itlpay_transfers_total{result="completed"}' in text
+    assert 'itlpay_transfers_total{result="insufficient_funds"}' in text
+    assert 'route="/api/v1/transfers/{tid}"' in text          # the template, not the ID
+    assert "TRF-DOESNOTEXIST" not in text
+    assert "http_request_duration_seconds_bucket" in text
+
+
+def test_json_logs_are_one_object_per_line():
+    import json
+    import logging
+
+    from app.observability import JsonFormatter
+    line = JsonFormatter().format(logging.LogRecord("itlpay", logging.INFO, __file__, 1, "Transfer %s", ("TRF-1",), None))
+    entry = json.loads(line)
+    assert entry["message"] == "Transfer TRF-1" and entry["level"] == "INFO" and "trace_id" not in entry
