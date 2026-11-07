@@ -159,21 +159,21 @@ Certification targets: Certified Kubernetes Administrator (CKA); optionally AWS 
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 15.1 Security posture: Security Hub, Defender for Cloud and Security Command Center | 32 | Coming next |
-| 15.2 Audit, compliance and data residency in Africa | 32 | Coming next |
+| [15.1 Security posture: Security Hub, Defender for Cloud and Security Command Center](phases/03-platform-sre/15-cloud-security-and-compliance/15.1-security-posture-on-three-clouds/lesson.md) | 32 | Written |
+| [15.2 Audit, compliance and data residency in Africa](phases/03-platform-sre/15-cloud-security-and-compliance/15.2-audit-compliance-and-data-residency/lesson.md) | 32 | Written |
 
 ### Module 16: FinOps and choosing a cloud (week 33)
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 16.1 Cost visibility and optimisation with OpenCost and the clouds' tools | 33 | Coming next |
-| 16.2 Comparing the same system on three clouds | 33 | Coming next |
+| [16.1 Cost visibility and optimisation with OpenCost and the clouds' tools](phases/03-platform-sre/16-finops-and-choosing-a-cloud/16.1-cost-visibility-and-optimisation/lesson.md) | 33 | Written |
+| [16.2 Comparing the same system on three clouds](phases/03-platform-sre/16-finops-and-choosing-a-cloud/16.2-comparing-the-same-system-on-three-clouds/lesson.md) | 33 | Written |
 
 ### Module 17: AI for operations (week 33)
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 17.1 AI assistants in operations, safely | 33 | Coming next |
-| 17.2 Running AI workloads: GPUs, model serving, Bedrock, Azure OpenAI and Vertex AI | 33 | Coming next |
+| [17.1 AI assistants in operations, safely](phases/03-platform-sre/17-ai-for-operations/17.1-ai-assistants-in-operations-safely/lesson.md) | 33 | Written |
+| [17.2 Running AI workloads: GPUs, model serving, Bedrock, Azure OpenAI and Vertex AI](phases/03-platform-sre/17-ai-for-operations/17.2-running-ai-workloads/lesson.md) | 33 | Written |
 
-### Capstone 3 (weeks 34–35): Run a three-cloud platform
+### [Capstone 3 (weeks 34–35): Run a three-cloud platform](phases/03-platform-sre/capstone-3/README.md)

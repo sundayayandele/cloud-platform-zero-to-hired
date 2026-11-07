@@ -1,0 +1,48 @@
+{
+  "about": "Topic 16.2. ILLUSTRATIVE unit prices in US dollars for comparing ITL Pay's architecture on three clouds. Only the cluster management fees are published list prices (EKS standard support, AKS Standard tier, GKE before its free-tier credit); every other number is a placeholder of a realistic size. Replace them with figures from each cloud's pricing calculator for your region and date before using the results for a decision (exercise 1).",
+  "as_of": "2026-11",
+  "clouds": {
+    "aws": {
+      "region": "af-south-1",
+      "cluster_hour": 0.10,
+      "vcpu_hour": 0.0285,
+      "gib_hour": 0.0038,
+      "load_balancer_hour": 0.027,
+      "nat_hour": 0.056,
+      "nat_gb": 0.056,
+      "database_small_hour": 0.045,
+      "database_storage_gb_month": 0.15,
+      "egress_gb": 0.154,
+      "spot_discount": 0.65,
+      "commitment_discount": 0.30
+    },
+    "azure": {
+      "region": "southafricanorth",
+      "cluster_hour": 0.10,
+      "vcpu_hour": 0.0300,
+      "gib_hour": 0.0040,
+      "load_balancer_hour": 0.030,
+      "nat_hour": 0.045,
+      "nat_gb": 0.045,
+      "database_small_hour": 0.040,
+      "database_storage_gb_month": 0.14,
+      "egress_gb": 0.12,
+      "spot_discount": 0.70,
+      "commitment_discount": 0.32
+    },
+    "gcp": {
+      "region": "africa-south1",
+      "cluster_hour": 0.10,
+      "vcpu_hour": 0.0290,
+      "gib_hour": 0.0039,
+      "load_balancer_hour": 0.030,
+      "nat_hour": 0.050,
+      "nat_gb": 0.045,
+      "database_small_hour": 0.042,
+      "database_storage_gb_month": 0.20,
+      "egress_gb": 0.14,
+      "spot_discount": 0.65,
+      "commitment_discount": 0.28
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Topic 15.1: Falco watches system calls on every node and alerts on suspicious behaviour in containers
+# (a shell in a container, sensitive files read, unexpected network connections...).
+#   helm upgrade --install falco falcosecurity/falco --version 9.2.1 -n falco --create-namespace -f falco-values.yaml
+driver:
+  kind: modern_ebpf # needs no kernel module; works on kind, EKS, AKS and GKE nodes with recent kernels
+tty: true # write each alert at once
+falco:
+  json_output: true # one JSON object per alert, for log pipelines and SIEMs (topic 11.2)
+  json_include_output_property: true

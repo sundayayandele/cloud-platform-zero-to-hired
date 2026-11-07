@@ -1,0 +1,134 @@
+# Topic 17.2: an open model served with vLLM on a GPU node pool, behind an OpenAI-compatible API inside the cluster.
+# Needs a cluster with a GPU node pool (see README.md); CI validates it (kubeconform and policy/gpu.rego) but can't run it.
+#   kubectl apply -f vllm.yaml
+#   kubectl -n ai-serving port-forward svc/vllm 8000 &
+#   curl localhost:8000/v1/chat/completions -H 'Content-Type: application/json' \
+#     -d '{"model":"Qwen/Qwen2.5-1.5B-Instruct","messages":[{"role":"user","content":"What is an SLO?"}]}'
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-serving
+  labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/warn: restricted
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: model-cache
+  namespace: ai-serving
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm
+  namespace: ai-serving
+  labels:
+    app: vllm
+    platform.itlearning.tech/team: platform
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate            # one GPU, one model cache volume: stop the old pod before starting the new one
+  selector:
+    matchLabels:
+      app: vllm
+  template:
+    metadata:
+      labels:
+        app: vllm
+        platform.itlearning.tech/team: platform
+    spec:
+      nodeSelector:
+        platform.itlearning.tech/pool: gpu
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: vllm
+          image: vllm/vllm-openai:v0.32.0
+          args:
+            - --model=Qwen/Qwen2.5-1.5B-Instruct
+            - --max-model-len=8192
+            - --gpu-memory-utilization=0.90
+            - --port=8000
+          env:
+            - name: HOME
+              value: /tmp
+            - name: HF_HOME
+              value: /models
+          ports:
+            - name: http
+              containerPort: 8000
+          resources:
+            requests:
+              cpu: "2"
+              memory: 12Gi
+              nvidia.com/gpu: "1"
+            limits:
+              memory: 16Gi
+              nvidia.com/gpu: "1"
+          startupProbe:          # downloading and loading a model takes minutes
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 30
+            failureThreshold: 5
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: models
+              mountPath: /models
+            - name: shm
+              mountPath: /dev/shm
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: models
+          persistentVolumeClaim:
+            claimName: model-cache
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm
+  namespace: ai-serving
+spec:
+  selector:
+    app: vllm
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http

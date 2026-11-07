@@ -273,7 +273,7 @@
    "slug": "02-devops-iac",
    "title": "DevOps and Infrastructure as Code",
    "weeks": "15-25",
-   "status": "building",
+   "status": "written",
    "summary": "Terraform on all three clouds, CI/CD with keyless login, Kubernetes and Helm (EKS, AKS and GKE), secrets and observability. Capstone 2: pipeline to production across three clouds.",
    "certifications": [
     "AWS Certified Solutions Architect – Associate, Microsoft Azure Administrator (AZ-104) or Google Cloud Associate Cloud Engineer",
@@ -437,7 +437,8 @@
    ],
    "capstone": {
     "week": "24-25",
-    "title": "Pipeline to production across three clouds"
+    "title": "Pipeline to production across three clouds",
+    "brief": "phases/02-devops-iac/capstone-2/README.md"
    }
   },
   {
@@ -445,7 +446,7 @@
    "slug": "03-platform-sre",
    "title": "Platform Engineering and SRE",
    "weeks": "26-35",
-   "status": "building",
+   "status": "written",
    "summary": "GitOps, reliability targets and incident response, a self-service platform that deploys to any of the three clouds, cloud security, FinOps and AI for operations. Capstone 3: run a three-cloud platform.",
    "modules": [
     {
@@ -595,7 +596,8 @@
    ],
    "capstone": {
     "week": "34-35",
-    "title": "Run a three-cloud platform"
+    "title": "Run a three-cloud platform",
+    "brief": "phases/03-platform-sre/capstone-3/README.md"
    },
    "certifications": [
     "Certified Kubernetes Administrator (CKA)",

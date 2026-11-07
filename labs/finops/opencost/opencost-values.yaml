@@ -1,0 +1,29 @@
+# Topic 16.1: OpenCost, the CNCF project for Kubernetes cost allocation.
+#   helm upgrade --install opencost opencost/opencost --version 2.5.33 -n opencost --create-namespace -f opencost-values.yaml
+# On EKS, AKS and GKE, OpenCost reads the cloud's own prices (public price lists, or your billing export for discounts).
+# On kind there's no cloud, so the lab sets illustrative unit prices: USD per vCPU-hour and per GiB-hour.
+opencost:
+  exporter:
+    defaultClusterId: kind-itlpay
+  customPricing:
+    enabled: true
+    provider: custom
+    costModel:
+      description: Illustrative lab prices (not a quote; check your cloud's pricing calculator)
+      CPU: "0.031"
+      spotCPU: "0.010"
+      RAM: "0.004"
+      spotRAM: "0.0013"
+      GPU: "0.95"
+      storage: "0.00011"
+      zoneNetworkEgress: "0.01"
+      regionNetworkEgress: "0.02"
+      internetNetworkEgress: "0.12"
+  prometheus:
+    internal:
+      enabled: true
+      serviceName: prometheus-server
+      namespaceName: prometheus-system
+      port: 80
+  ui:
+    enabled: false

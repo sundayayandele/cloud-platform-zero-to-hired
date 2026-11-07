@@ -1517,5 +1517,161 @@
     "https://www.skills.google/course_templates/21"
    ]
   ]
+ },
+ "15.1": {
+  "azure": [
+   [
+    "Manage your cloud security posture management",
+    "https://learn.microsoft.com/training/modules/manage-cloud-security-posture-management/"
+   ],
+   [
+    "Enable Defender for Cloud on your Azure subscription",
+    "https://learn.microsoft.com/training/modules/enable-defender-cloud-azure-subscription/"
+   ],
+   [
+    "Remediate security alerts using Microsoft Defender for Cloud",
+    "https://learn.microsoft.com/training/modules/remediate-azure-defender-security-alerts/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Security Hub CSPM Getting Started",
+    "https://skillbuilder.aws/learn/YJ5XKSDUNA/aws-security-hub-cspm-getting-started/JWRKYBXUXG"
+   ],
+   [
+    "Build with AWS Security Hub CSPM",
+    "https://skillbuilder.aws/learn/NJY3XVH2XW/build-with-aws-security-hub-cspm/B1YWZ2T3YS"
+   ]
+  ],
+  "gcp": [
+   [
+    "Manage Security in Google Cloud",
+    "https://www.skills.google/course_templates/21"
+   ],
+   [
+    "Security & Identity Fundamentals",
+    "https://www.skills.google/course_templates/770"
+   ]
+  ]
+ },
+ "15.2": {
+  "azure": [
+   [
+    "Evaluate regulatory compliance in Defender for Cloud",
+    "https://learn.microsoft.com/training/modules/evaluate-regulatory-compliance/"
+   ],
+   [
+    "Guided project: monitor Azure with Service Health and Activity Log alerts",
+    "https://learn.microsoft.com/training/modules/guided-project-monitor-service-health-activity-alerts/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS CloudTrail Getting Started",
+    "https://skillbuilder.aws/learn/6E2F4RVDA2/aws-cloudtrail-getting-started/N24M82M8YF"
+   ],
+   [
+    "Deep Dive on AWS Organizations Policies",
+    "https://skillbuilder.aws/learn/SG8M56GKXM/deep-dive-on-aws-organizations-policies/GGZRYCVY3A"
+   ]
+  ],
+  "gcp": [
+   [
+    "Logging and Monitoring in Google Cloud (including Cloud Audit Logs)",
+    "https://www.skills.google/course_templates/99"
+   ]
+  ]
+ },
+ "16.1": {
+  "azure": [
+   [
+    "Adopt FinOps on Azure",
+    "https://learn.microsoft.com/training/modules/adopt-finops-on-azure/"
+   ],
+   [
+    "Introduction to analyzing costs and creating budgets with Microsoft Cost Management",
+    "https://learn.microsoft.com/training/modules/analyze-costs-create-budgets-azure-cost-management/"
+   ],
+   [
+    "Save money with Azure Reserved Instances",
+    "https://learn.microsoft.com/training/modules/save-money-with-azure-reserved-instances/"
+   ]
+  ],
+  "aws": [
+   [
+    "Cloud Financial Management: FinOps fundamentals & strategies (Part 1)",
+    "https://skillbuilder.aws/learn/YZYAV9M2UB/cloud-financial-management-finops-fundamentals--strategies-part-1/JG1XFPZQG1"
+   ],
+   [
+    "Cloud Financial Management: FinOps Fundamentals & Strategies (Part 2)",
+    "https://skillbuilder.aws/learn/RE6C7ZPAHN/cloud-financial-management-finops-fundamentals--strategies-part-2/X59U3HSU75"
+   ]
+  ],
+  "gcp": [
+   [
+    "Optimizing Your Google Cloud Costs",
+    "https://www.skills.google/course_templates/56"
+   ]
+  ]
+ },
+ "16.2": {
+  "azure": [
+   [
+    "Describe cost management in Azure (Pricing and TCO calculators)",
+    "https://learn.microsoft.com/training/modules/describe-cost-management-azure/"
+   ],
+   [
+    "Microsoft Azure Well-Architected Framework - Cost Optimization",
+    "https://learn.microsoft.com/training/modules/azure-well-architected-cost-optimization/"
+   ]
+  ]
+ },
+ "17.1": {
+  "azure": [
+   [
+    "Implement a responsible generative AI solution in Azure AI Foundry",
+    "https://learn.microsoft.com/training/modules/responsible-ai-studio/"
+   ],
+   [
+    "Develop an AI agent with Azure AI Foundry Agent Service",
+    "https://learn.microsoft.com/training/modules/develop-ai-agent-azure/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Security: Securing Generative AI on AWS",
+    "https://skillbuilder.aws/learn/ES7A9MKPBZ/aws-security-securing-generative-ai-on-aws/DTAJFXQSUY"
+   ],
+   [
+    "Lab - Building Secure and Responsible Gen AI with GuardRails for Amazon Bedrock",
+    "https://skillbuilder.aws/learn/DEFW74BV18/lab--building-secure-and-responsible-gen-ai-with-guardrails-for-amazon-bedrock/EWW6F5XMSH"
+   ]
+  ],
+  "gcp": [
+   [
+    "Beginner: Introduction to Generative AI (learning path)",
+    "https://www.skills.google/paths/118"
+   ]
+  ]
+ },
+ "17.2": {
+  "azure": [
+   [
+    "Develop applications with Azure OpenAI in Foundry Models",
+    "https://learn.microsoft.com/training/modules/develop-applications-openai/"
+   ]
+  ],
+  "aws": [
+   [
+    "Amazon Bedrock Getting Started",
+    "https://skillbuilder.aws/learn/63KTRM86DQ/amazon-bedrock-getting-started/SC2Y3HMAUE"
+   ]
+  ],
+  "gcp": [
+   [
+    "Google Cloud AI Infrastructure (learning path: GPUs, TPUs and GKE)",
+    "https://www.skills.google/paths/2806"
+   ]
+  ]
  }
 }
