@@ -1,0 +1,24 @@
+# Topic 14.3: every image must name a version (a tag other than "latest", or a digest), so what runs is known and
+# can be rolled back. Kyverno also applies it to Deployments, StatefulSets and Jobs (autogen), so the error comes at
+# kubectl apply time, not when a pod fails to start.
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: disallow-latest-tag
+spec:
+  validationActions: [Deny]
+  autogen:
+    podControllers:
+      controllers: [deployments, statefulsets, jobs]
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [pods]
+  validations:
+    - message: "Images must have a version tag or a digest, never :latest or no tag"
+      expression: >-
+        object.spec.containers.all(c,
+          c.image.contains('@sha256:') ||
+          (c.image.split('/')[size(c.image.split('/')) - 1].contains(':') && !c.image.endsWith(':latest')))

@@ -1,0 +1,120 @@
+# Topic 14.2: dev databases as a PostgreSQL StatefulSet in the team's own namespace. The password is generated once
+# and then read back from the existing Secret, so it doesn't change at every reconciliation.
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: database-in-cluster
+  labels:
+    platform.itlearning.tech/where: in-cluster
+spec:
+  compositeTypeRef:
+    apiVersion: platform.itlearning.tech/v1alpha1
+    kind: Database
+  mode: Pipeline
+  pipeline:
+    - step: render
+      functionRef:
+        name: function-go-templating
+      input:
+        apiVersion: gotemplating.fn.crossplane.io/v1beta1
+        kind: GoTemplate
+        source: Inline
+        inline:
+          template: |
+            {{- $xr := .observed.composite.resource }}
+            {{- $name := printf "%s-db" $xr.metadata.name }}
+            {{- $small := eq $xr.spec.size "small" }}
+            {{- $password := randAlphaNum 24 }}
+            {{- $secret := getComposedResource . "secret" }}
+            {{- if $secret }}{{ $password = dig "data" "POSTGRES_PASSWORD" "" $secret | b64dec }}{{ end }}
+            {{- $sts := getComposedResource . "statefulset" }}
+            ---
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: {{ $name }}
+              annotations:
+                gotemplating.fn.crossplane.io/composition-resource-name: secret
+                gotemplating.fn.crossplane.io/ready: "True"
+            stringData:
+              POSTGRES_PASSWORD: {{ $password | quote }}
+              DATABASE_URL: {{ printf "postgresql://app:%s@%s:5432/app" $password $name | quote }}
+            ---
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: {{ $name }}
+              annotations:
+                gotemplating.fn.crossplane.io/composition-resource-name: service
+                gotemplating.fn.crossplane.io/ready: "True"
+            spec:
+              clusterIP: None
+              selector:
+                platform.itlearning.tech/database: {{ $xr.metadata.name }}
+              ports:
+                - { name: postgres, port: 5432 }
+            ---
+            apiVersion: apps/v1
+            kind: StatefulSet
+            metadata:
+              name: {{ $name }}
+              annotations:
+                gotemplating.fn.crossplane.io/composition-resource-name: statefulset
+                {{- if and $sts (ge (int (dig "status" "readyReplicas" 0 $sts)) 1) }}
+                gotemplating.fn.crossplane.io/ready: "True"
+                {{- end }}
+            spec:
+              serviceName: {{ $name }}
+              replicas: 1
+              selector:
+                matchLabels:
+                  platform.itlearning.tech/database: {{ $xr.metadata.name }}
+              template:
+                metadata:
+                  labels:
+                    platform.itlearning.tech/database: {{ $xr.metadata.name }}
+                spec:
+                  securityContext:
+                    runAsNonRoot: true
+                    runAsUser: 70
+                    fsGroup: 70
+                    seccompProfile: { type: RuntimeDefault }
+                  containers:
+                    - name: postgres
+                      image: postgres:{{ $xr.spec.version }}-alpine
+                      env:
+                        - { name: POSTGRES_DB, value: app }
+                        - { name: POSTGRES_USER, value: app }
+                        - name: POSTGRES_PASSWORD
+                          valueFrom: { secretKeyRef: { name: {{ $name }}, key: POSTGRES_PASSWORD } }
+                        - { name: PGDATA, value: /var/lib/postgresql/data/pgdata }
+                      readinessProbe:
+                        # over TCP: on first start the image runs a socket-only server while it initialises, and a
+                        # socket check would call it ready while TCP clients are still refused
+                        exec: { command: ["pg_isready", "-h", "127.0.0.1", "-U", "app", "-d", "app"] }
+                        periodSeconds: 5
+                      resources:
+                        requests: { cpu: {{ if $small }}100m{{ else }}500m{{ end }}, memory: {{ if $small }}256Mi{{ else }}1Gi{{ end }} }
+                        limits: { memory: {{ if $small }}512Mi{{ else }}2Gi{{ end }} }
+                      securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities: { drop: ["ALL"] }
+                      volumeMounts:
+                        - { name: data, mountPath: /var/lib/postgresql/data }
+                        - { name: run, mountPath: /var/run/postgresql }
+                  volumes:
+                    - { name: run, emptyDir: {} }
+              volumeClaimTemplates:
+                - metadata:
+                    name: data
+                  spec:
+                    accessModes: ["ReadWriteOnce"]
+                    resources:
+                      requests:
+                        storage: {{ if $small }}1Gi{{ else }}5Gi{{ end }}
+            ---
+            apiVersion: platform.itlearning.tech/v1alpha1
+            kind: Database
+            status:
+              endpoint: {{ printf "%s:5432" $name | quote }}
+              secretName: {{ $name | quote }}

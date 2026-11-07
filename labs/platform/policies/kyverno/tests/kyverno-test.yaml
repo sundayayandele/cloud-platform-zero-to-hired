@@ -1,0 +1,21 @@
+# Topic 14.3: unit tests for the policies, run by the course's CI with:   kyverno test labs/platform/policies/kyverno/tests
+apiVersion: cli.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: platform-policies
+policies:
+  - ../disallow-latest-tag.yaml
+  - ../require-resources.yaml
+  - ../require-team-label.yaml
+  - ../restrict-registries.yaml
+resources:
+  - resources.yaml
+results:
+  - { isValidatingPolicy: true, kind: Pod, policy: disallow-latest-tag, resources: [good-pod, digest-pod, no-limits-pod], result: pass }
+  - { isValidatingPolicy: true, kind: Pod, policy: disallow-latest-tag, resources: [latest-pod, untagged-pod], result: fail }
+  - { isValidatingPolicy: true, kind: Pod, policy: require-resources, resources: [good-pod, digest-pod, latest-pod, untagged-pod], result: pass }
+  - { isValidatingPolicy: true, kind: Pod, policy: require-resources, resources: [no-limits-pod], result: fail }
+  - { isValidatingPolicy: true, kind: Deployment, policy: require-team-label, resources: [labelled-deployment], result: pass }
+  - { isValidatingPolicy: true, kind: Deployment, policy: require-team-label, resources: [unlabelled-deployment], result: fail }
+  - { isValidatingPolicy: true, kind: Pod, policy: restrict-registries, resources: [good-pod, digest-pod, latest-pod, no-limits-pod], result: pass }
+  - { isValidatingPolicy: true, kind: Pod, policy: restrict-registries, resources: [untagged-pod], result: fail }

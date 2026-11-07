@@ -1,0 +1,22 @@
+# Topic 14.3: images only from the platform's registries. Audit first: see what would break, then switch to Deny.
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: restrict-registries
+spec:
+  validationActions: [Audit]
+  autogen:
+    podControllers:
+      controllers: [deployments, statefulsets, jobs]
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [pods]
+  variables:
+    - name: allowed
+      expression: "['ghcr.io/', '.dkr.ecr.', '.azurecr.io/', '-docker.pkg.dev/']"
+  validations:
+    - message: "Images must come from GHCR, ECR, ACR or Artifact Registry"
+      expression: "object.spec.containers.all(c, variables.allowed.exists(r, c.image.contains(r)))"

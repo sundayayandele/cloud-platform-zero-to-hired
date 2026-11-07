@@ -1,0 +1,41 @@
+# Topic 14.2: the platform's API. A team asks for a Database with a size; the platform decides how it's built
+# (in the cluster for dev, RDS / Azure Database / Cloud SQL in production: one Composition per cloud).
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: databases.platform.itlearning.tech
+spec:
+  scope: Namespaced
+  group: platform.itlearning.tech
+  names:
+    kind: Database
+    plural: databases
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                size:
+                  type: string
+                  enum: [small, medium]
+                  default: small
+                  description: small is 1 GiB and 0.1 CPU; medium is 5 GiB and 0.5 CPU
+                version:
+                  type: string
+                  enum: ["17"]
+                  default: "17"
+            status:
+              type: object
+              properties:
+                endpoint:
+                  type: string
+                  description: Where the database answers (host:port)
+                secretName:
+                  type: string
+                  description: The Secret holding DATABASE_URL and the password

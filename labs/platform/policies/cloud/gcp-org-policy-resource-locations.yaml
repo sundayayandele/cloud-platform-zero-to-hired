@@ -1,0 +1,9 @@
+# Topic 14.3: Google Cloud organisation policy limiting where resources can be created (africa-south1 and europe-west1).
+#   gcloud org-policies set-policy gcp-org-policy-resource-locations.yaml
+name: organizations/ORG_ID/policies/gcp.resourceLocations
+spec:
+  rules:
+    - values:
+        allowedValues:
+          - in:africa-south1-locations
+          - in:europe-west1-locations

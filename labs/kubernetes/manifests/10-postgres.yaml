@@ -61,7 +61,8 @@ spec:
               containerPort: 5432
           readinessProbe:
             exec:
-              command: ["pg_isready", "-U", "itlpay", "-d", "itlpay"]
+              # over TCP, like the API: on first start the image runs a socket-only server while it initialises
+              command: ["pg_isready", "-h", "127.0.0.1", "-U", "itlpay", "-d", "itlpay"]
             periodSeconds: 5
           resources:
             requests: { cpu: 100m, memory: 256Mi }

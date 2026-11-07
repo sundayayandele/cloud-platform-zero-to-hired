@@ -1,0 +1,21 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "OnlyAfricaAndEuropeRegions",
+      "Effect": "Deny",
+      "NotAction": ["iam:*", "organizations:*", "sts:*", "support:*", "budgets:*", "cloudfront:*", "route53:*", "account:*"],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": { "aws:RequestedRegion": ["af-south-1", "eu-west-1"] },
+        "ArnNotLike": { "aws:PrincipalArn": "arn:aws:iam::*:role/platform-break-glass" }
+      }
+    },
+    {
+      "Sid": "NoLeavingTheOrganisationOrDisablingAudit",
+      "Effect": "Deny",
+      "Action": ["organizations:LeaveOrganization", "cloudtrail:StopLogging", "cloudtrail:DeleteTrail"],
+      "Resource": "*"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.name }}
+  description: ${{ values.description }}
+  annotations:
+    github.com/project-slug: ${{ values.repoOwner }}/${{ values.name }}
+    argocd/app-name: ${{ values.name }}-dev
+    backstage.io/techdocs-ref: dir:.
+  tags: [python, kubernetes, ${{ values.cloud }}]
+spec:
+  type: service
+  lifecycle: experimental
+  owner: ${{ values.owner }}
+  system: itl-platform

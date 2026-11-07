@@ -1451,5 +1451,71 @@
     "https://skillbuilder.aws/learn/PS5FF6JM8X/amazon-simple-storage-service-amazon-s3-business-continuity-and-disaster-recovery/YVFDT8PZ8W"
    ]
   ]
+ },
+ "14.1": {
+  "azure": [
+   [
+    "Foundations of Platform Engineering",
+    "https://learn.microsoft.com/training/modules/foundations-platform-engineering/"
+   ]
+  ],
+  "gcp": [
+   [
+    "Developing a Google SRE Culture (platform and team practices)",
+    "https://www.skills.google/course_templates/95"
+   ]
+  ]
+ },
+ "14.2": {
+  "azure": [
+   [
+    "Governance, guardrails, and operations",
+    "https://learn.microsoft.com/training/modules/governance-guardrails-operations/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Service Catalog",
+    "https://skillbuilder.aws/learn/KASUBK4E7W/aws-service-catalog/PNPUSBYTQ4"
+   ]
+  ],
+  "gcp": [
+   [
+    "Manage Kubernetes in Google Cloud (skill badge)",
+    "https://www.skills.google/course_templates/783"
+   ]
+  ]
+ },
+ "14.3": {
+  "azure": [
+   [
+    "Intro to Azure Policy",
+    "https://learn.microsoft.com/training/modules/intro-to-azure-policy/"
+   ],
+   [
+    "Azure Kubernetes Service governance with Azure Policy",
+    "https://learn.microsoft.com/training/modules/aks-governance-azure-policy/"
+   ],
+   [
+    "Enforce governance with Azure Policy and resource locks",
+    "https://learn.microsoft.com/training/modules/enforce-governance-azure-policy-resource-locks/"
+   ]
+  ],
+  "aws": [
+   [
+    "Deep Dive on AWS Organizations Policies",
+    "https://skillbuilder.aws/learn/SG8M56GKXM/deep-dive-on-aws-organizations-policies/GGZRYCVY3A"
+   ],
+   [
+    "Deep Dive on Declarative Policies in AWS Organizations",
+    "https://skillbuilder.aws/learn/1JC4FTCW9T/deep-dive-on-declarative-policies-in-aws-organizations/DEMM94F869"
+   ]
+  ],
+  "gcp": [
+   [
+    "Manage Security in Google Cloud (including organisation policies)",
+    "https://www.skills.google/course_templates/21"
+   ]
+  ]
  }
 }

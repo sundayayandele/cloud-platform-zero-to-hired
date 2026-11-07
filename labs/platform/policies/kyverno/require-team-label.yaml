@@ -1,0 +1,16 @@
+# Topic 14.3: every Deployment says which team owns it, for alerts, cost reports (Module 16) and the catalog.
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: require-team-label
+spec:
+  validationActions: [Deny]
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [apps]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [deployments]
+  validations:
+    - message: "Deployments need the label platform.itlearning.tech/team"
+      expression: "'platform.itlearning.tech/team' in object.metadata.?labels.orValue({})"

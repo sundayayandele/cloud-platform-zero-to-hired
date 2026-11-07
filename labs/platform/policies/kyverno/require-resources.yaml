@@ -1,0 +1,22 @@
+# Topic 14.3: a memory limit (no pod can take a whole node) and a CPU request (the scheduler and autoscaler need it).
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: require-resources
+spec:
+  validationActions: [Deny]
+  autogen:
+    podControllers:
+      controllers: [deployments, statefulsets, jobs]
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [pods]
+  validations:
+    - message: "Every container needs resources.limits.memory and resources.requests.cpu (topic 9.3)"
+      expression: >-
+        object.spec.containers.all(c,
+          has(c.resources) && has(c.resources.limits) && 'memory' in c.resources.limits &&
+          has(c.resources.requests) && 'cpu' in c.resources.requests)

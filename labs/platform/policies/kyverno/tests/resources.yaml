@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Pod
+metadata: { name: good-pod }
+spec:
+  containers:
+    - name: app
+      image: ghcr.io/itlearning/orders-api:1.2.0
+      resources: { requests: { cpu: 100m }, limits: { memory: 256Mi } }
+---
+apiVersion: v1
+kind: Pod
+metadata: { name: digest-pod }
+spec:
+  containers:
+    - name: app
+      image: 123456789012.dkr.ecr.af-south-1.amazonaws.com/itlpay-lite@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      resources: { requests: { cpu: 100m }, limits: { memory: 256Mi } }
+---
+apiVersion: v1
+kind: Pod
+metadata: { name: latest-pod }
+spec:
+  containers:
+    - name: app
+      image: ghcr.io/itlearning/orders-api:latest
+      resources: { requests: { cpu: 100m }, limits: { memory: 256Mi } }
+---
+apiVersion: v1
+kind: Pod
+metadata: { name: untagged-pod }
+spec:
+  containers:
+    - name: app
+      image: nginx
+      resources: { requests: { cpu: 100m }, limits: { memory: 256Mi } }
+---
+apiVersion: v1
+kind: Pod
+metadata: { name: no-limits-pod }
+spec:
+  containers:
+    - name: app
+      image: ghcr.io/itlearning/orders-api:1.2.0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: labelled-deployment
+  labels: { platform.itlearning.tech/team: payments }
+spec:
+  selector: { matchLabels: { app: x } }
+  template:
+    metadata: { labels: { app: x } }
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/itlearning/orders-api:1.2.0
+          resources: { requests: { cpu: 100m }, limits: { memory: 256Mi } }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unlabelled-deployment
+spec:
+  selector: { matchLabels: { app: y } }
+  template:
+    metadata: { labels: { app: y } }
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/itlearning/orders-api:1.2.0
+          resources: { requests: { cpu: 100m }, limits: { memory: 256Mi } }

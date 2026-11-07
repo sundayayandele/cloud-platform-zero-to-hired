@@ -151,9 +151,9 @@ Certification targets: Certified Kubernetes Administrator (CKA); optionally AWS 
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 14.1 Developer platforms and golden paths with Backstage | 30 | Coming next |
-| 14.2 Self-service infrastructure: Crossplane and Terraform modules | 30 | Coming next |
-| 14.3 Policy as code: Kyverno, OPA and the clouds' organisation policies | 31 | Coming next |
+| [14.1 Developer platforms and golden paths with Backstage](phases/03-platform-sre/14-platform-engineering/14.1-developer-platforms-and-golden-paths/lesson.md) | 30 | Written |
+| [14.2 Self-service infrastructure: Crossplane and Terraform modules](phases/03-platform-sre/14-platform-engineering/14.2-self-service-infrastructure/lesson.md) | 30 | Written |
+| [14.3 Policy as code: Kyverno, OPA and the clouds' organisation policies](phases/03-platform-sre/14-platform-engineering/14.3-policy-as-code/lesson.md) | 31 | Written |
 
 ### Module 15: Cloud security and compliance (week 32)
 

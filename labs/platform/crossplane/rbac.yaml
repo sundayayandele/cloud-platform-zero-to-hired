@@ -1,0 +1,15 @@
+# Crossplane 2 can compose any Kubernetes resource, but only those it's allowed to manage: grant exactly what the
+# in-cluster Database composition creates. The label adds these rules to Crossplane's own role.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: crossplane-compose-databases
+  labels:
+    rbac.crossplane.io/aggregate-to-crossplane: "true"
+rules:
+  - apiGroups: [""]
+    resources: [secrets, services]
+    verbs: [get, list, watch, create, update, patch, delete]
+  - apiGroups: [apps]
+    resources: [statefulsets]
+    verbs: [get, list, watch, create, update, patch, delete]

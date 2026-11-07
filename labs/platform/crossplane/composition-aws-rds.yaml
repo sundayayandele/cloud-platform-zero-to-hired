@@ -1,0 +1,50 @@
+# Topic 14.2, for reference (not run by the course's CI): the same Database API, built as Amazon RDS for PostgreSQL by
+# the Upbound AWS provider (provider-aws-rds; namespaced managed resources in Crossplane 2 use the *.m.upbound.io groups).
+# Teams don't change anything: the platform selects this Composition for production namespaces.
+# Check field names against the provider's API reference for the version you install before using it.
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: database-aws-rds
+  labels:
+    platform.itlearning.tech/where: aws
+spec:
+  compositeTypeRef:
+    apiVersion: platform.itlearning.tech/v1alpha1
+    kind: Database
+  mode: Pipeline
+  pipeline:
+    - step: render
+      functionRef:
+        name: function-go-templating
+      input:
+        apiVersion: gotemplating.fn.crossplane.io/v1beta1
+        kind: GoTemplate
+        source: Inline
+        inline:
+          template: |
+            {{- $xr := .observed.composite.resource }}
+            ---
+            apiVersion: rds.aws.m.upbound.io/v1beta1
+            kind: Instance
+            metadata:
+              name: {{ $xr.metadata.name }}
+              annotations:
+                gotemplating.fn.crossplane.io/composition-resource-name: rds
+            spec:
+              forProvider:
+                region: af-south-1
+                engine: postgres
+                engineVersion: "{{ $xr.spec.version }}"
+                instanceClass: {{ if eq $xr.spec.size "small" }}db.t4g.micro{{ else }}db.t4g.medium{{ end }}
+                allocatedStorage: {{ if eq $xr.spec.size "small" }}20{{ else }}50{{ end }}
+                storageEncrypted: true
+                publiclyAccessible: false
+                backupRetentionPeriod: 7
+                dbSubnetGroupName: itlpay-data          # from the network modules (topic 7.2)
+                vpcSecurityGroupIds: [sg-REPLACE]       # the data-tier security group
+                username: app
+                manageMasterUserPassword: true          # RDS keeps the password in Secrets Manager (topic 10.2)
+                tags:
+                  owner: {{ $xr.metadata.namespace }}
+                  managed-by: crossplane

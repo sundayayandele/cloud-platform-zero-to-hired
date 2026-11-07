@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "displayName": "ITL: allowed locations (South Africa North and West Europe)",
+    "description": "Topic 14.3: resources may only be created in the agreed regions (data residency, topic 15.2). Assign at the management group.",
+    "mode": "Indexed",
+    "policyRule": {
+      "if": {
+        "allOf": [
+          { "field": "location", "notIn": ["southafricanorth", "westeurope", "global"] }
+        ]
+      },
+      "then": { "effect": "deny" }
+    }
+  }
+}

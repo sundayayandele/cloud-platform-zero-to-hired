@@ -1,0 +1,8 @@
+# What a team writes: four lines of intent. Everything else is the platform's job.
+apiVersion: platform.itlearning.tech/v1alpha1
+kind: Database
+metadata:
+  name: orders
+  namespace: team-payments
+spec:
+  size: small
