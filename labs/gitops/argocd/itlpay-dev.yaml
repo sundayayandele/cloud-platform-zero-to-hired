@@ -1,0 +1,24 @@
+# Topic 12.1: Argo CD keeps the itlpay namespace equal to the dev overlay in Git.
+#   - automated: a commit to the branch is deployed without anyone running kubectl;
+#   - selfHeal: a hand change in the cluster is undone (Git is the only way in);
+#   - prune: something deleted from Git is deleted from the cluster.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: itlpay-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/OWNER/REPO.git # your repository
+    targetRevision: main
+    path: labs/gitops/kustomize/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc # the cluster Argo CD runs in
+    namespace: itlpay
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false # the namespace and its Pod Security level come from the platform (topic 9.1)

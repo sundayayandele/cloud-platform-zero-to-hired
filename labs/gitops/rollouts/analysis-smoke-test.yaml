@@ -1,0 +1,43 @@
+# Topic 12.2: the canary's test. Three times, 10 s apart, a Job calls the new version's /health and makes a small transfer.
+# One failure aborts the rollout. (With Prometheus, a "prometheus" metric can check the canary's error ratio instead: topic 11.1.)
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: smoke-test
+spec:
+  args:
+    - name: service
+  metrics:
+    - name: smoke
+      count: 3
+      interval: 10s
+      failureLimit: 0
+      provider:
+        job:
+          spec:
+            backoffLimit: 0
+            activeDeadlineSeconds: 30
+            template:
+              spec:
+                restartPolicy: Never
+                automountServiceAccountToken: false
+                securityContext:
+                  runAsNonRoot: true
+                  runAsUser: 65534
+                  seccompProfile: { type: RuntimeDefault }
+                containers:
+                  - name: smoke
+                    image: curlimages/curl:8.11.1
+                    command: ["sh", "-c"]
+                    args:
+                      - >-
+                        curl -fsS --max-time 5 http://{{args.service}}/health &&
+                        curl -fsS --max-time 5 -X POST http://{{args.service}}/api/v1/transfers
+                        -H 'Content-Type: application/json'
+                        -d '{"from": "ACC-1001", "to": "ACC-2002", "amount_kobo": 1}'
+                    resources:
+                      requests: { cpu: 10m, memory: 16Mi }
+                      limits: { memory: 32Mi }
+                    securityContext:
+                      allowPrivilegeEscalation: false
+                      capabilities: { drop: ["ALL"] }

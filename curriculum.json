@@ -445,8 +445,162 @@
    "slug": "03-platform-sre",
    "title": "Platform Engineering and SRE",
    "weeks": "26-35",
-   "status": "planned",
-   "summary": "GitOps, reliability targets and incident response, a self-service platform that deploys to any of the three clouds, cloud security, FinOps and AI for operations. Capstone 3: run a three-cloud platform."
+   "status": "building",
+   "summary": "GitOps, reliability targets and incident response, a self-service platform that deploys to any of the three clouds, cloud security, FinOps and AI for operations. Capstone 3: run a three-cloud platform.",
+   "modules": [
+    {
+     "number": 12,
+     "slug": "12-gitops-and-progressive-delivery",
+     "title": "GitOps and progressive delivery",
+     "weeks": "26-27",
+     "topics": [
+      {
+       "id": "12.1",
+       "slug": "12.1-gitops-with-argo-cd-and-kustomize",
+       "title": "GitOps with Argo CD and Kustomize",
+       "week": 26
+      },
+      {
+       "id": "12.2",
+       "slug": "12.2-canary-releases-with-argo-rollouts",
+       "title": "Canary releases with Argo Rollouts and automatic rollback",
+       "week": 26
+      },
+      {
+       "id": "12.3",
+       "slug": "12.3-one-repository-three-clusters",
+       "title": "One repository, three clusters: Argo CD across EKS, AKS and GKE",
+       "week": 27
+      }
+     ]
+    },
+    {
+     "number": 13,
+     "slug": "13-site-reliability-engineering",
+     "title": "Site reliability engineering",
+     "weeks": "28-29",
+     "topics": [
+      {
+       "id": "13.1",
+       "slug": "13.1-reliability-in-practice-slo-policy-toil",
+       "title": "Reliability in practice: SLO policy, toil and capacity",
+       "week": 28
+      },
+      {
+       "id": "13.2",
+       "slug": "13.2-incident-response-on-call-post-mortems",
+       "title": "Incident response, on-call and blameless post-mortems",
+       "week": 28
+      },
+      {
+       "id": "13.3",
+       "slug": "13.3-chaos-engineering-on-three-clouds",
+       "title": "Chaos engineering: AWS FIS, Azure Chaos Studio and Chaos Mesh",
+       "week": 29
+      },
+      {
+       "id": "13.4",
+       "slug": "13.4-backup-and-disaster-recovery-across-clouds",
+       "title": "Backup and disaster recovery across clouds",
+       "week": 29
+      }
+     ]
+    },
+    {
+     "number": 14,
+     "slug": "14-platform-engineering",
+     "title": "Platform engineering",
+     "weeks": "30-31",
+     "topics": [
+      {
+       "id": "14.1",
+       "slug": "14.1-developer-platforms-and-golden-paths",
+       "title": "Developer platforms and golden paths with Backstage",
+       "week": 30
+      },
+      {
+       "id": "14.2",
+       "slug": "14.2-self-service-infrastructure",
+       "title": "Self-service infrastructure: Crossplane and Terraform modules",
+       "week": 30
+      },
+      {
+       "id": "14.3",
+       "slug": "14.3-policy-as-code",
+       "title": "Policy as code: Kyverno, OPA and the clouds' organisation policies",
+       "week": 31
+      }
+     ]
+    },
+    {
+     "number": 15,
+     "slug": "15-cloud-security-and-compliance",
+     "title": "Cloud security and compliance",
+     "weeks": "32",
+     "topics": [
+      {
+       "id": "15.1",
+       "slug": "15.1-security-posture-on-three-clouds",
+       "title": "Security posture: Security Hub, Defender for Cloud and Security Command Center",
+       "week": 32
+      },
+      {
+       "id": "15.2",
+       "slug": "15.2-audit-compliance-and-data-residency",
+       "title": "Audit, compliance and data residency in Africa",
+       "week": 32
+      }
+     ]
+    },
+    {
+     "number": 16,
+     "slug": "16-finops-and-choosing-a-cloud",
+     "title": "FinOps and choosing a cloud",
+     "weeks": "33",
+     "topics": [
+      {
+       "id": "16.1",
+       "slug": "16.1-cost-visibility-and-optimisation",
+       "title": "Cost visibility and optimisation with OpenCost and the clouds' tools",
+       "week": 33
+      },
+      {
+       "id": "16.2",
+       "slug": "16.2-comparing-the-same-system-on-three-clouds",
+       "title": "Comparing the same system on three clouds",
+       "week": 33
+      }
+     ]
+    },
+    {
+     "number": 17,
+     "slug": "17-ai-for-operations",
+     "title": "AI for operations",
+     "weeks": "33",
+     "topics": [
+      {
+       "id": "17.1",
+       "slug": "17.1-ai-assistants-in-operations-safely",
+       "title": "AI assistants in operations, safely",
+       "week": 33
+      },
+      {
+       "id": "17.2",
+       "slug": "17.2-running-ai-workloads",
+       "title": "Running AI workloads: GPUs, model serving, Bedrock, Azure OpenAI and Vertex AI",
+       "week": 33
+      }
+     ]
+    }
+   ],
+   "capstone": {
+    "week": "34-35",
+    "title": "Run a three-cloud platform"
+   },
+   "certifications": [
+    "Certified Kubernetes Administrator (CKA)",
+    "optionally AWS Certified DevOps Engineer – Professional, Microsoft Azure DevOps Engineer Expert (AZ-400) or Google Cloud Professional Cloud DevOps Engineer"
+   ]
   }
  ]
 }

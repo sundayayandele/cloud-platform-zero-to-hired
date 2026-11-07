@@ -1,0 +1,30 @@
+# Topic 12.3: one ApplicationSet, one Application per cluster. Argo CD runs in a management cluster; the EKS, AKS and
+# GKE clusters are registered with it (argocd cluster add, or cluster Secrets) and labelled env=dev or env=prod and cloud=...
+# The cluster generator makes one Application for every registered cluster with env=dev.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: itlpay-dev
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            env: dev
+  template:
+    metadata:
+      name: 'itlpay-dev-{{ index .metadata.labels "cloud" }}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/OWNER/REPO.git
+        targetRevision: main
+        path: 'labs/gitops/kustomize/overlays/dev'
+      destination:
+        server: '{{ .server }}'
+        namespace: itlpay
+      syncPolicy:
+        automated: { prune: true, selfHeal: true }

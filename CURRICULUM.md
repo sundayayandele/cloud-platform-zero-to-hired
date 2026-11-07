@@ -128,4 +128,52 @@ Certification targets: AWS Certified Solutions Architect – Associate, Microsof
 
 GitOps, reliability targets and incident response, a self-service platform that deploys to any of the three clouds, cloud security, FinOps and AI for operations. Capstone 3: run a three-cloud platform.
 
-*Planned.*
+Certification targets: Certified Kubernetes Administrator (CKA); optionally AWS Certified DevOps Engineer – Professional, Microsoft Azure DevOps Engineer Expert (AZ-400) or Google Cloud Professional Cloud DevOps Engineer.
+
+### Module 12: GitOps and progressive delivery (weeks 26–27)
+
+| Topic | Week | Status |
+| --- | --- | --- |
+| [12.1 GitOps with Argo CD and Kustomize](phases/03-platform-sre/12-gitops-and-progressive-delivery/12.1-gitops-with-argo-cd-and-kustomize/lesson.md) | 26 | Written |
+| [12.2 Canary releases with Argo Rollouts and automatic rollback](phases/03-platform-sre/12-gitops-and-progressive-delivery/12.2-canary-releases-with-argo-rollouts/lesson.md) | 26 | Written |
+| [12.3 One repository, three clusters: Argo CD across EKS, AKS and GKE](phases/03-platform-sre/12-gitops-and-progressive-delivery/12.3-one-repository-three-clusters/lesson.md) | 27 | Written |
+
+### Module 13: Site reliability engineering (weeks 28–29)
+
+| Topic | Week | Status |
+| --- | --- | --- |
+| 13.1 Reliability in practice: SLO policy, toil and capacity | 28 | Coming next |
+| 13.2 Incident response, on-call and blameless post-mortems | 28 | Coming next |
+| 13.3 Chaos engineering: AWS FIS, Azure Chaos Studio and Chaos Mesh | 29 | Coming next |
+| 13.4 Backup and disaster recovery across clouds | 29 | Coming next |
+
+### Module 14: Platform engineering (weeks 30–31)
+
+| Topic | Week | Status |
+| --- | --- | --- |
+| 14.1 Developer platforms and golden paths with Backstage | 30 | Coming next |
+| 14.2 Self-service infrastructure: Crossplane and Terraform modules | 30 | Coming next |
+| 14.3 Policy as code: Kyverno, OPA and the clouds' organisation policies | 31 | Coming next |
+
+### Module 15: Cloud security and compliance (week 32)
+
+| Topic | Week | Status |
+| --- | --- | --- |
+| 15.1 Security posture: Security Hub, Defender for Cloud and Security Command Center | 32 | Coming next |
+| 15.2 Audit, compliance and data residency in Africa | 32 | Coming next |
+
+### Module 16: FinOps and choosing a cloud (week 33)
+
+| Topic | Week | Status |
+| --- | --- | --- |
+| 16.1 Cost visibility and optimisation with OpenCost and the clouds' tools | 33 | Coming next |
+| 16.2 Comparing the same system on three clouds | 33 | Coming next |
+
+### Module 17: AI for operations (week 33)
+
+| Topic | Week | Status |
+| --- | --- | --- |
+| 17.1 AI assistants in operations, safely | 33 | Coming next |
+| 17.2 Running AI workloads: GPUs, model serving, Bedrock, Azure OpenAI and Vertex AI | 33 | Coming next |
+
+### Capstone 3 (weeks 34–35): Run a three-cloud platform

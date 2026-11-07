@@ -1,0 +1,16 @@
+# Two Services: Argo Rollouts points "itlpay" at the stable pods and "itlpay-canary" at the new version's pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: itlpay
+spec:
+  selector: { app.kubernetes.io/name: itlpay }
+  ports: [{ name: http, port: 80, targetPort: http }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: itlpay-canary
+spec:
+  selector: { app.kubernetes.io/name: itlpay }
+  ports: [{ name: http, port: 80, targetPort: http }]

@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: itlpay
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  progressDeadlineSeconds: 90 # a version whose pods aren't ready within 90 s...
+  progressDeadlineAbort: true # ...is aborted and the stable version keeps all traffic
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: itlpay
+  strategy:
+    canary:
+      stableService: itlpay
+      canaryService: itlpay-canary
+      steps:
+        - setWeight: 50 # without a service mesh or Gateway, the weight is a share of the pods: 1 of 2
+        - analysis:
+            templates:
+              - templateName: smoke-test
+            args:
+              - name: service
+                value: itlpay-canary # test the new version only
+        - setWeight: 100
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: itlpay
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: api
+          image: itlpay-lite
+          ports:
+            - { name: http, containerPort: 8080 }
+          env:
+            - { name: APP_ENV, value: canary-demo }
+            - { name: LOG_FORMAT, value: json }
+          envFrom:
+            - secretRef: { name: itlpay-db }
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket: { port: http }
+            periodSeconds: 10
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { memory: 256Mi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - { name: tmp, emptyDir: {} }

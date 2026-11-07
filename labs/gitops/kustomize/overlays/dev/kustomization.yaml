@@ -1,0 +1,19 @@
+# Topic 12.1: dev. Argo CD syncs this folder (argocd/itlpay-dev.yaml). A merged pull request that changes newTag is a deployment.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: itlpay
+resources:
+  - ../../base
+images:
+  - name: itlpay-lite
+    newName: itlpay-lite # on a cloud: ghcr.io/OWNER/itlpay-lite, and digest: sha256:... instead of newTag
+    newTag: ci
+replicas:
+  - name: itlpay
+    count: 2
+configMapGenerator:
+  - name: itlpay
+    behavior: merge
+    literals:
+      - APP_ENV=dev
+      - LOG_LEVEL=DEBUG

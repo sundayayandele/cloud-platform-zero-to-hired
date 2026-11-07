@@ -1,0 +1,16 @@
+# Topic 12.1: the base every environment shares. Overlays change only what differs (namespace, replicas, image, settings).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: itlpay
+    includeSelectors: false
+resources:
+  - deployment.yaml
+  - service.yaml
+configMapGenerator:
+  - name: itlpay
+    literals:
+      - APP_ENV=base
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json

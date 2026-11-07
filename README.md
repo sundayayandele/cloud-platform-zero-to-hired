@@ -27,6 +27,8 @@ weekly plan, the capstone checks and a certificate, or read it here.
   [Kubernetes lab](labs/kubernetes/README.md), the [Ansible lab](labs/ansible/README.md), the
   [secrets lab](labs/secrets/README.md), the [observability lab](labs/observability/README.md), and
   [Capstone 2](phases/02-devops-iac/capstone-2/README.md) with its [starter kit](labs/capstone-2-starter/README.md).
+- [Phase 3: Platform Engineering and SRE](CURRICULUM.md) (weeks 26–35), being written: Module 12 (GitOps and progressive
+  delivery) is ready, with the [GitOps lab](labs/gitops/README.md).
 
 Phase 3 (Platform Engineering and SRE) follows.
 

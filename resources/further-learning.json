@@ -1327,5 +1327,55 @@
     "https://www.skills.google/course_templates/864"
    ]
   ]
+ },
+ "12.1": {
+  "aws": [
+   [
+    "GitOps for Amazon EKS Automation",
+    "https://skillbuilder.aws/learn/KB9MZUXHSF/gitops-for-amazon-eks-automation/52PNE2AN58"
+   ]
+  ],
+  "gcp": [
+   [
+    "Implement CI/CD Pipelines on Google Cloud (Cloud Build and Cloud Deploy)",
+    "https://www.skills.google/course_templates/691"
+   ]
+  ]
+ },
+ "12.2": {
+  "azure": [
+   [
+    "Implement canary releases and dark launching",
+    "https://learn.microsoft.com/training/modules/implement-canary-releases-dark-launching/"
+   ],
+   [
+    "Implement blue-green deployment and feature toggles",
+    "https://learn.microsoft.com/training/modules/implement-blue-green-deployment-feature-toggles/"
+   ],
+   [
+    "Implement A/B testing and progressive exposure deployment",
+    "https://learn.microsoft.com/training/modules/implement-test-progressive-exposure-deployment/"
+   ]
+  ],
+  "gcp": [
+   [
+    "Deploy Kubernetes Applications on Google Cloud (skill badge)",
+    "https://www.skills.google/course_templates/663"
+   ]
+  ]
+ },
+ "12.3": {
+  "aws": [
+   [
+    "GitOps for Amazon EKS Automation",
+    "https://skillbuilder.aws/learn/KB9MZUXHSF/gitops-for-amazon-eks-automation/52PNE2AN58"
+   ]
+  ],
+  "gcp": [
+   [
+    "Manage Kubernetes in Google Cloud (skill badge)",
+    "https://www.skills.google/course_templates/783"
+   ]
+  ]
  }
 }

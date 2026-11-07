@@ -1,0 +1,12 @@
+# Topic 12.2: ITL Pay as an Argo Rollouts canary: a new version gets half the pods, an automatic smoke test checks it,
+# and only then does it take all of them. A version that fails the test, or never becomes ready, is rolled back by itself.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: itlpay
+resources:
+  - rollout.yaml
+  - services.yaml
+  - analysis-smoke-test.yaml
+images:
+  - name: itlpay-lite
+    newTag: ci
