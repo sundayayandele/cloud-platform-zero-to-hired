@@ -1215,5 +1215,49 @@
     "https://www.skills.google/course_templates/783"
    ]
   ]
+ },
+ "10.1": {
+  "aws": [
+   [
+    "AWS Systems Manager Getting Started (Session Manager, to reach private VMs)",
+    "https://skillbuilder.aws/learn/1AG8ZGZN4Z/aws-systems-manager-getting-started/PKCXBQX7M5"
+   ]
+  ]
+ },
+ "10.2": {
+  "azure": [
+   [
+    "Manage application secrets with Azure Key Vault",
+    "https://learn.microsoft.com/training/modules/manage-app-secrets-key-vault/"
+   ],
+   [
+    "Configure and secure Azure Key Vault",
+    "https://learn.microsoft.com/training/modules/configure-secure-key-vault/"
+   ],
+   [
+    "Manage keys and secrets in Azure Key Vault",
+    "https://learn.microsoft.com/training/modules/manage-keys-secrets-key-vault/"
+   ]
+  ],
+  "aws": [
+   [
+    "AWS Secrets Manager Getting Started",
+    "https://skillbuilder.aws/learn/26F7XCFDUX/aws-secrets-manager-getting-started/U1CPGYWQTK"
+   ],
+   [
+    "AWS CloudTrail Getting Started (the audit log of every secret read)",
+    "https://skillbuilder.aws/learn/6E2F4RVDA2/aws-cloudtrail-getting-started/N24M82M8YF"
+   ]
+  ],
+  "gcp": [
+   [
+    "Manage Security in Google Cloud",
+    "https://www.skills.google/course_templates/21"
+   ],
+   [
+    "Security & Identity Fundamentals",
+    "https://www.skills.google/course_templates/770"
+   ]
+  ]
  }
 }

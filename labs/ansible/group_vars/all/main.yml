@@ -1,0 +1,12 @@
+# Settings for every host. Secrets are NOT here: see itlpay_database_url below and topic 10.2.
+base_timezone: UTC
+base_manage_ssh: true
+
+itlpay_env: dev
+itlpay_port: 8080
+
+# Where the database URL comes from (topic 10.2), one of:
+#   - the cloud's secret store, with a lookup (the examples in roles/itlpay/defaults/main.yml)
+#   - an Ansible Vault-encrypted file: group_vars/all/vault.yml (ansible-vault create ...)
+#   - an environment variable, for the CI test only
+itlpay_database_url: "{{ lookup('ansible.builtin.env', 'ITLPAY_DATABASE_URL') }}"

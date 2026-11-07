@@ -1,0 +1,4 @@
+profile: production
+exclude_paths:
+  - inventory/
+offline: true # don't download collections; CI installs community.general itself

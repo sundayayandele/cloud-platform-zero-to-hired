@@ -1,0 +1,7 @@
+base_timezone: UTC
+base_packages:
+  - chrony
+  - unattended-upgrades
+  - python3-venv
+  - curl
+base_manage_ssh: true

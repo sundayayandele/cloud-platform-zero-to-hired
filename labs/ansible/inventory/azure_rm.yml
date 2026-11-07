@@ -1,0 +1,10 @@
+# Dynamic inventory for Azure: VMs tagged role=app in the ITL Pay resource group join group "app".
+# Needs the azure.azcollection collection and `az login` (or a managed identity).
+plugin: azure.azcollection.azure_rm
+include_vm_resource_groups: [rg-itlpay-dev]
+auth_source: auto
+conditional_groups:
+  app: "tags.role is defined and tags.role == 'app'"
+hostvar_expressions:
+  ansible_host: private_ipv4_addresses[0]
+  ansible_user: "'azureuser'"

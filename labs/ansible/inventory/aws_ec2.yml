@@ -1,0 +1,13 @@
+# Dynamic inventory for AWS (topic 10.1): every running EC2 instance tagged role=app in af-south-1 joins group "app".
+# Needs the amazon.aws collection and AWS credentials. List it with: ansible-inventory -i inventory/aws_ec2.yml --graph
+plugin: amazon.aws.aws_ec2
+regions: [af-south-1]
+filters:
+  instance-state-name: running
+  tag:project: itlpay
+keyed_groups:
+  - key: tags.role
+    separator: ""
+hostnames: [private-ip-address] # reach them over Session Manager or a bastion, never a public SSH port
+compose:
+  ansible_user: "'ubuntu'"

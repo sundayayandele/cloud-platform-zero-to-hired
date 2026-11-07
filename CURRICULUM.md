@@ -112,8 +112,8 @@ Certification targets: AWS Certified Solutions Architect – Associate, Microsof
 
 | Topic | Week | Status |
 | --- | --- | --- |
-| 10.1 Configuration management with Ansible | 22 | Coming next |
-| 10.2 Secrets in the cloud: Secrets Manager, Key Vault, Secret Manager and External Secrets | 22 | Coming next |
+| [10.1 Configuration management with Ansible](phases/02-devops-iac/10-configuration-and-secrets/10.1-configuration-management-with-ansible/lesson.md) | 22 | Written |
+| [10.2 Secrets in the cloud: Secrets Manager, Key Vault, Secret Manager and External Secrets](phases/02-devops-iac/10-configuration-and-secrets/10.2-secrets-in-the-cloud-secrets-manager-key/lesson.md) | 22 | Written |
 
 ### Module 11: Observability (weeks 23)
 

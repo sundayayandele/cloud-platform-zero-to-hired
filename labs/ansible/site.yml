@@ -1,0 +1,9 @@
+# Topic 10.1: configure ITL Pay Lite app servers. Run it twice: the second run should change nothing.
+#   ansible-playbook site.yml                      # this machine (inventory/local.ini)
+#   ansible-playbook -i inventory/aws_ec2.yml site.yml
+- name: Configure ITL Pay app servers
+  hosts: app
+  become: true
+  roles:
+    - base
+    - itlpay

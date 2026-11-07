@@ -19,7 +19,8 @@ spec:
   containers:
     - name: curl
       image: curlimages/curl:8.11.1
-      args: ["--fail", "--silent", "--show-error", "--max-time", "5", "http://{{ include "itlpay.fullname" . }}:{{ .Values.service.port }}/health"]
+      # retries: right after a rollout, a pod that is shutting down can still receive the first request
+      args: ["--fail", "--silent", "--show-error", "--max-time", "5", "--retry", "5", "--retry-delay", "2", "--retry-all-errors", "http://{{ include "itlpay.fullname" . }}:{{ .Values.service.port }}/health"]
       resources:
         requests: { cpu: 10m, memory: 16Mi }
         limits: { memory: 32Mi }

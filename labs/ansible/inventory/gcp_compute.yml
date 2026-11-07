@@ -1,0 +1,13 @@
+# Dynamic inventory for Google Cloud: instances labelled role=app join group "app". Reach them through IAP (topic 6.5).
+# Needs the google.cloud collection and Application Default Credentials (gcloud auth application-default login).
+plugin: google.cloud.gcp_compute
+projects: [PROJECT_ID]
+zones: [africa-south1-a, africa-south1-b]
+filters:
+  - status = RUNNING
+  - labels.project = itlpay
+auth_kind: application
+keyed_groups:
+  - key: labels.role
+    separator: ""
+hostnames: [private_ip]

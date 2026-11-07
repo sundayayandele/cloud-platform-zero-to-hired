@@ -1,0 +1,22 @@
+# Managed by Ansible (labs/ansible): edits here are overwritten on the next run
+[Unit]
+Description=ITL Pay Lite API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User={{ itlpay_user }}
+Group={{ itlpay_user }}
+WorkingDirectory={{ itlpay_home }}
+EnvironmentFile=/etc/itlpay/itlpay.env
+ExecStart={{ itlpay_home }}/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port {{ itlpay_port }}
+Restart=on-failure
+RestartSec=3
+# Sandboxing (topic 1.4): the service can't write to the system or gain privileges
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

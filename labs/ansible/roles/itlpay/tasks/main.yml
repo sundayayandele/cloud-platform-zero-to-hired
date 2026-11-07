@@ -1,0 +1,93 @@
+- name: Check the database URL was given (from the secret store or Ansible Vault, never from this repository)
+  ansible.builtin.assert:
+    that: itlpay_database_url | length > 0
+    fail_msg: itlpay_database_url is empty; see roles/itlpay/defaults/main.yml
+    quiet: true
+
+- name: Create the service user (no login shell, no home directory)
+  ansible.builtin.user:
+    name: "{{ itlpay_user }}"
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
+
+- name: Create the application directory
+  ansible.builtin.file:
+    path: "{{ itlpay_home }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Copy the application code
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ itlpay_home }}/"
+    owner: root
+    group: root
+    mode: u=rwX,go=rX
+  loop:
+    - "{{ itlpay_src }}/app"
+    - "{{ itlpay_src }}/requirements.txt"
+  notify: Restart itlpay
+
+- name: Install the dependencies into a virtual environment
+  ansible.builtin.pip:
+    requirements: "{{ itlpay_home }}/requirements.txt"
+    virtualenv: "{{ itlpay_home }}/venv"
+    virtualenv_command: python3 -m venv
+  notify: Restart itlpay
+
+- name: Create the configuration directory
+  ansible.builtin.file:
+    path: /etc/itlpay
+    state: directory
+    owner: root
+    group: "{{ itlpay_user }}"
+    mode: "0750"
+
+- name: Write the environment file (readable by root and the service only)
+  ansible.builtin.template:
+    src: itlpay.env.j2
+    dest: /etc/itlpay/itlpay.env
+    owner: root
+    group: "{{ itlpay_user }}"
+    mode: "0640"
+  no_log: true # the file contains the database password: keep it out of the output and logs
+  notify: Restart itlpay
+
+- name: Install the systemd unit
+  ansible.builtin.template:
+    src: itlpay.service.j2
+    dest: /etc/systemd/system/itlpay.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart itlpay
+
+- name: Start ITL Pay now and at boot
+  ansible.builtin.systemd_service:
+    name: itlpay
+    enabled: true
+    state: started
+    daemon_reload: true
+
+- name: Apply any restart now, before the health check
+  ansible.builtin.meta: flush_handlers
+
+- name: Wait until /health answers 200
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ itlpay_port }}/health"
+    return_content: true
+  register: itlpay_health
+  until: itlpay_health.status == 200 # connection refused or 503 while starting: try again
+  retries: 20
+  delay: 3
+  changed_when: false
+
+- name: Check the API reports UP with its database
+  ansible.builtin.assert:
+    that:
+      - itlpay_health.json.status == "UP"
+      - itlpay_health.json.db == "up"
+    quiet: true

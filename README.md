@@ -22,9 +22,10 @@ weekly plan, the capstone checks and a certificate, or read it here.
 - [Further learning](resources/further-learning.json): the Microsoft Learn, AWS Skill Builder, Google Skills and HashiCorp courses for each topic.
 
 - [Phase 2: DevOps and Infrastructure as Code](CURRICULUM.md) (weeks 15–25), being written: Module 7 (Terraform on AWS, Azure
-  and Google Cloud) , Module 8 (CI/CD with GitHub Actions) and Module 9 (Kubernetes and Helm)
-  are ready, with the [Terraform network lab](labs/terraform-network/README.md), the [pipeline lab](labs/pipelines/README.md)
-  and the [Kubernetes lab](labs/kubernetes/README.md).
+  and Google Cloud) , Module 8 (CI/CD with GitHub Actions), Module 9 (Kubernetes and Helm) and
+  Module 10 (Ansible and cloud secrets) are ready, with the [Terraform network lab](labs/terraform-network/README.md),
+  the [pipeline lab](labs/pipelines/README.md), the [Kubernetes lab](labs/kubernetes/README.md), the
+  [Ansible lab](labs/ansible/README.md) and the [secrets lab](labs/secrets/README.md).
 
 Phase 3 (Platform Engineering and SRE) follows.
 

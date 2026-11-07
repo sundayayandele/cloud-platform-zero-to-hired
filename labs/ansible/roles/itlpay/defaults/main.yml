@@ -1,0 +1,17 @@
+itlpay_user: itlpay
+itlpay_home: /opt/itlpay
+itlpay_src: "{{ playbook_dir }}/../itlpay-lite" # the app's source, copied from the control machine
+itlpay_env: dev
+itlpay_port: 8080
+itlpay_log_level: INFO
+
+# Required. Never put the value in this file. It comes from the same secret the Kubernetes lab uses (topic 10.2):
+# "itlpay-dev-database", JSON with username, password, host, port and dbname. For example, in group_vars:
+#   itlpay_db: "{{ lookup('amazon.aws.secretsmanager_secret', 'itlpay-dev-database', region='af-south-1') | from_json }}"
+#   itlpay_db: "{{ lookup('azure.azcollection.azure_keyvault_secret', 'itlpay-dev-database',
+#                         vault_url='https://kv-itlpay-dev.vault.azure.net') | from_json }}"
+#   itlpay_db: "{{ lookup('google.cloud.gcp_secret_manager', key='itlpay-dev-database', project='PROJECT_ID',
+#                         auth_kind='application') | from_json }}"
+#   itlpay_database_url: >-
+#     postgresql://{{ itlpay_db.username }}:{{ itlpay_db.password | urlencode }}@{{ itlpay_db.host }}:{{ itlpay_db.port }}/{{ itlpay_db.dbname }}
+itlpay_database_url: ""
